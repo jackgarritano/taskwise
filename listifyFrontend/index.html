@@ -8,12 +8,13 @@
   </head>
   <body>
       <div class="allTasks">
-        <div class="form">
-          <div class="title">
-            <span>Test title</span>
-          </div>
+        <form class="addForm" action="" method="post">
+          <label for="taskName" style="display:none;">Title</label>
+          <input type="hidden" id="taskName" name="taskName"></input>
+          <div class="title" placeholder="Task name" contenteditable></div>
+          
           <div class="description">
-            <span>Description adsfajasdfasdfk;ladsfj;asdfklj asdfkjadsfkasdfj asdfkjsdf sadfkj</span>
+            <span>Description</span>
           </div>
           <div class="options">
             <div class="estTime">
@@ -53,7 +54,7 @@
 
           </div>
         </div>
-      </div>
+      </form>
     <script type="module" src="/main.js"></script>
   </body>
 </html>

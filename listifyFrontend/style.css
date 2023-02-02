@@ -188,8 +188,8 @@ body{
   display:flex;
   justify-content: center;
 }
-.form{
-  width:50%;
+.addForm{
+  width:min(50%, 700px);
   display:flex;
   flex-direction: column;
   justify-content: space-around;
@@ -202,13 +202,27 @@ body{
 }
 .title{
   border: 1px solid blue;
-  width:calc(100% - 10px);
-  padding-top:9px;
-  padding-left:10px;
+  width:calc(100% - 20px);
+  margin-top:9px;
+  margin-left:10px;
   font-size: 14px;
-  line-height: 12px;
+  line-height: 14px;
   padding-bottom:4px;
-
+  background-color: #303136;
+  color:#FFFFFF;
+  white-space: normal;
+  resize:none;
+  /*white-space: pre-wrap;*/
+  word-wrap:break-word;
+  cursor:text;
+}
+.title:focus{
+  outline:none;
+  white-space: normal;
+}
+.title:empty:before {
+  content: attr(placeholder);
+  color: #97989D; 
 }
 .description{
   border:1px solid blue;
