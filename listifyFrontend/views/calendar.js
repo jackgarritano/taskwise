@@ -173,7 +173,6 @@ function renderCalendar (){
       }
   
       function scrollDisappear(){
-        console.log(calContainer.scrollTop);
         let scroll = calContainer.scrollTop || 0;
         scrollDown.style.opacity = 1-scroll/150;
         if(scroll >= 150){
