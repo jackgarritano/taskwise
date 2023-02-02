@@ -1,7 +1,12 @@
+@font-face {
+  font-family: 'Agane';
+  src: url('assets/agane_55_roman-webfont.woff') format('woff');
+}
 *{
   margin:0;
   padding:0;
   box-sizing: border-box;
+  font-family:'Agane';
 }
 :root {
   line-height: 24px;
