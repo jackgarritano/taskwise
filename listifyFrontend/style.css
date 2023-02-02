@@ -177,6 +177,99 @@ body{
     background-color: #7400B8;
     position:absolute;
     left:calc(50% - 2px);
+    bottom: 2px;
 
 }
 /*end of calendar styling*/
+
+/*beginning of form styling*/
+.allTasks{
+  width:100%;
+  display:flex;
+  justify-content: center;
+}
+.form{
+  width:50%;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  background-color: #303136;
+  border-radius: 10px;
+  color:#97989D;
+  line-height: 18px;
+  font-size:12px;
+}
+.title{
+  border: 1px solid blue;
+  width:calc(100% - 10px);
+  padding-top:9px;
+  padding-left:10px;
+  font-size: 14px;
+  line-height: 12px;
+  padding-bottom:4px;
+
+}
+.description{
+  border:1px solid blue;
+  padding-left:10px;
+  width:calc(100% - 10px);
+  line-height:14px;
+}
+.options{
+  display:flex;
+  flex-direction: row;
+  border:1px solid blue;
+  
+}
+.estTime{
+  display:flex;
+  justify-content: space-between;
+  border:1px solid red;
+  margin-left:10px;
+}
+.clockLogo{
+  border:1px solid purple;
+}
+.estTimeChoice{
+  border:1px solid purple;
+}
+.dueDate{
+  display:flex;
+  justify-content:space-between;
+  border:1px solid red;
+  margin-left:5px;
+}
+.calLogo{
+  border:1px solid purple;
+}
+.dueDateChoice{
+  border:1px solid purple;
+}
+.priorityBox{
+  display:flex;
+  justify-content: space-between;
+  border:1px solid green;
+}
+.priority{
+  display:flex;
+  justify-content: space-between;
+  border: 1px solid red;
+  margin-left:5px;
+}
+.priLogo{
+  border:1px solid purple;
+}
+.priChoice{
+  border:1px solid purple;
+}
+.maxPriority{
+  display:flex;
+  justify-content: space-between;
+  border:1px solid red;
+  margin-left:5px;
+}
+.maxPriChoice{
+  border:1px solid purple;
+}
+/*end of form styling*/
