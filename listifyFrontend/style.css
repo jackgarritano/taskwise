@@ -211,6 +211,7 @@ body{
   resize:none;
   word-wrap:break-word;
   cursor:text;
+  display:inline-block;
 }
 .textInput:focus{
   outline:none;
@@ -236,23 +237,28 @@ body{
   min-height: 3em;
 }
 .bottomButtons{
-  width:100%;
+  width:calc(100% - 20px);
   display:flex;
   justify-content: space-between;
+  margin-bottom:10px;
+  margin-right:10px;
+  margin-left:10px;
+  margin-top: 4px;
+}
+.selectable:hover{
+  background-color: #41444A;
+  cursor: pointer;
 }
 .options{
   display:flex;
-  flex-direction: row;
-  margin-bottom:10px;
-  
+  flex-direction: row;  
 }
 .estTime{
   display:flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #97989D;
+  border: 1px solid #44464C;
   border-radius: 5px;
-  margin-left:10px;
 }
 .clockLogo{
   width:14px;
@@ -266,7 +272,7 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  border: 1px solid #97989D;
+  border: 1px solid #44464C;
   border-radius: 5px;
   margin-left:5px;
 }
@@ -287,7 +293,7 @@ body{
   display:flex;
   justify-content: space-between;
   align-items:center;
-  border: 1px solid #97989D;
+  border: 1px solid #44464C;
   border-radius: 5px;
   margin-left:5px;
 }
@@ -303,7 +309,7 @@ body{
   display:flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #97989D;
+  border: 1px solid #44464C;
   border-radius: 5px;
   margin-left:5px;
 }
@@ -313,5 +319,27 @@ body{
 .rightSideButtons{
   display:flex;
   justify-content: space-between;
+}
+.cancel{
+  border: 1px solid #44464C;
+  border-radius: 5px;
+  margin-left:5px;
+  display:flex;
+  align-items: center;
+
+}
+.addTask{
+  border: 1px solid #44464C;/*make border colors delineation line*/
+  border-radius: 5px;
+  margin-left:5px;
+  display:flex;
+  align-items: center;
+}
+.rightSideButtons span{
+  padding-left:3px;
+  padding-right:3px;
+}
+.rightSideButtons>div{
+
 }
 /*end of form styling*/
