@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Agane';
-  src: url('assets/agane_55_roman-webfont.woff') format('woff');
+  src: url('assets/agane_45_light-webfont.woff');
 }
 *{
   margin:0;
@@ -20,6 +20,10 @@
 body{
     background-color: #37393e;
 	display:flex;
+  -webkit-font-smoothing: antialiased;
+  font-smooth: always;
+  -moz-osx-font-smoothing: grayscale;
+
 }
 .cal__container::-webkit-scrollbar {
 	 display: none;
@@ -198,92 +202,116 @@ body{
   border-radius: 10px;
   color:#97989D;
   line-height: 18px;
-  font-size:12px;
+  font-size:13px;
 }
-.title{
-  border: 1px solid blue;
-  width:calc(100% - 20px);
-  margin-top:9px;
-  margin-left:10px;
-  font-size: 14px;
-  line-height: 14px;
-  padding-bottom:4px;
+.textInput{
   background-color: #303136;
   color:#FFFFFF;
   white-space: normal;
   resize:none;
-  /*white-space: pre-wrap;*/
   word-wrap:break-word;
   cursor:text;
 }
-.title:focus{
+.textInput:focus{
   outline:none;
   white-space: normal;
 }
-.title:empty:before {
+.title{
+  width:calc(100% - 20px);
+  margin-top:9px;
+  margin-left:10px;
+  font-size: 15px;
+  line-height: 14px;
+  padding-bottom:4px;
+  
+}
+.textInput:empty:before {
   content: attr(placeholder);
   color: #97989D; 
 }
 .description{
-  border:1px solid blue;
-  padding-left:10px;
-  width:calc(100% - 10px);
+  margin-left:10px;
+  width:calc(100% - 20px);
   line-height:14px;
+  min-height: 3em;
+}
+.bottomButtons{
+  width:100%;
+  display:flex;
+  justify-content: space-between;
 }
 .options{
   display:flex;
   flex-direction: row;
-  border:1px solid blue;
+  margin-bottom:10px;
   
 }
 .estTime{
   display:flex;
   justify-content: space-between;
-  border:1px solid red;
+  align-items: center;
+  border: 1px solid #97989D;
+  border-radius: 5px;
   margin-left:10px;
 }
 .clockLogo{
-  border:1px solid purple;
+  width:14px;
+  height:14px;
+  margin:3px;
 }
 .estTimeChoice{
-  border:1px solid purple;
+  margin-right:3px;
 }
 .dueDate{
   display:flex;
   justify-content:space-between;
-  border:1px solid red;
+  align-items:center;
+  border: 1px solid #97989D;
+  border-radius: 5px;
   margin-left:5px;
 }
 .calLogo{
-  border:1px solid purple;
+  width:14px;
+  height:14px;
+  margin:3px;
 }
 .dueDateChoice{
-  border:1px solid purple;
+  margin-right:3px;
 }
 .priorityBox{
   display:flex;
   justify-content: space-between;
-  border:1px solid green;
+
 }
 .priority{
   display:flex;
   justify-content: space-between;
-  border: 1px solid red;
+  align-items:center;
+  border: 1px solid #97989D;
+  border-radius: 5px;
   margin-left:5px;
 }
 .priLogo{
-  border:1px solid purple;
+  width:14px;
+  height:14px;
+  margin:3px;
 }
 .priChoice{
-  border:1px solid purple;
+  margin-right:3px;
 }
 .maxPriority{
   display:flex;
   justify-content: space-between;
-  border:1px solid red;
+  align-items: center;
+  border: 1px solid #97989D;
+  border-radius: 5px;
   margin-left:5px;
 }
 .maxPriChoice{
-  border:1px solid purple;
+  margin-right:3px;
+}
+.rightSideButtons{
+  display:flex;
+  justify-content: space-between;
 }
 /*end of form styling*/
