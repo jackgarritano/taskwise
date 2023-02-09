@@ -169,7 +169,9 @@ body{
 	 width: 212px; /*reduced by 25%; need corresponding reduction in height of cells*/
 	 margin: auto;
 	 border: 1px solid #5d5d5d;
-	 position: relative;
+	 position: absolute;
+   left:calc(50% - 212px / 2);
+   top:100%;
 }
 .todaysDate{
     position:relative;
@@ -274,6 +276,7 @@ body{
   border: 1px solid #44464C;
   border-radius: 5px;
   margin-left:5px;
+  position:relative;
 }
 .calLogo{
   width:14px;
@@ -342,3 +345,7 @@ body{
 
 }
 /*end of form styling*/
+
+.hidden{
+  display:none;
+}

@@ -1,3 +1,4 @@
+import { renderCalendar } from "./calendar";
 export {renderForm};
 
 function renderForm(){
@@ -42,6 +43,7 @@ function renderForm(){
     addForm.append(descriptionInput);
     addForm.append(description);
     addForm.append(bottomButtons);
+    //renderCalendar(dueDate);
 
     return {
         addTask,

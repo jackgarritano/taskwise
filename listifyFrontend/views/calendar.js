@@ -1,18 +1,18 @@
-export {renderCalendar};
+export {renderCalendar, clearCal};
 
 //todo: fix inconsistent spacing above and below 'today' and 'tomorrow' buttons
 //todo: add a function to pre-populate selected date on open if a date was previously selected and render the month of the selected date instead of current month
 //todo: add a prepend months method for use in the above case
-function renderCalendar (){
+function renderCalendar (parent){
     var monthsToShow, primary, accent, mode;
     var cal;
     const d = new Date();
     var year = d.getFullYear();
     var month = d.getMonth() - 1;
   
-    const body = document.querySelector('body');
+    //const body = document.querySelector('body');
     const calendarHolder = document.createElement('div');
-    calendarHolder.classList.add('calendarHolder');
+    calendarHolder.classList.add('calendarHolder', 'hidden');
     const calendar = document.createElement('div');
     calendar.classList.add('calendar');
     const inputContainer = document.createElement('div');
@@ -34,7 +34,7 @@ function renderCalendar (){
       calendar.append(inputContainer);
       calendar.append(calContainer);
       calendarHolder.append(calendar);
-      body.append(calendarHolder);
+      parent.append(calendarHolder);
   
     /*inputContainer.append(today);
     inputContainer.append(tomorrow);
@@ -99,11 +99,7 @@ function renderCalendar (){
         addMoreMonths();
    // });
   
-    // function to destroy the calendar element
-    function clearCal() {
-      let calCont = document.getElementsByClassName('cal__container')[0];
-      calCont.innerHTML = "";
-    }
+    
   
     // Logic for calendar
     function buildCal(is2ndMonth) {
@@ -267,4 +263,9 @@ function renderCalendar (){
         item.classList = "";
       }
     }
+  }
+  // function to destroy the calendar element
+  function clearCal() {
+    let calCont = document.getElementsByClassName('cal__container')[0];
+    calCont.innerHTML = "";
   }
