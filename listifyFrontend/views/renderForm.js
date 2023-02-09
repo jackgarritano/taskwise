@@ -8,6 +8,7 @@ function renderForm(){
     let priority = renderPriority();
     let dueDate = renderDueDate();
     let estTime = renderEstTime();
+    let timePickerHolder = renderTimePicker();
     let description = renderDescription();
     let descriptionInput = renderDescriptionInput();
     let descriptionLabel = renderDescriptionLabel();
@@ -30,6 +31,7 @@ function renderForm(){
 
     rightSideButtons.append(cancel);
     rightSideButtons.append(addTask);
+    estTime.append(timePickerHolder);
     options.append(estTime);
     options.append(dueDate);
     options.append(priority);
@@ -43,7 +45,6 @@ function renderForm(){
     addForm.append(descriptionInput);
     addForm.append(description);
     addForm.append(bottomButtons);
-    //renderCalendar(dueDate);
 
     return {
         addTask,
@@ -158,6 +159,53 @@ function renderEstTime(){
     estTime.append(estTimeChoice);
 
     return estTime;
+}
+function renderTimePicker(){
+    let timePickerHolder = document.createElement('div');
+    let minuteContainer = document.createElement('div');
+    let hourContainer = document.createElement('div');
+    let dayContainer = document.createElement('div');
+    let minuteChooser = document.createElement('input');
+    let hourChooser = document.createElement('input');
+    let dayChooser = document.createElement('input');
+    let minuteLabel = document.createElement('label');
+    let hourLabel = document.createElement('label');
+    let dayLabel = document.createElement('label');
+
+    timePickerHolder.classList.add('timePickerHolder');
+    minuteContainer.classList.add('.minuteContainer');
+    hourContainer.classList.add('hourContainer');
+    dayContainer.classList.add('dayContainer');
+    minuteChooser.classList.add('minuteChooser');
+    hourChooser.classList.add('hourChooser');
+    dayChooser.classList.add('dayChooser');
+
+    minuteChooser.setAttribute('id', 'estMinutes');
+    minuteChooser.setAttribute('type', 'text');
+    hourChooser.setAttribute('id', 'estHours');
+    hourChooser.setAttribute('type', 'text');
+    dayChooser.setAttribute('id', 'estDays');
+    dayChooser.setAttribute('type', 'text');
+    minuteLabel.setAttribute('for', 'estMinutes');
+    hourLabel.setAttribute('for', 'estHours');
+    dayLabel.setAttribute('for', 'estDays');
+
+    minuteLabel.textContent = 'Mins';
+    hourLabel.textContent = 'Hours';
+    dayLabel.textContent = 'Days';
+
+    minuteContainer.append(minuteLabel);
+    minuteContainer.append(minuteChooser);
+    hourContainer.append(hourLabel);
+    hourContainer.append(hourChooser);
+    dayContainer.append(dayLabel);
+    dayContainer.append(dayChooser);
+
+    timePickerHolder.append(minuteContainer);
+    timePickerHolder.append(hourContainer);
+    timePickerHolder.append(dayContainer);
+
+    return timePickerHolder;
 }
 function renderDescription(){
     let description = document.createElement('div');

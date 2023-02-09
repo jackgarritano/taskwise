@@ -260,6 +260,7 @@ body{
   align-items: center;
   border: 1px solid #44464C;
   border-radius: 5px;
+  position:relative;
 }
 .clockLogo{
   width:14px;
@@ -341,11 +342,16 @@ body{
   padding-left:3px;
   padding-right:3px;
 }
-.rightSideButtons>div{
-
-}
 /*end of form styling*/
-
+/*beginning of time picker styling*/
+.timePickerHolder{
+  position:absolute;
+  top:100%;
+  left:50%;
+  display:flex;
+  
+}
+/*end of time picker styling*/
 .hidden{
   display:none;
 }
