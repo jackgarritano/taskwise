@@ -12,7 +12,7 @@ function renderCalendar (parent){
   
     //const body = document.querySelector('body');
     const calendarHolder = document.createElement('div');
-    calendarHolder.classList.add('calendarHolder', 'hidden');
+    calendarHolder.classList.add('calendarHolder');
     const calendar = document.createElement('div');
     calendar.classList.add('calendar');
     const inputContainer = document.createElement('div');
@@ -266,6 +266,6 @@ function renderCalendar (parent){
   }
   // function to destroy the calendar element
   function clearCal() {
-    let calCont = document.getElementsByClassName('cal__container')[0];
-    calCont.innerHTML = "";
+    let calCont = document.querySelector('.calendarHolder');
+    calCont.remove();
   }
