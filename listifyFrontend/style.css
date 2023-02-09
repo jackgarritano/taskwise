@@ -207,28 +207,30 @@ body{
 .textInput{
   background-color: #303136;
   color:#FFFFFF;
-  white-space: normal;
+  /*white-space: normal;*/
   resize:none;
   word-wrap:break-word;
   cursor:text;
   display:inline-block;
+  border:none;
 }
 .textInput:focus{
   outline:none;
   white-space: normal;
+}
+.textInput::placeholder{
+  color: #97989D;
 }
 .title{
   width:calc(100% - 20px);
   margin-top:9px;
   margin-left:10px;
   font-size: 15px;
-  line-height: 14px;
+  line-height: 15px;
   padding-bottom:4px;
+  /*height:19px;*/
 }
-.textInput:empty:before {
-  content: attr(placeholder);
-  color: #97989D; 
-}
+
 .description{
   margin-left:10px;
   width:calc(100% - 20px);

@@ -1,4 +1,7 @@
+import * as Stretchy from "https://stretchy.verou.me/dist/stretchy.min.js";
 export {renderForm};
+
+Stretchy.init();
 
 function renderForm(){
     let addTask = renderAddTask();
@@ -7,10 +10,10 @@ function renderForm(){
     let priority = renderPriority();
     let dueDate = renderDueDate();
     let estTime = renderEstTime();
-    let description = renderDescription();
+//    let description = renderDescription();
     let descriptionInput = renderDescriptionInput();
     let descriptionLabel = renderDescriptionLabel();
-    let taskName = renderTaskName();
+//    let taskName = renderTaskName();
     let taskNameInput = renderTaskNameInput();
     let taskNameLabel = renderTaskNameLabel();
 
@@ -37,10 +40,10 @@ function renderForm(){
     bottomButtons.append(rightSideButtons);
     addForm.append(taskNameLabel);
     addForm.append(taskNameInput);
-    addForm.append(taskName);
+ //   addForm.append(taskName);
     addForm.append(descriptionLabel);
     addForm.append(descriptionInput);
-    addForm.append(description);
+//    addForm.append(description);
     addForm.append(bottomButtons);
 
     return {
@@ -50,10 +53,10 @@ function renderForm(){
         priority,
         dueDate,
         estTime,
-        description,
+       // description,
         descriptionInput,
         descriptionLabel,
-        taskName,
+       // taskName,
         taskNameInput,
         taskNameLabel,
         rightSideButtons,
@@ -157,7 +160,7 @@ function renderEstTime(){
 
     return estTime;
 }
-function renderDescription(){
+/*function renderDescription(){
     let description = document.createElement('div');
 
     description.classList.add('description', 'textInput');
@@ -165,13 +168,16 @@ function renderDescription(){
     description.setAttribute('contenteditable', 'true');
 
     return description;
-}
+}*/
 function renderDescriptionInput(){
-    let descriptionInput = document.createElement('input');
+    let descriptionInput = document.createElement('textarea');
 
-    descriptionInput.setAttribute('type', 'hidden');
+    //descriptionInput.setAttribute('type', 'hidden');
+    //descriptionInput.setAttribute('type', 'text');
+    descriptionInput.classList.add('description', 'textInput');
     descriptionInput.setAttribute('id', 'taskDesc');
     descriptionInput.setAttribute('name', 'taskDesc');
+    descriptionInput.setAttribute('placeholder', 'Description');
 
     return descriptionInput;
 }
@@ -184,7 +190,7 @@ function renderDescriptionLabel(){
 
     return descriptionLabel;
 }
-function renderTaskName(){
+/*function renderTaskName(){
     let taskName = document.createElement('div');
 
     taskName.classList.add('title', 'textInput');
@@ -192,13 +198,16 @@ function renderTaskName(){
     taskName.setAttribute('contenteditable', 'true');
 
     return taskName;
-}
+}*/
 function renderTaskNameInput(){
-    let taskNameInput = document.createElement('input');
+    let taskNameInput = document.createElement('textarea');
 
-    taskNameInput.setAttribute('type', 'hidden');
+    //taskNameInput.setAttribute('type', 'hidden');
+    //taskNameInput.setAttribute('type', 'text');
+    taskNameInput.classList.add('title', 'textInput');
     taskNameInput.setAttribute('id', 'taskName');
     taskNameInput.setAttribute('name', 'taskName');
+    taskNameInput.setAttribute('placeholder', 'Task name');
 
     return taskNameInput;
 }
