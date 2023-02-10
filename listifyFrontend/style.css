@@ -347,10 +347,16 @@ body{
 .timePickerHolder{
   position:absolute;
   top:100%;
-  left:50%;
+  left:calc(50% - (144.48px / 2));
   display:flex;
   background-color: #2D2E33;
   border: 1px solid #5d5d5d;
+}
+.timePickerHolder:hover{
+  cursor:default;
+}
+.timePickerHolder>div{
+  padding:2.5px;
 }
 .timePickerHolder input{
   border: 1px solid #44464C;
