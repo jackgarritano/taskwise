@@ -176,16 +176,22 @@ function renderTimePicker(){
     minuteContainer.classList.add('.minuteContainer');
     hourContainer.classList.add('hourContainer');
     dayContainer.classList.add('dayContainer');
-    minuteChooser.classList.add('minuteChooser');
-    hourChooser.classList.add('hourChooser');
-    dayChooser.classList.add('dayChooser');
+    minuteChooser.classList.add('minuteChooser', 'textInput');
+    hourChooser.classList.add('hourChooser', 'textInput');
+    dayChooser.classList.add('dayChooser', 'textInput');
 
     minuteChooser.setAttribute('id', 'estMinutes');
-    minuteChooser.setAttribute('type', 'text');
+    minuteChooser.setAttribute('type', 'number');
+    minuteChooser.setAttribute('min', '0');
+    minuteChooser.setAttribute('max', '999');
     hourChooser.setAttribute('id', 'estHours');
-    hourChooser.setAttribute('type', 'text');
+    hourChooser.setAttribute('type', 'number');
+    hourChooser.setAttribute('min', '0');
+    hourChooser.setAttribute('max', '999');
     dayChooser.setAttribute('id', 'estDays');
-    dayChooser.setAttribute('type', 'text');
+    dayChooser.setAttribute('type', 'number');
+    dayChooser.setAttribute('min', '0');
+    dayChooser.setAttribute('max', '999');
     minuteLabel.setAttribute('for', 'estMinutes');
     hourLabel.setAttribute('for', 'estHours');
     dayLabel.setAttribute('for', 'estDays');
