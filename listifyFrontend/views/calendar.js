@@ -3,7 +3,7 @@ export {renderCalendar, clearCal};
 //todo: fix inconsistent spacing above and below 'today' and 'tomorrow' buttons
 //todo: add a function to pre-populate selected date on open if a date was previously selected and render the month of the selected date instead of current month
 //todo: add a prepend months method for use in the above case
-function renderCalendar (parent){
+function renderCalendar (parent){ 
     var monthsToShow, primary, accent, mode;
     var cal;
     const d = new Date();
@@ -12,7 +12,7 @@ function renderCalendar (parent){
   
     //const body = document.querySelector('body');
     const calendarHolder = document.createElement('div');
-    calendarHolder.classList.add('calendarHolder');
+    calendarHolder.classList.add('calendarHolder', 'hidden', 'popup');
     const calendar = document.createElement('div');
     calendar.classList.add('calendar');
     const inputContainer = document.createElement('div');

@@ -8,19 +8,42 @@ onlyPasteText();
 let formElements = renderForm();
 let allTasks = document.querySelector('.allTasks');
 allTasks.append(formElements.addForm);
+renderCalendar(formElements.dueDate);
 
 formElements.dueDate.addEventListener('click', () => {
-    if(!document.querySelector('.calendarHolder')){
-        renderCalendar(formElements.dueDate);
+    let calendarHolder = document.querySelector('.calendarHolder')
+    if(calendarHolder.classList.contains('hidden')){
+        calendarHolder.classList.toggle('hidden');
+        closePopupListener();
     }
 })
 
-document.addEventListener('click', function(e) {
-    let calendarHolder = document.querySelector('.calendarHolder');
-    if(calendarHolder){
-        if (!calendarHolder.contains(e.target)) {
-            clearCal();
-            }
+formElements.estTime.addEventListener('click', () => {
+    let estTime = document.querySelector('.timePickerHolder')
+    if(estTime.classList.contains('hidden')){
+        estTime.classList.toggle('hidden');
+        closePopupListener();
     }
-}, true)
+})
+
+function closePopupListener(e){
+    let popup;
+    let popups = document.querySelectorAll('.popup');
+    popups.forEach((item) => {
+        if(!item.classList.contains('hidden')){
+            popup = item;
+        }
+    })
+    let closePopup = function(e){ 
+        if (!popup.contains(e.target)) {
+            popup.classList.add('hidden');
+            removeClosePopupListener();
+        }
+    }
+    let removeClosePopupListener = function(){
+        document.removeEventListener('click', closePopup, true);
+    }
+    document.addEventListener('click', closePopup, true)
+}
+
 }

@@ -172,7 +172,7 @@ function renderTimePicker(){
     let hourLabel = document.createElement('label');
     let dayLabel = document.createElement('label');
 
-    timePickerHolder.classList.add('timePickerHolder');
+    timePickerHolder.classList.add('timePickerHolder', 'popup', 'hidden');
     minuteContainer.classList.add('.minuteContainer');
     hourContainer.classList.add('hourContainer');
     dayContainer.classList.add('dayContainer');
