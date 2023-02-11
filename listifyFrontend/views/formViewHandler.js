@@ -26,6 +26,14 @@ formElements.estTime.addEventListener('click', () => {
     }
 })
 
+formElements.priority.addEventListener('click', () => {
+    let priority = document.querySelector('.priorityPickerHolder')
+    if(priority.classList.contains('hidden')){
+        priority.classList.toggle('hidden');
+        closePopupListener();
+    }
+})
+
 function closePopupListener(e){
     let popup;
     let popups = document.querySelectorAll('.popup');

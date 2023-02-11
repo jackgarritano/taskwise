@@ -5,6 +5,7 @@ function renderForm(){
     let addTask = renderAddTask();
     let cancel = renderCancel();
     let maxPriority = renderMaxPriority();
+    let priorityPickerHolder = renderPriorityPicker();
     let priority = renderPriority();
     let dueDate = renderDueDate();
     let estTime = renderEstTime();
@@ -34,6 +35,7 @@ function renderForm(){
     estTime.append(timePickerHolder);
     options.append(estTime);
     options.append(dueDate);
+    priority.append(priorityPickerHolder);
     options.append(priority);
     options.append(maxPriority);
     bottomButtons.append(options);
@@ -105,6 +107,20 @@ function renderMaxPriority(){
     maxPriority.append(maxPriChoice);
 
     return maxPriority;
+}
+function renderPriorityPicker(){
+    let priorityPickerHolder = document.createElement('div');
+    priorityPickerHolder.classList.add('priorityPickerHolder', 'hidden', 'popup');
+
+    for(let i=1; i<=8; i++){
+        let priorityChoice = document.createElement('div');
+        priorityChoice.textContent = `Priority ${i}`;
+        priorityChoice.classList.add('priorityPicker');
+        priorityChoice.dataset.number = i-1;
+        priorityPickerHolder.append(priorityChoice);
+    }
+    
+    return priorityPickerHolder;
 }
 function renderPriority(){
     let priority = document.createElement('div');
