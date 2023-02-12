@@ -115,7 +115,7 @@ function renderPriorityPicker(){
     for(let i=1; i<=8; i++){
         let priorityChoice = document.createElement('div');
         priorityChoice.textContent = `Priority ${i}`;
-        priorityChoice.classList.add('priorityPicker');
+        priorityChoice.classList.add('priorityPicker', 'selectable');
         priorityChoice.dataset.number = i-1;
         priorityPickerHolder.append(priorityChoice);
     }
