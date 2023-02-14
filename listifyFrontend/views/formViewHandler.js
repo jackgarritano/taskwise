@@ -29,17 +29,25 @@ formElements.estTime.addEventListener('click', () => {
     }
 })
 
-formElements.priority.addEventListener('click', () => {
-    let priority = document.querySelectorAll('.priorityPickerHolder')[0];
-    if(priority.classList.contains('hidden')){
-        priority.classList.toggle('hidden');
+formElements.priority.addEventListener('click', (e) => {
+    let priorityPicker = document.querySelectorAll('.priorityPickerHolder')[0];
+    if(e.target.classList.contains('regPriorityButton')){
+        formElements.priority.querySelector('input').setAttribute('value', e.target.dataset.number);
+        priorityPicker.classList.add('hidden');
+    }
+    else if(priorityPicker.classList.contains('hidden')){
+        priorityPicker.classList.toggle('hidden');
         closePopupListener();
     }
 })
-formElements.maxPriority.addEventListener('click', () => {
-    let priority = document.querySelectorAll('.priorityPickerHolder')[1];
-    if(priority.classList.contains('hidden')){
-        priority.classList.toggle('hidden');
+formElements.maxPriority.addEventListener('click', (e) => {
+    let maxPriorityPicker = document.querySelectorAll('.priorityPickerHolder')[1];
+    if(e.target.classList.contains('maxPriorityButton')){
+        formElements.maxPriority.querySelector('input').setAttribute('value', e.target.dataset.number);
+        maxPriorityPicker.classList.add('hidden');
+    }
+    else if(maxPriorityPicker.classList.contains('hidden')){
+        maxPriorityPicker.classList.toggle('hidden');
         closePopupListener();
     }
 })
@@ -76,5 +84,10 @@ function gatherTextInput(e){
 
 formElements.taskName.addEventListener('blur', gatherTextInput);
 formElements.description.addEventListener('blur', gatherTextInput);
+
+/*let regPriorityButtons = formElements.priority.querySelectorAll('.regPriorityButton');
+regPriorityButtons.forEach((el) =>{
+    el.addEventListener
+})*/
 
 }

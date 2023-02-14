@@ -130,7 +130,7 @@ function renderPriorityPicker(){
         let priorityChoice = document.createElement('div');
         priorityChoice.textContent = `Priority ${i}`;
         priorityChoice.classList.add('priorityPicker', 'selectable');
-        priorityChoice.dataset.number = i-1;
+        priorityChoice.dataset.number = i;
         priorityPickerHolder.append(priorityChoice);
     }
     
