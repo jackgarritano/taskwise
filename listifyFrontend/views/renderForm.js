@@ -4,6 +4,7 @@ export {renderForm};
 function renderForm(){
     let addTask = renderAddTask();
     let cancel = renderCancel();
+    let maxPriorityPickerHolder = renderPriorityPicker();
     let maxPriority = renderMaxPriority();
     let priorityPickerHolder = renderPriorityPicker();
     let priority = renderPriority();
@@ -21,7 +22,15 @@ function renderForm(){
     let options = document.createElement('div');
     let bottomButtons = document.createElement('div');
     let addForm = document.createElement('form');
+    let maxPriButtons = maxPriorityPickerHolder.querySelectorAll('.priorityPicker');
+    let priButtons = priorityPickerHolder.querySelectorAll('.priorityPicker');
 
+    maxPriButtons.forEach((el)=>{
+        el.classList.add('maxPriorityButton');
+    })
+    priButtons.forEach((el)=>{
+        el.classList.add('regPriorityButton');
+    })
     rightSideButtons.classList.add('rightSideButtons');
     options.classList.add('options');
     bottomButtons.classList.add('bottomButtons');
@@ -37,6 +46,7 @@ function renderForm(){
     options.append(dueDate);
     priority.append(priorityPickerHolder);
     options.append(priority);
+    maxPriority.append(maxPriorityPickerHolder);
     options.append(maxPriority);
     bottomButtons.append(options);
     bottomButtons.append(rightSideButtons);
@@ -95,13 +105,17 @@ function renderMaxPriority(){
     let priLogo = document.createElement('img');
     let maxPriChoice = document.createElement('div');
     let textSpan = document.createElement('span');
+    let maxPriInput = document.createElement('input');
 
     maxPriority.classList.add('maxPriority', 'selectable');
     priLogo.classList.add('priLogo');
     priLogo.setAttribute('src', 'assets/priLogo.svg');
     maxPriChoice.classList.add('maxPriChoice');
     textSpan.textContent = 'Max. Priority';
+    maxPriInput.setAttribute('name', 'maxPriInput');
+    maxPriInput.setAttribute('type', 'hidden');
 
+    maxPriority.append(maxPriInput);
     maxPriChoice.append(textSpan);
     maxPriority.append(priLogo);
     maxPriority.append(maxPriChoice);
@@ -126,6 +140,7 @@ function renderPriority(){
     let priority = document.createElement('div');
     let priLogo = document.createElement('img');
     let priChoice = document.createElement('div');
+    let priInput = document.createElement('input');
     let textSpan = document.createElement('span');
 
     priority.classList.add('priority', 'selectable');
@@ -133,7 +148,10 @@ function renderPriority(){
     priLogo.setAttribute('src', 'assets/priLogo.svg');
     priChoice.classList.add('priChoice');
     textSpan.textContent = 'Priority';
+    priInput.setAttribute('name', 'priInput');
+    priInput.setAttribute('type', 'hidden');
 
+    priority.append(priInput);
     priChoice.append(textSpan);
     priority.append(priLogo);
     priority.append(priChoice);
@@ -144,6 +162,7 @@ function renderDueDate(){
     let dueDate = document.createElement('div');
     let calLogo = document.createElement('img');
     let dueDateChoice = document.createElement('div');
+    let dateInput = document.createElement('input');
     let textSpan = document.createElement('span');
 
     dueDate.classList.add('dueDate', 'selectable');
@@ -151,7 +170,10 @@ function renderDueDate(){
     calLogo.setAttribute('src', 'assets/calLogo.svg');
     dueDateChoice.classList.add('dueDateChoice');
     textSpan.textContent = 'Date';
+    dateInput.setAttribute('name', 'dateInput');
+    dateInput.setAttribute('type', 'hidden');
 
+    dueDate.append(dateInput);
     dueDateChoice.append(textSpan);
     dueDate.append(calLogo);
     dueDate.append(dueDateChoice);
@@ -160,6 +182,7 @@ function renderDueDate(){
 }
 function renderEstTime(){
     let estTime = document.createElement('div');
+    let estTimeInput = document.createElement('input');
     let clockLogo = document.createElement('img');
     let estTimeChoice = document.createElement('div');
     let textSpan = document.createElement('span');
@@ -169,7 +192,10 @@ function renderEstTime(){
     clockLogo.setAttribute('src', 'assets/clockLogo.svg');
     estTimeChoice.classList.add('estTimeChoice');
     textSpan.textContent = 'Time';
+    estTimeInput.setAttribute('name', 'estTimeInput');
+    estTimeInput.setAttribute('type', 'hidden');
 
+    estTime.append(estTimeInput);
     estTimeChoice.append(textSpan);
     estTime.append(clockLogo);
     estTime.append(estTimeChoice);
@@ -200,14 +226,17 @@ function renderTimePicker(){
     minuteChooser.setAttribute('type', 'number');
     minuteChooser.setAttribute('min', '0');
     minuteChooser.setAttribute('max', '999');
+    minuteChooser.setAttribute('value', '0');
     hourChooser.setAttribute('id', 'estHours');
     hourChooser.setAttribute('type', 'number');
     hourChooser.setAttribute('min', '0');
     hourChooser.setAttribute('max', '999');
+    hourChooser.setAttribute('value', '0');
     dayChooser.setAttribute('id', 'estDays');
     dayChooser.setAttribute('type', 'number');
     dayChooser.setAttribute('min', '0');
     dayChooser.setAttribute('max', '999');
+    dayChooser.setAttribute('value', '0');
     minuteLabel.setAttribute('for', 'estMinutes');
     hourLabel.setAttribute('for', 'estHours');
     dayLabel.setAttribute('for', 'estDays');

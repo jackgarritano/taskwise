@@ -27,12 +27,23 @@ formElements.estTime.addEventListener('click', () => {
 })
 
 formElements.priority.addEventListener('click', () => {
-    let priority = document.querySelector('.priorityPickerHolder')
+    let priority = document.querySelectorAll('.priorityPickerHolder')[0];
     if(priority.classList.contains('hidden')){
         priority.classList.toggle('hidden');
         closePopupListener();
     }
 })
+formElements.maxPriority.addEventListener('click', () => {
+    let priority = document.querySelectorAll('.priorityPickerHolder')[1];
+    if(priority.classList.contains('hidden')){
+        priority.classList.toggle('hidden');
+        closePopupListener();
+    }
+})
+formElements.estTime.querySelectorAll('.textInput').forEach((el)=>{
+    el.addEventListener('focus', (e)=>{
+        e.target.select();
+})})
 
 function closePopupListener(e){
     let popup;

@@ -316,6 +316,7 @@ body{
   border: 1px solid #44464C;
   border-radius: 5px;
   margin-left:5px;
+  position:relative;
 }
 .maxPriChoice{
   margin-right:3px;
