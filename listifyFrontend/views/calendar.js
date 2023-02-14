@@ -10,6 +10,7 @@ function renderCalendar (parent){
     var year = d.getFullYear();
     var month = d.getMonth() - 1;
   
+    let dateInput = document.querySelector('input[name=dateInput]');
     //const body = document.querySelector('body');
     const calendarHolder = document.createElement('div');
     calendarHolder.classList.add('calendarHolder', 'hidden', 'popup');
@@ -148,6 +149,7 @@ function renderCalendar (parent){
         let gbFormat = new Intl.DateTimeFormat("en-US").format(new Date(year, month, dim));
         cell.setAttribute("data-date-intl", new Date(year, month, dim));
         cell.setAttribute("data-date", gbFormat);
+        cell.classList.add('dateCircle');
         cell.innerHTML = '<span>'+dim+'</span>';
         day++;
         if (day == 8) {

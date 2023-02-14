@@ -10,9 +10,12 @@ let allTasks = document.querySelector('.allTasks');
 allTasks.append(formElements.addForm);
 renderCalendar(formElements.dueDate);
 
-formElements.dueDate.addEventListener('click', () => {
+formElements.dueDate.addEventListener('click', (e) => {
     let calendarHolder = document.querySelector('.calendarHolder')
-    if(calendarHolder.classList.contains('hidden')){
+    if(e.target.classList.contains('dateCircle') || e.target.parentElement.classList.contains('dateCircle')){
+        calendarHolder.classList.add('hidden');
+    }
+    else if(calendarHolder.classList.contains('hidden')){
         calendarHolder.classList.toggle('hidden');
         closePopupListener();
     }
@@ -64,5 +67,14 @@ function closePopupListener(e){
     }
     document.addEventListener('click', closePopup, true)
 }
+
+function gatherTextInput(e){
+    let input = e.target.innerText;
+    let inputField = document.querySelector(`#${e.target.dataset.inputType}`);
+    inputField.setAttribute('value', input);
+}
+
+formElements.taskName.addEventListener('blur', gatherTextInput);
+formElements.description.addEventListener('blur', gatherTextInput);
 
 }

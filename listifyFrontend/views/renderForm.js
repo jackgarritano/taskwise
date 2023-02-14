@@ -264,6 +264,7 @@ function renderDescription(){
     description.classList.add('description', 'textInput');
     description.setAttribute('placeholder', 'Description');
     description.setAttribute('contenteditable', 'true');
+    description.dataset.inputType = 'taskDesc';
 
     return description;
 }
@@ -291,6 +292,7 @@ function renderTaskName(){
     taskName.classList.add('title', 'textInput');
     taskName.setAttribute('placeholder', 'Task name');
     taskName.setAttribute('contenteditable', 'true');
+    taskName.dataset.inputType = 'taskName';
 
     return taskName;
 }
