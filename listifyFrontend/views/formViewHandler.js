@@ -85,9 +85,47 @@ function gatherTextInput(e){
 formElements.taskName.addEventListener('blur', gatherTextInput);
 formElements.description.addEventListener('blur', gatherTextInput);
 
-/*let regPriorityButtons = formElements.priority.querySelectorAll('.regPriorityButton');
-regPriorityButtons.forEach((el) =>{
-    el.addEventListener
-})*/
+formElements.estTime.querySelectorAll('input').forEach((el)=>{
+    el.addEventListener('keydown', (e)=>{
+        if(e.code == "Minus"){
+            e.preventDefault();
+        }
+    })
+    el.addEventListener('paste', (e)=>{
+        let pastedDatas = e.clipboardData.getData('text/plain');
+        let currVal = e.target.value;
+        let highlightedStr = '';
+        let newVal = '';
+        while(pastedDatas.indexOf('-') != -1){        
+            pastedDatas = pastedDatas.replace('-','');
+        }
+        if (window.getSelection){
+            highlightedStr = window.getSelection();
+        }
+        else if (document.getSelection){
+            highlightedStr = document.getSelection();
+        }
+        else if (document.selection){
+            highlightedStr = document.selection.createRange().text;;
+        }
+        newVal = currVal.replace(highlightedStr, pastedDatas);
+        if(newVal.length > 3){
+            newVal = newVal.slice(0,3);
+        }
+        e.target.value = newVal;
+        e.preventDefault();
+    })
+    el.addEventListener('input', (e)=>{
+        if(e.target.value.length > 3){
+            e.target.value = e.target.value.slice(0,3);
+        }
+    })
+    el.addEventListener('blur', (e)=>{
+        if(e.target.value === ''){
+            e.target.value = '0';
+        }
+    })
+    })
+        
 
 }
