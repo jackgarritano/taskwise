@@ -4,6 +4,8 @@ import { onlyPasteText } from "../controller/formHandler";
 export {initForm};
 
 function initForm(){
+let highestUnavailable = 0;
+
 onlyPasteText();
 let formElements = renderForm();
 let allTasks = document.querySelector('.allTasks');
@@ -38,10 +40,25 @@ formElements.estTime.addEventListener('click', () => {
     }
 })
 
+function disableMaxPriority(maxDisabled){
+    highestUnavailable = maxDisabled;
+    let maxButtons = formElements.maxPriority.querySelectorAll('.priorityPicker');
+    maxButtons.forEach((el)=>{
+        if(el.dataset.number <= maxDisabled){
+            el.classList.add('dimmed');
+        }
+        else{
+            el.classList.remove('dimmed');
+        }
+    })
+
+}
+
 formElements.priority.addEventListener('click', (e) => {
     let priorityPicker = document.querySelectorAll('.priorityPickerHolder')[0];
     if(e.target.classList.contains('regPriorityButton')){
         formElements.priority.querySelector('input').setAttribute('value', e.target.dataset.number);
+        disableMaxPriority(e.target.dataset.number - 1);
         priorityPicker.classList.add('hidden');
     }
     else if(priorityPicker.classList.contains('hidden')){
@@ -51,7 +68,7 @@ formElements.priority.addEventListener('click', (e) => {
 })
 formElements.maxPriority.addEventListener('click', (e) => {
     let maxPriorityPicker = document.querySelectorAll('.priorityPickerHolder')[1];
-    if(e.target.classList.contains('maxPriorityButton')){
+    if(e.target.classList.contains('maxPriorityButton') && e.target.dataset.number > highestUnavailable){
         formElements.maxPriority.querySelector('input').setAttribute('value', e.target.dataset.number);
         maxPriorityPicker.classList.add('hidden');
     }

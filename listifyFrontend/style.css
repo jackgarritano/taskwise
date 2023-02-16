@@ -361,6 +361,7 @@ button{
 }
 .dimmed{
   filter:brightness(.5);
+  cursor:not-allowed;
 }
   /*top:100%;
   left:calc(50%);*/
