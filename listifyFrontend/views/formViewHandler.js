@@ -10,6 +10,7 @@ onlyPasteText();
 let formElements = renderForm();
 let allTasks = document.querySelector('.allTasks');
 allTasks.append(formElements.addForm);
+formElements.taskName.focus();
 renderCalendar(formElements.dueDate);
  
 
@@ -59,10 +60,10 @@ formElements.priority.addEventListener('click', (e) => {
     if(e.target.classList.contains('regPriorityButton')){
         formElements.priority.querySelector('input').setAttribute('value', e.target.dataset.number);
         disableMaxPriority(e.target.dataset.number - 1);
-        console.log("typeof pri number: " + typeof e.target.dataset.number);
         if(e.target.dataset.number > document.querySelector('input[name="maxPriInput"]').value){
             document.querySelector('input[name="maxPriInput"]').value = e.target.dataset.number;
         }
+        checkIfAddAllowed();
         priorityPicker.classList.add('hidden');
     }
     else if(priorityPicker.classList.contains('hidden')){
@@ -106,14 +107,35 @@ function closePopupListener(e){
     document.addEventListener('click', closePopup, true)
 }
 
-function gatherTextInput(e){
-    let input = e.target.innerText;
-    let inputField = document.querySelector(`#${e.target.dataset.inputType}`);
+function gatherTitleInput(){
+    let modifiedElement = formElements.taskName;
+    let input = modifiedElement.innerText.replace(/\n/g, '');
+    let inputField = document.querySelector(`#${modifiedElement.dataset.inputType}`);
+    inputField.setAttribute('value', input);
+    checkIfAddAllowed();
+}
+function gatherDescInput(){
+    let modifiedElement = formElements.description;
+    let input = modifiedElement.innerText.replace(/\n/g, '');
+    let inputField = document.querySelector(`#${modifiedElement.dataset.inputType}`);
     inputField.setAttribute('value', input);
 }
+function checkIfAddAllowed(){
+    if(document.querySelector('input[name=taskName]').value != '' && document.querySelector('input[name=priInput]').value != ''){
+        formElements.addTask.classList.remove('dimmed');
+    }
+    else{
+        formElements.addTask.classList.add('dimmed');
+    }
+}
+const titleObserver = new MutationObserver(gatherTitleInput);
+titleObserver.observe(formElements.taskName, {characterData: true, subtree: true});
+const descObserver = new MutationObserver(gatherDescInput);
+descObserver.observe(formElements.description, {characterData: true, subtree: true});
 
-formElements.taskName.addEventListener('blur', gatherTextInput);
-formElements.description.addEventListener('blur', gatherTextInput);
+/*formElements.taskName.addEventListener('blur', gatherTextInput);
+formElements.taskName.addEventListener('blur', checkIfAddAllowed);
+formElements.description.addEventListener('blur', gatherTextInput);*/
 
 formElements.estTime.querySelectorAll('input').forEach((el)=>{
     el.addEventListener('keydown', (e)=>{

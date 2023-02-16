@@ -360,7 +360,7 @@ button{
   z-index:-1;
 }
 .dimmed{
-  filter:brightness(.5);
+  color:#4c4c4e;
   cursor:not-allowed;
 }
   /*top:100%;

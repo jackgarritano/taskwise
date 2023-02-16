@@ -85,7 +85,7 @@ function renderAddTask(){
     let addTask = document.createElement('button');
     let textSpan = document.createElement('span');
 
-    addTask.classList.add('addTask', 'selectable');
+    addTask.classList.add('addTask', 'selectable', 'dimmed');
     textSpan.textContent = 'Add';
 
     addTask.append(textSpan);
