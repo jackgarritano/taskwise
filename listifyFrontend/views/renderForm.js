@@ -17,6 +17,7 @@ function renderForm(){
     let taskName = renderTaskName();
     let taskNameInput = renderTaskNameInput();
     let taskNameLabel = renderTaskNameLabel();
+    let errorMessage = renderErrorMessage();
 
     let rightSideButtons = document.createElement('div');
     let options = document.createElement('div');
@@ -57,6 +58,7 @@ function renderForm(){
     addForm.append(descriptionInput);
     addForm.append(description);
     addForm.append(bottomButtons);
+    addForm.append(errorMessage);
 
     return {
         addTask,
@@ -75,6 +77,7 @@ function renderForm(){
         options,
         bottomButtons,
         addForm,
+        errorMessage,
     }
 }
 
@@ -302,6 +305,7 @@ function renderTaskNameInput(){
     taskNameInput.setAttribute('type', 'hidden');
     taskNameInput.setAttribute('id', 'taskName');
     taskNameInput.setAttribute('name', 'taskName');
+    taskNameInput.setAttribute('required', 'true');
 
     return taskNameInput;
 }
@@ -313,4 +317,11 @@ function renderTaskNameLabel(){
     taskNameLabel.textContent = 'Title';
 
     return taskNameLabel;
+}
+function renderErrorMessage(){
+    let errorMessage = document.createElement('div');
+    errorMessage.classList.add('errorMessage', 'under');
+    errorMessage.textContent = 'temp';
+
+    return errorMessage;
 }

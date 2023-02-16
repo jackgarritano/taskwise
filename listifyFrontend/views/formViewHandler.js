@@ -9,6 +9,15 @@ let formElements = renderForm();
 let allTasks = document.querySelector('.allTasks');
 allTasks.append(formElements.addForm);
 renderCalendar(formElements.dueDate);
+ 
+
+function horizCenterPopups(){
+    for(let i=0; i<arguments.length; i++){
+        arguments[i].style.left = `calc(50% - ${arguments[i].clientWidth}px / 2)`;
+    }
+}
+horizCenterPopups(formElements.errorMessage);
+hideErrorMessage();
 
 formElements.dueDate.addEventListener('click', (e) => {
     let calendarHolder = document.querySelector('.calendarHolder')
@@ -127,5 +136,12 @@ formElements.estTime.querySelectorAll('input').forEach((el)=>{
     })
     })
         
-
+    function showErrorMessage(message){
+        formElements.errorMessage.textContent = message;
+        horizCenterPopups(formElements.errorMessage);
+        formElements.errorMessage.style.top = '100%';
+    }
+    function hideErrorMessage(){
+        formElements.errorMessage.style.top = `calc(100% - ${formElements.errorMessage.clientHeight}px)`;
+    }
 }

@@ -205,6 +205,7 @@ body{
   color:#97989D;
   line-height: 18px;
   font-size:13px;
+  position:relative;
 }
 .textInput{
   background-color: #303136;
@@ -349,6 +350,21 @@ button{
   padding-left:3px;
   padding-right:3px;
 }
+.errorMessage{
+  border-radius: 5px;
+  background-color: #640303;
+  padding:3px;
+  position:absolute;
+  transition: top .35s;
+  transition-timing-function: ease-out;
+  z-index:-1;
+}
+.dimmed{
+  filter:brightness(.5);
+}
+  /*top:100%;
+  left:calc(50%);*/
+
 /*end of form styling*/
 /*beginning of time picker styling*/
 .timePickerHolder{
