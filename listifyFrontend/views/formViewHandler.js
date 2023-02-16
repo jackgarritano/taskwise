@@ -59,6 +59,10 @@ formElements.priority.addEventListener('click', (e) => {
     if(e.target.classList.contains('regPriorityButton')){
         formElements.priority.querySelector('input').setAttribute('value', e.target.dataset.number);
         disableMaxPriority(e.target.dataset.number - 1);
+        console.log("typeof pri number: " + typeof e.target.dataset.number);
+        if(e.target.dataset.number > document.querySelector('input[name="maxPriInput"]').value){
+            document.querySelector('input[name="maxPriInput"]').value = e.target.dataset.number;
+        }
         priorityPicker.classList.add('hidden');
     }
     else if(priorityPicker.classList.contains('hidden')){

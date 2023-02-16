@@ -251,7 +251,7 @@ button{
   background-color: #303136;
   color:#97989D;
 }
-.selectable:hover{
+.selectable:hover:not(.dimmed){
   background-color: #41444A;
   cursor: pointer;
 }
