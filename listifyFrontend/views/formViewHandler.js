@@ -5,6 +5,7 @@ export {initForm};
 
 function initForm(){
 let highestUnavailable = 0;
+let errIsVisible = false;
 
 onlyPasteText();
 let formElements = renderForm();
@@ -60,7 +61,8 @@ formElements.priority.addEventListener('click', (e) => {
     if(e.target.classList.contains('regPriorityButton')){
         formElements.priority.querySelector('input').setAttribute('value', e.target.dataset.number);
         disableMaxPriority(e.target.dataset.number - 1);
-        if(e.target.dataset.number > document.querySelector('input[name="maxPriInput"]').value){
+        if(document.querySelector('input[name="maxPriInput"]').value != '' &&
+        e.target.dataset.number > document.querySelector('input[name="maxPriInput"]').value){
             document.querySelector('input[name="maxPriInput"]').value = e.target.dataset.number;
         }
         checkIfAddAllowed();
@@ -121,21 +123,32 @@ function gatherDescInput(){
     inputField.setAttribute('value', input);
 }
 function checkIfAddAllowed(){
-    if(document.querySelector('input[name=taskName]').value != '' && document.querySelector('input[name=priInput]').value != ''){
+    if(document.querySelector('input[name=taskName]').value != '' &&
+     document.querySelector('input[name=priInput]').value != '' &&
+     (formElements.dueDate.querySelector('input[name=dateInput]').value != '' ||
+     formElements.maxPriority.querySelector('input[name=maxPriInput]').value == '')){
         formElements.addTask.classList.remove('dimmed');
     }
     else{
         formElements.addTask.classList.add('dimmed');
     }
 }
+function checkOnValueMutation(mutations){
+    mutations.forEach((el)=>{
+        if (el.type === 'attributes' && el.attributeName === 'value'){
+            checkIfAddAllowed();
+        }
+    })
+}
 const titleObserver = new MutationObserver(gatherTitleInput);
 titleObserver.observe(formElements.taskName, {characterData: true, subtree: true});
 const descObserver = new MutationObserver(gatherDescInput);
 descObserver.observe(formElements.description, {characterData: true, subtree: true});
 
-/*formElements.taskName.addEventListener('blur', gatherTextInput);
-formElements.taskName.addEventListener('blur', checkIfAddAllowed);
-formElements.description.addEventListener('blur', gatherTextInput);*/
+const valueObserver =  new MutationObserver(checkOnValueMutation);
+valueObserver.observe(formElements.dueDate.querySelector('input[name=dateInput]'), {attributes: true});
+valueObserver.observe(formElements.maxPriority.querySelector('input[name=maxPriInput]'), {attributes: true});
+
 
 formElements.estTime.querySelectorAll('input').forEach((el)=>{
     el.addEventListener('keydown', (e)=>{
@@ -187,4 +200,33 @@ formElements.estTime.querySelectorAll('input').forEach((el)=>{
     function hideErrorMessage(){
         formElements.errorMessage.style.top = `calc(100% - ${formElements.errorMessage.clientHeight}px)`;
     }
+    function getErrorMessage(){
+        let firstMessage = true;
+        let message = '';
+        if(document.querySelector('input[name=taskName]').value == ''){
+            message += "Task name is required";
+            firstMessage = false;
+        }
+        if(formElements.priority.querySelector('input[name=priInput]').value == ''){
+            if(!firstMessage){
+                message += ', ';
+            }
+            message += 'Priority is required';
+        }
+        if(formElements.dueDate.querySelector('input[name=dateInput]').value == '' &&
+        formElements.maxPriority.querySelector('input[name=maxPriInput]').value != ''){
+            if(!firstMessage){
+                message += ', ';
+            }
+            message += 'Date is required to use Max. Priority';
+        }
+        return message;
+    }
+    function addTaskHoverErr(e){
+        if(e.target.classList.contains('dimmed')){
+            showErrorMessage(getErrorMessage());
+        }
+    }
+    formElements.addTask.addEventListener('mouseover', addTaskHoverErr);
+    document.addEventListener('click', hideErrorMessage);
 }
