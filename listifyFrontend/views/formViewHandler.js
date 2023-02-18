@@ -1,6 +1,7 @@
 import { renderForm } from "./renderForm";
 import { clearCal, renderCalendar } from "./calendar";
-import { onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked, observeTextFields} from "../controller/formHandler";
+import { onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
+    observeTextFields, validateTimeInputs, getErrorMessage, formSubmission} from "../controller/formHandler";
 export {initForm};
 
 function initForm(){
@@ -126,96 +127,29 @@ const valueObserver =  new MutationObserver(checkOnValueMutation);
 valueObserver.observe(formElements.dueDate.querySelector('input[name=dateInput]'), {attributes: true});
 valueObserver.observe(formElements.maxPriority.querySelector('input[name=maxPriInput]'), {attributes: true});
 
-
 formElements.estTime.querySelectorAll('input').forEach((el)=>{
-    el.addEventListener('keydown', (e)=>{
-        if(e.code == "Minus"){
-            e.preventDefault();
-        }
-    })
-    el.addEventListener('paste', (e)=>{     //entire thing is controller
-        let pastedDatas = e.clipboardData.getData('text/plain');
-        let currVal = e.target.value;
-        let highlightedStr = '';
-        let newVal = '';
-        while(pastedDatas.indexOf('-') != -1){        
-            pastedDatas = pastedDatas.replace('-','');
-        }
-        if (window.getSelection){
-            highlightedStr = window.getSelection();
-        }
-        else if (document.getSelection){
-            highlightedStr = document.getSelection();
-        }
-        else if (document.selection){
-            highlightedStr = document.selection.createRange().text;;
-        }
-        newVal = currVal.replace(highlightedStr, pastedDatas);
-        if(newVal.length > 3){
-            newVal = newVal.slice(0,3);
-        }
-        e.target.value = newVal;
-        e.preventDefault();
-    })
-    el.addEventListener('input', (e)=>{
-        if(e.target.value.length > 3){
-            e.target.value = e.target.value.slice(0,3);
-        }
-    })
-    el.addEventListener('blur', (e)=>{
-        if(e.target.value === ''){
-            e.target.value = '0';
-        }
-    })
-    })
-        
-    function showErrorMessage(message){
-        formElements.errorMessage.textContent = message;
-        horizCenterPopups(formElements.errorMessage);
-        formElements.errorMessage.style.top = '100%';
-    }
-    function hideErrorMessage(){
-        formElements.errorMessage.style.top = `calc(100% - ${formElements.errorMessage.clientHeight}px)`;
-    }
-    function getErrorMessage(){     //controller
-        let firstMessage = true;
-        let message = '';
-        if(document.querySelector('input[name=taskName]').value == ''){
-            message += "Task name is required";
-            firstMessage = false;
-        }
-        if(formElements.priority.querySelector('input[name=priInput]').value == ''){
-            if(!firstMessage){
-                message += ', ';
-            }
-            message += 'Priority is required';
-            firstMessage = false;
-        }
-        if(formElements.dueDate.querySelector('input[name=dateInput]').value == '' &&
-        formElements.maxPriority.querySelector('input[name=maxPriInput]').value != ''){
-            if(!firstMessage){
-                message += ', ';
-            }
-            message += 'Date is required to use Max. Priority';
-            firstMessage = false;
-        }
-        return message;
-    }
-    function addTaskHoverErr(e){
-        if(e.target.classList.contains('dimmed')){
-            showErrorMessage(getErrorMessage());
-        }
-    }
-    formElements.addTask.addEventListener('mouseover', addTaskHoverErr);
-    document.addEventListener('click', hideErrorMessage);
+    validateTimeInputs(el);
+})
 
-    function formSubmission(e){     //controller
-        if(formElements.addTask.classList.contains('dimmed')){
-            e.preventDefault();
-        }
-        else{
+function showErrorMessage(message){
+    formElements.errorMessage.textContent = message;
+    horizCenterPopups(formElements.errorMessage);
+    formElements.errorMessage.style.top = '100%';
+}
 
-        }
+function hideErrorMessage(){
+    formElements.errorMessage.style.top = `calc(100% - ${formElements.errorMessage.clientHeight}px)`;
+}
+
+function addTaskHoverErr(e){
+    if(e.target.classList.contains('dimmed')){
+        showErrorMessage(getErrorMessage());
     }
-    formElements.addForm.addEventListener('submit', formSubmission);
+}
+
+formElements.addTask.addEventListener('mouseover', addTaskHoverErr);
+
+document.addEventListener('click', hideErrorMessage);
+
+formElements.addForm.addEventListener('submit', formSubmission);
 }
