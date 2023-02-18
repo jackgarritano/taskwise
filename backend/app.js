@@ -75,7 +75,6 @@ function findSwitchTimes(task) {
         switchTimes.push(nextInterval.toJSON())
     }
     return switchTimes
-
 }
 
 

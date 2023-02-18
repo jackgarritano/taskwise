@@ -134,8 +134,56 @@ function getErrorMessage(){
 
 function formSubmission(e){
   if(document.querySelector('.addTask').classList.contains('dimmed')){
-      e.preventDefault();
+    e.preventDefault();
   }
   else{
+    let task = constructTask();
+    console.log(task);
+    e.preventDefault();
   }
+
+function taskFactory(name, desc, due, priority, maxPriority, estimatedTime){
+  let task = {name, desc, due, priority, maxPriority, estimatedTime};
+  let switchTimes = {};
+  if(maxPriority != ''){
+    switchTimes = findSwitchTimes(task);
+  }
+  task.switchTimes = switchTimes;
+  return task;
+}
+
+function findSwitchTimes(task) {
+  let intervals = parseInt(task.maxPriority) - parseInt(task.priority);
+  if (intervals == 0) {             //no intervals means priority doesn't switch
+      return null;
+  }
+  let due = new Date(task.due);
+  let dueMS = due.getTime();           //due date in milliseconds (date object)
+  let today = new Date();          //current time in iso format
+  let currentMS = today.getTime();     //current time in milliseconds
+  let estimatedTime = task.estimatedTime;
+  if (estimatedTime < 86400000) {   //ensures that highest priority will be reached a minimum of a day before due
+      estimatedTime = 86400000;
+  }
+  let lastSwitch = dueMS - estimatedTime;
+  let intervalTime = (lastSwitch - currentMS) / intervals;
+  let switchTimes = [];
+  for (let i = 1; i <= intervals; i++) {    //calculates each intervalTime and adds it to the array
+      let nextInterval = new Date(currentMS + (intervalTime * i));
+      switchTimes.push(nextInterval.toJSON());
+  }
+  return switchTimes
+}
+
+function constructTask(){
+  let name = document.querySelector('input[name=taskName]').value;
+  let desc = document.querySelector('input[name=taskDesc]').value;
+  let due = document.querySelector('input[name=dateInput]').value;
+  let priority = document.querySelector('input[name=priInput]').value;
+  let maxPriority = document.querySelector('input[name=maxPriInput]').value;
+  let estimatedTime = document.querySelector('input[name=estTimeInput]').value;
+
+  let task = taskFactory(name, desc, due, priority, maxPriority, estimatedTime);
+  return task;
+}
 }
