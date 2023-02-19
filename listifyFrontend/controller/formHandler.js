@@ -144,7 +144,7 @@ function formSubmission(e){
 
 function taskFactory(name, desc, due, priority, maxPriority, estimatedTime){
   let task = {name, desc, due, priority, maxPriority, estimatedTime};
-  let switchTimes = {};
+  let switchTimes = [];
   if(maxPriority != ''){
     switchTimes = findSwitchTimes(task);
   }

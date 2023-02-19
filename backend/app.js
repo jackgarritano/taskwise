@@ -33,7 +33,7 @@ Necessary help functions:
 */
 var user1
 async function addTask() {
-    const uri = "mongodb+srv://admin:108642@mflix.5cbzlet.mongodb.net/?retryWrites=true&w=majority"
+    const uri = "mongodb+srv://admin:PASSWORD@mflix.5cbzlet.mongodb.net/?retryWrites=true&w=majority"
 
     const client = new MongoClient(uri)
     console.log("connecting to database")
