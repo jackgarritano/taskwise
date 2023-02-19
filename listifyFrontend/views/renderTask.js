@@ -1,32 +1,98 @@
 export {renderTask};
 
 function renderTask(taskObj){
-    let estTime = renderEstTime('1 hr');
-    let dueDate = renderDueDate('March 18');
-    let priBar = renderPriBar(3, 8);
-    let description = renderDescription('this is an example task');
+    let numLines = 0;
+    let estTime = renderEstTime('4 min');
+    let dueDate = renderDueDate('feb 5');
+    let priBar = renderPriBar(2, '');
+    let description = renderDescription('this is a desc');
     let title = renderTitle('Example task');
     let checkCircle = renderCheckCircle();
 
     let task = document.createElement('div');
-    //let visibleTask = document.createElement('div');
     let checkContainer = document.createElement('div');
     let infoContainer = document.createElement('div');
     let topRow = document.createElement('div');
     let nextRow = document.createElement('div');
     let bottomRow = document.createElement('div');
-    //let moveIcon = document.createElement('div');
 
     task.classList.add('task');
-    //visibleTask.classList.add('visibleTask');
     checkContainer.classList.add('checkContainer');
     infoContainer.classList.add('infoContainer');
     topRow.classList.add('row', 'topRow');
 
-    if(description.textContent == ''){
+    console.log('dueDate: ' + dueDate.textContent);
+    console.log('description: ' + description.textContent);
+    console.log('estTime: ' + estTime.textContent);
+        if(description.textContent != '' && dueDate.textContent != ''){
+        numLines = 3;
+        console.log('assigned to 3');
+    }
+    else if(dueDate.textContent == '' && description.textContent == '' && estTime.textContent == ''){
+        numLines = 1;
+        console.log('assigned to 1');
+    }
+    else{
+        console.log('assigned to 2');
+        numLines = 2;
+    }
+
+    if(numLines == 1){
+        console.log(numLines);
+        topRow.classList.add('row', 'topRow', 'bottomRow');
+        topRow.append(title);
+        topRow.append(priBar);
+
+        infoContainer.append(topRow);
+    }
+    else if(numLines == 2){
+        console.log(numLines);
+        topRow.classList.add('row', 'topRow');
+        nextRow.classList.add('row', 'bottomRow');
+        bottomRow = null;
+
+        topRow.append(title);
+        topRow.append(priBar);
+        if(dueDate.textContent != ''){
+            nextRow.append(dueDate);
+        }
+        if(description.textContent != ''){
+            nextRow.append(description);
+        }
+        if(estTime.textContent != ''){
+            nextRow.append(estTime);
+        }
+
+        infoContainer.append(topRow);
+        infoContainer.append(nextRow);
+    }
+    else{
+        console.log(numLines);
+        topRow.classList.add('row', 'topRow');
+        nextRow.classList.add('row', 'middleRow');
+        bottomRow.classList.add('row', 'bottomRow');
+
+        topRow.append(title);
+        nextRow.append(description);
+        nextRow.append(priBar);
+        if(dueDate.textContent != ''){
+            bottomRow.append(dueDate);
+        }
+        if(estTime.textContent != ''){
+            bottomRow.append(estTime);
+        }
+
+        infoContainer.append(topRow);
+        infoContainer.append(nextRow);
+        infoContainer.append(bottomRow);
+    }
+
+    /*if(description.textContent == ''){
         nextRow.classList.add('row', 'bottomRow');
         nextRow.append(dueDate);
         nextRow.append(estTime);
+        topRow.append(title);
+        topRow.append(priBar);
         bottomRow = null;
     }
     else{
@@ -37,18 +103,16 @@ function renderTask(taskObj){
         bottomRow.append(estTime);
         nextRow.append(description);
         nextRow.append(priBar);
+        topRow.append(title);
     }
-    topRow.append(title);
     infoContainer.append(topRow);
     infoContainer.append(nextRow);
     if(bottomRow){
         infoContainer.append(bottomRow);
-    }
+    }*/
     checkContainer.append(checkCircle);
     task.append(checkContainer);
     task.append(infoContainer);
-    //task.append(moveIcon);
-    //task.append(visibleTask);
     
     document.querySelector('.allTasks').append(task);
 }
@@ -89,34 +153,33 @@ function renderDueDate(dateDue){
 
 function renderPriBar(priority, maxPriority){
     let taskPri = document.createElement('div');
-    let priBar = document.createElement('div');
     let priLogo = document.createElement('img');
     let priSpan = document.createElement('span');
-    let priCubes = [];
-    for(let i=1; i<=maxPriority; i++){
-        let cube = document.createElement('div');
-        cube.classList.add('priCube');
-        if(i<=priority){
-            cube.classList.add('filled');
-        }
-        else{
-            cube.classList.add('empty');
-        }
-        cube.dataset.number = i;
-        priCubes.push(cube);
-    }
+
+    
 
     taskPri.classList.add('taskPri');
-    priBar.classList.add('priBar');
     priLogo.classList.add('priLogo');
     priLogo.setAttribute('src', 'assets/priLogo.svg');
 
     priSpan.textContent = priority;
-
-    priCubes.forEach((el)=>{
-        priBar.append(el);
-    })
-    taskPri.append(priBar);
+    if(maxPriority != ''){
+        let priBar = document.createElement('div');
+        for(let i=1; i<=maxPriority; i++){
+            let cube = document.createElement('div');
+            cube.classList.add('priCube');
+            if(i<=priority){
+                cube.classList.add('filled');
+            }
+            else{
+                cube.classList.add('empty');
+            }
+            cube.dataset.number = i;
+            priBar.append(cube);
+        }
+        priBar.classList.add('priBar');
+        taskPri.append(priBar);
+    }
     taskPri.append(priSpan);
     taskPri.append(priLogo);
     

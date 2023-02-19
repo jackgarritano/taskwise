@@ -426,7 +426,7 @@ button{
   height:20px;
   border-radius: 50%;
   border:#18191C 1px solid;
-  margin-top: 10px;
+  margin-top: 7px;
   margin-right: 10px;
   background-color: #303136;
 }
@@ -480,6 +480,7 @@ button{
 .taskEstTime{
   display:flex;
   align-items: center;
+  margin-left:auto;
 }
 .row{
   display:flex;
@@ -491,7 +492,7 @@ button{
 }
 .middleRow{
   display:flex;
-  align-items: center;
+  align-items:center;
 }
 .bottomRow{
   padding-bottom:8px;
