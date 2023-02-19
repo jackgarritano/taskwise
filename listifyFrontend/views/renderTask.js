@@ -21,17 +21,17 @@ function renderTask(taskObj){
     //visibleTask.classList.add('visibleTask');
     checkContainer.classList.add('checkContainer');
     infoContainer.classList.add('infoContainer');
-    topRow.classList.add('row');
+    topRow.classList.add('row', 'topRow');
 
     if(description.textContent == ''){
-        nextRow.classList.add('bottomRow');
+        nextRow.classList.add('row', 'bottomRow');
         nextRow.append(dueDate);
         nextRow.append(estTime);
         bottomRow = null;
     }
     else{
-        nextRow.classList.add('middleRow');
-        bottomRow.classList.add('bottomRow');
+        nextRow.classList.add('row', 'middleRow');
+        bottomRow.classList.add('row', 'bottomRow');
 
         bottomRow.append(dueDate);
         bottomRow.append(estTime);

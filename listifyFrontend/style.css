@@ -189,14 +189,22 @@ body{
 /*end of calendar styling*/
 
 /*beginning of form styling*/
-.allTasks{
+body{
   width:100%;
   display:flex;
   align-items: center;
   flex-direction: column;
 }
-.addForm{
+.allTasks{
+  /*width:100%;*/
   width:min(50%, 700px);
+  display:flex;
+  flex-direction: column;
+  border-bottom:#44464C 3px solid;
+}
+.addForm{
+  /*width:min(50%, 700px);*/
+  width:100%;
   display:flex;
   flex-direction: column;
   justify-content: space-around;
@@ -403,7 +411,67 @@ button{
 /*end of priority picker styling*/
 /*beginning of task styling*/
 .task{
-  width:min(50%, 700px);
+  /*width:min(50%, 700px);*/
+  width:100%;
+  border-top:#44464C 3px solid;
+  display:flex;
+  font-size:13px;
+  color:#FFFFFF;
+}
+.checkCircle{
+  width:20px;
+  height:20px;
+  border-radius: 50%;
+  border:#18191C 1px solid;
+  margin-top: 10px;
+  margin-right: 10px;
+  background-color: #303136;
+}
+.infoContainer{
+  width:100%;
+}
+.taskTitle{
+  display:inline-block;
+  font-size:15px;
+}
+.taskDescription{
+  display:inline-block;
+  color:#97989D;
+}
+.taskPri{
+  display:inline-block;
+}
+.priBar{
+  display:inline-flex;
+}
+.priCube{
+  display:inline-block;
+  /*border: #18191C 1px solid;*/
+  box-shadow: 
+  1px 0 0 0 #18191C, 
+  0 1px 0 0 #18191C, 
+  1px 1px 0 0 #18191C,   /* Just to fix the corner */
+  1px 0 0 0 #18191C inset, 
+  0 1px 0 0 #18191C inset;
+  width:10px;
+  height:16px;
+}
+.filled{
+  background-color: #303136;
+}
+.taskDueDate{
+  display:inline-block;
+  color:#48BFE3;
+}
+.taskEstTime{
+  display:inline-block;
+}
+.row{
+  display:flex;
+  justify-content: space-between;
+}
+.topRow{
+  margin-top:9px;
 }
 /*end of task styling*/
 
