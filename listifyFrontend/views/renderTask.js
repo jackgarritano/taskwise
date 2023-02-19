@@ -1,7 +1,56 @@
 export {renderTask};
 
-function renderTask(){
+function renderTask(taskObj){
+    let estTime = renderEstTime('1 hr');
+    let dueDate = renderDueDate('March 18');
+    let priBar = renderPriBar(3, 8);
+    let description = renderDescription('this is an example task');
+    let title = renderTitle('Example task');
+    let checkCircle = renderCheckCircle();
 
+    let task = document.createElement('div');
+    //let visibleTask = document.createElement('div');
+    let checkContainer = document.createElement('div');
+    let infoContainer = document.createElement('div');
+    let topRow = document.createElement('div');
+    let nextRow = document.createElement('div');
+    let bottomRow = document.createElement('div');
+    //let moveIcon = document.createElement('div');
+
+    task.classList.add('task');
+    //visibleTask.classList.add('visibleTask');
+    checkContainer.classList.add('checkContainer');
+    infoContainer.classList.add('infoContainer');
+    topRow.classList.add('row');
+
+    if(description.textContent == ''){
+        nextRow.classList.add('bottomRow');
+        nextRow.append(dueDate);
+        nextRow.append(estTime);
+        bottomRow = null;
+    }
+    else{
+        nextRow.classList.add('middleRow');
+        bottomRow.classList.add('bottomRow');
+
+        bottomRow.append(dueDate);
+        bottomRow.append(estTime);
+        nextRow.append(description);
+        nextRow.append(priBar);
+    }
+    topRow.append(title);
+    infoContainer.append(topRow);
+    infoContainer.append(nextRow);
+    if(bottomRow){
+        infoContainer.append(bottomRow);
+    }
+    checkContainer.append(checkCircle);
+    task.append(checkContainer);
+    task.append(infoContainer);
+    //task.append(moveIcon);
+    //task.append(visibleTask);
+    
+    document.querySelector('.allTasks').append(task);
 }
 
 function renderEstTime(timeEst){
@@ -30,7 +79,7 @@ function renderDueDate(dateDue){
     calLogo.classList.add('calLogo');
     calLogo.setAttribute('src', 'assets/calLogo.svg');
 
-    dateSpan.textContent = dueDate;
+    dateSpan.textContent = dateDue;
 
     dueDate.append(calLogo);
     dueDate.append(dateSpan);
@@ -78,12 +127,12 @@ function renderDescription(description){
     let taskDescription = document.createElement('div');
     let descSpan = document.createElement('span');
 
-    taskDesc.classList.add('taskDescription');
+    taskDescription.classList.add('taskDescription');
     descSpan.textContent = description;
 
-    taskDesc.append(descSpan);
+    taskDescription.append(descSpan);
 
-    return taskDesc;
+    return taskDescription;
 }
 
 function renderTitle(title){

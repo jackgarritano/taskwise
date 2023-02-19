@@ -5,6 +5,7 @@ import { renderCalendar } from './views/calendar';
 import { onlyPasteText } from './controller/formHandler';
 import { renderForm } from './views/renderForm';
 import { initForm } from './views/formViewHandler';
+import { renderTask } from './views/renderTask';
 
 /*sortOnLoad().then((task) => {
     console.log(JSON.stringify(task));
@@ -19,3 +20,4 @@ allTasks.append(formElements.addForm);
 renderCalendar(formElements.dueDate);*/
 
 initForm();
+renderTask();

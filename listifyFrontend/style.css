@@ -192,7 +192,8 @@ body{
 .allTasks{
   width:100%;
   display:flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .addForm{
   width:min(50%, 700px);
@@ -399,9 +400,12 @@ button{
 .priorityPicker{
   padding:2.5px;
 }
-
 /*end of priority picker styling*/
-
+/*beginning of task styling*/
+.task{
+  width:min(50%, 700px);
+}
+/*end of task styling*/
 
 .hidden{
   display:none;
