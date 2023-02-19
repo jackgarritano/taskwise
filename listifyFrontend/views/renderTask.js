@@ -76,7 +76,7 @@ function renderDueDate(dateDue){
     let dateSpan = document.createElement('span');
 
     dueDate.classList.add('taskDueDate');
-    calLogo.classList.add('calLogo');
+    calLogo.classList.add('calLogo', 'calLogoTask');
     calLogo.setAttribute('src', 'assets/calLogo.svg');
 
     dateSpan.textContent = dateDue;
@@ -117,9 +117,9 @@ function renderPriBar(priority, maxPriority){
         priBar.append(el);
     })
     taskPri.append(priBar);
-    taskPri.append(priLogo);
     taskPri.append(priSpan);
-
+    taskPri.append(priLogo);
+    
     return taskPri;
 }
 

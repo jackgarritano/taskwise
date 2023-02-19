@@ -169,7 +169,7 @@ function renderDueDate(){
     let textSpan = document.createElement('span');
 
     dueDate.classList.add('dueDate', 'selectable');
-    calLogo.classList.add('calLogo');
+    calLogo.classList.add('calLogo', 'calLogoForm');
     calLogo.setAttribute('src', 'assets/calLogo.svg');
     dueDateChoice.classList.add('dueDateChoice');
     textSpan.textContent = 'Date';

@@ -231,7 +231,7 @@ body{
 }
 .title{
   width:calc(100% - 20px);
-  margin-top:9px;
+  margin-top:10px;
   margin-left:10px;
   font-size: 15px;
   line-height: 14px;
@@ -296,6 +296,8 @@ button{
 .calLogo{
   width:14px;
   height:14px;
+}
+.calLogoForm{
   margin:3px;
 }
 .dueDateChoice{
@@ -417,6 +419,7 @@ button{
   display:flex;
   font-size:13px;
   color:#FFFFFF;
+  line-height: 14px;
 }
 .checkCircle{
   width:20px;
@@ -439,7 +442,8 @@ button{
   color:#97989D;
 }
 .taskPri{
-  display:inline-block;
+  display:flex;
+  align-items: center;
 }
 .priBar{
   display:inline-flex;
@@ -456,22 +460,41 @@ button{
   width:10px;
   height:16px;
 }
+.taskPri > span{
+  margin-left:4px;
+  /*margin-right:-3px;*/
+}
 .filled{
   background-color: #303136;
 }
 .taskDueDate{
-  display:inline-block;
+  display:flex;
+  align-items: center;
   color:#48BFE3;
 }
+.calLogoTask{
+  margin-right:3px;
+  margin-top:3px;
+  margin-bottom:3px;
+}
 .taskEstTime{
-  display:inline-block;
+  display:flex;
+  align-items: center;
 }
 .row{
   display:flex;
   justify-content: space-between;
 }
 .topRow{
-  margin-top:9px;
+  margin-top:10px;
+  padding-bottom: 2px;
+}
+.middleRow{
+  display:flex;
+  align-items: center;
+}
+.bottomRow{
+  padding-bottom:8px;
 }
 /*end of task styling*/
 
