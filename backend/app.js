@@ -2,8 +2,9 @@ const express = require('express')
 const { MongoClient } = require('mongodb')
 const { ObjectId } = require('mongodb')
 const { MongoError } = require('mongodb')
+const dotenv = require('dotenv');
+dotenv.config();
 const app = express()
-
 /*function Taska() {
     this.name = 'math homework',
         this.desc = '',
@@ -33,7 +34,7 @@ Necessary help functions:
 */
 var user1
 async function addTask() {
-    const uri = "mongodb+srv://admin:PASSWORD@mflix.5cbzlet.mongodb.net/?retryWrites=true&w=majority"
+    const uri = "mongodb+srv://admin:" + process.env.SECRET_KEY + "@mflix.5cbzlet.mongodb.net/?retryWrites=true&w=majority"
 
     const client = new MongoClient(uri)
     console.log("connecting to database")
@@ -92,7 +93,7 @@ function validate(req, res, next) {
 }
 
 //middleware to convert query string params into Task object
-function paramsToObject(req, res, next) {
+/*function paramsToObject(req, res, next) {
     const taskname = req.body.name
     const { desc } = req.body
     const { due } = req.body
@@ -199,7 +200,7 @@ async function addSubtask(req,res){
     console.log("subtask addSubtask error: " + e)
     throw new Error(e)
     }
-}
+}*/
 
 app.all('/', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -223,7 +224,7 @@ app.get('/', async (req, res) => {
 })
 
 //writes task to server and returns rich task to frontend
-app.post('/', [express.urlencoded({ extended: false }), paramsToObject], async (req, res) => {       
+/*app.post('/', [express.urlencoded({ extended: false })], async (req, res) => {       
     let { task } = req.body
     let {name, desc, due, priority, maxPriority, estimatedTime, tags, status, switchTimes} = task;
     try { 
@@ -237,7 +238,7 @@ app.post('/', [express.urlencoded({ extended: false }), paramsToObject], async (
 })
 
 //writes subtask to server underneath its associated task
-app.post('/subtask/:taskId', [express.urlencoded({ extended: false }), paramsToSubtask], async (req,res) =>{ 
+app.post('/subtask/:taskId', [express.urlencoded({ extended: false })], async (req,res) =>{ 
     let {taskId} = req.params
     try{
     let subtaskArray = await addSubtask(req,res)    //helper method extracts array of all subtasks for the given task then adds the new one, making necessary adjustments, and returns new array of subtasks
@@ -324,6 +325,6 @@ app.delete('/subtask/:taskId/:subtaskId', [express.urlencoded({ extended: false 
     catch(e){
         console.log("subtask delete error: " + e)
     }
-})
+})*/
 
 app.listen(3000, () => console.log('server listening on port 3000...'))

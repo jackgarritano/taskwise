@@ -27,24 +27,17 @@ function renderTask(taskObj){
     infoContainer.classList.add('infoContainer');
     topRow.classList.add('row', 'topRow');
 
-    console.log('dueDate: ' + dueDate.textContent);
-    console.log('description: ' + description.textContent);
-    console.log('estTime: ' + estTime.textContent);
-        if(description.textContent != '' && dueDate.textContent != ''){
-        numLines = 3;
-        console.log('assigned to 3');
+    if(description.textContent != '' && dueDate.textContent != ''){
+        numLines = 3;     
     }
     else if(dueDate.textContent == '' && description.textContent == '' && estTime.textContent == ''){
         numLines = 1;
-        console.log('assigned to 1');
     }
     else{
-        console.log('assigned to 2');
         numLines = 2;
     }
 
     if(numLines == 1){
-        console.log(numLines);
         topRow.classList.add('row', 'topRow', 'bottomRow');
         topRow.append(title);
         topRow.append(priBar);
@@ -52,7 +45,6 @@ function renderTask(taskObj){
         infoContainer.append(topRow);
     }
     else if(numLines == 2){
-        console.log(numLines);
         topRow.classList.add('row', 'topRow');
         nextRow.classList.add('row', 'bottomRow');
         bottomRow = null;

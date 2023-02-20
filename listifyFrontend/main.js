@@ -7,9 +7,13 @@ import { renderForm } from './views/renderForm';
 import { initForm } from './views/formViewHandler';
 import { renderTask } from './views/renderTask';
 
-/*sortOnLoad().then((task) => {
-    console.log(JSON.stringify(task));
-});*/
+
+initForm();
+sortOnLoad().then((task) => {
+    task.forEach((el)=>{
+        renderTask(el);
+    })
+});
 
 
 
@@ -19,5 +23,5 @@ let allTasks = document.querySelector('.allTasks');
 allTasks.append(formElements.addForm);
 renderCalendar(formElements.dueDate);*/
 
-initForm();
+//initForm();
 //renderTask();
