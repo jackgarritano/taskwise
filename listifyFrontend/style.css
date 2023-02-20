@@ -477,6 +477,12 @@ button{
   margin-top:3px;
   margin-bottom:3px;
 }
+.clockLogoTask{
+  margin-left:6px;
+}
+.priLogoTask{
+  margin-left:6px;
+}
 .taskEstTime{
   display:flex;
   align-items: center;

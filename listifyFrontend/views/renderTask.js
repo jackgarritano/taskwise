@@ -174,7 +174,7 @@ function renderEstTime(timeEst){
     let timeSpan = document.createElement('span');
 
     estTime.classList.add('taskEstTime');
-    clockLogo.classList.add('clockLogo');
+    clockLogo.classList.add('clockLogo', 'clockLogoTask');
     clockLogo.setAttribute('src', 'assets/clockLogo.svg');
 
     timeSpan.textContent = timeEst;
@@ -210,7 +210,7 @@ function renderPriBar(priority, maxPriority){
     
 
     taskPri.classList.add('taskPri');
-    priLogo.classList.add('priLogo');
+    priLogo.classList.add('priLogo', 'priLogoTask');
     priLogo.setAttribute('src', 'assets/priLogo.svg');
 
     priSpan.textContent = priority;
