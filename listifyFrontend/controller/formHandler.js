@@ -1,3 +1,4 @@
+import { renderTask } from "../views/renderTask";
 export {onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
   observeTextFields, validateTimeInputs, getErrorMessage, formSubmission};
 
@@ -137,9 +138,11 @@ function formSubmission(e){
     e.preventDefault();
   }
   else{
-    let task = constructTask();
-    console.log(task);
     e.preventDefault();
+    let task = constructTask();
+    //renderTask(task);
+    console.log(task);
+    
   }
 
 function taskFactory(name, desc, due, priority, maxPriority, estimatedTime){
@@ -181,9 +184,14 @@ function constructTask(){
   let due = document.querySelector('input[name=dateInput]').value;
   let priority = document.querySelector('input[name=priInput]').value;
   let maxPriority = document.querySelector('input[name=maxPriInput]').value;
-  let estimatedTime = document.querySelector('input[name=estTimeInput]').value;
-
-  let task = taskFactory(name, desc, due, priority, maxPriority, estimatedTime);
+  //let estimatedTime = document.querySelector('input[name=estTimeInput]').value;
+ let estimatedMins = document.querySelector('input[name=estMinutes').value;
+  let estimatedHours = document.querySelector('input[name=estHours').value;
+  let estimatedDays = document.querySelector('input[name=estDays').value;
+  console.log("estmins type: " + typeof estimatedMins);
+  let estmatedMs;
+  
+  let task = taskFactory(name, desc, due, priority, maxPriority, estimatedMins); //wrong:estimatedMins needs to be total ms b/w days, mins, hours
   return task;
 }
 }

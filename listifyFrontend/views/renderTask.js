@@ -1,6 +1,7 @@
 export {renderTask};
 
 function renderTask(taskObj){
+    let {name, desc, due, priority, maxPriority, estimatedTime, switchTimes} = taskObj;
     let numLines = 0;
     let estTime = renderEstTime('4 min');
     let dueDate = renderDueDate('feb 5');
