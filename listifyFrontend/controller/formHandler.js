@@ -169,11 +169,11 @@ function formSubmission(e){
     e.preventDefault();
   }
   else{
-    
+    e.preventDefault();
     let task = constructTask();
     renderTask(task);
     console.log(task);
-    e.preventDefault();
+    
   }
 
 function taskFactory(name, desc, due, priority, maxPriority, estimatedTime){

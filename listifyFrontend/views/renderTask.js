@@ -6,14 +6,14 @@ function renderTask(taskObj){
     let numLines = 0;
     name = cutOffStrings(name);
     desc = cutOffStrings(desc);
-    date = formatDate(date);
+    due = formatDate(due);
+    estimatedTime = formatTime(estimatedTime);
     let estTime = renderEstTime(estimatedTime);
     let dueDate = renderDueDate(due);
     let priBar = renderPriBar(priority, maxPriority);
     let description = renderDescription(desc);
     let title = renderTitle(name);
     let checkCircle = renderCheckCircle();
-
 
     let task = document.createElement('div');
     let checkContainer = document.createElement('div');
@@ -99,18 +99,66 @@ function renderTask(taskObj){
     document.querySelector('.allTasks').append(task);
 }
 
-function formatDate(date){
-    if(date == ''){
-        return date;
+function formatTime(ms){
+    let timeStr = '';
+    if(ms == ''){
+        return timeStr;
+    }
+    else if(ms >= 86400000){
+        let days = Math.floor(ms / 86400000);
+        let hrs = ms % 86400000;
+        hrs = Math.round(hrs / 3600000);
+        return formatDays(days) + ', ' + formatHours(hrs);
+    }
+    else if(ms >= 3600000){
+        let hrs = Math.round((ms * 10)/3600000) / 10;
+        return formatHours(hrs);
+    }
+    else{
+        let mins = Math.ceil(ms / 60000);
+        return formatMinutes(mins);
+    }
+}
+
+function formatMinutes(mins){
+    if(mins > 1){
+        return mins + ' mins';
+    }
+    else{
+        return mins + ' min';
+    }
+}
+
+function formatHours(hrs){
+    if(hrs > 1){
+        return hrs + ' hrs';
+    }
+    else{
+        return hrs + ' hr';
+    }
+}
+
+function formatDays(days){
+    if(days > 1){
+        return days + ' days';
+    }
+    else{
+        return days + ' day';
+    }
+}
+
+function formatDate(d){
+    if(d == ''){
+        return d;
     }
     let year = new Date().getFullYear();
-    let dateParts = due.split('/');
+    let dateParts = d.split('/');
     let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"];
-    due = months[parseInt(dateParts[0]) - 1] + ' ' +  dateParts[1];
+    d = months[parseInt(dateParts[0]) - 1] + ' ' +  dateParts[1];
     if(dateParts[2] != year){
-        due += " '" + dateParts[2].substring(2,4);
+        d += " '" + dateParts[2].substring(2,4);
     }
-    return date;
+    return d;
 }
 
 function cutOffStrings(str){
