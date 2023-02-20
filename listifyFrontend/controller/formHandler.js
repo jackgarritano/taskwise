@@ -45,6 +45,10 @@ function maxPriorityButtonClicked(target, highestUnavailable){
 function observeTextFields(checkIfAddAllowed){
   let taskName = document.querySelector('.title');
   let description = document.querySelector('.description');
+  let estimatedMins = document.querySelector('input[name=estMinutes');
+  let estimatedHours = document.querySelector('input[name=estHours');
+  let estimatedDays = document.querySelector('input[name=estDays');
+
   function gatherTitleInput(){
     let modifiedElement = taskName;
     let input = modifiedElement.innerText.replace(/\n/g, '');
@@ -60,10 +64,37 @@ function observeTextFields(checkIfAddAllowed){
     inputField.setAttribute('value', input);
   }
 
+  function gatherMinInput(){
+    let modifiedElement = estimatedMins;
+    let input = modifiedElement.innerText.replace(/\n/g, '');
+    let inputField = estimatedMins;
+    inputField.setAttribute('value', input);
+  }
+
+  function gatherHourInput(){
+    let modifiedElement = estimatedHours;
+    let input = modifiedElement.innerText.replace(/\n/g, '');
+    let inputField = estimatedHours;
+    inputField.setAttribute('value', input);
+  }
+
+  function gatherDayInput(){
+    let modifiedElement = estimatedDays;
+    let input = modifiedElement.innerText.replace(/\n/g, '');
+    let inputField = estimatedDays;
+    inputField.setAttribute('value', input);
+  }
+
   const titleObserver = new MutationObserver(gatherTitleInput);
   titleObserver.observe(taskName, {characterData: true, subtree: true});
   const descObserver = new MutationObserver(gatherDescInput);
   descObserver.observe(description, {characterData: true, subtree: true});
+  const minObserver = new MutationObserver(gatherMinInput);
+  minObserver.observe(estimatedMins, {characterData: true, subtree: true});
+  const hourObserver = new MutationObserver(gatherHourInput);
+  hourObserver.observe(estimatedHours, {characterData: true, subtree: true});
+  const dayObserver = new MutationObserver(gatherDayInput);
+  dayObserver.observe(estimatedDays, {characterData: true, subtree: true});
 }
 
 function validateTimeInputs(el){
@@ -185,7 +216,7 @@ function constructTask(){
   let priority = document.querySelector('input[name=priInput]').value;
   let maxPriority = document.querySelector('input[name=maxPriInput]').value;
   //let estimatedTime = document.querySelector('input[name=estTimeInput]').value;
- let estimatedMins = document.querySelector('input[name=estMinutes').value;
+  let estimatedMins = document.querySelector('input[name=estMinutes').value;
   let estimatedHours = document.querySelector('input[name=estHours').value;
   let estimatedDays = document.querySelector('input[name=estDays').value;
   console.log("estmins type: " + typeof estimatedMins);
