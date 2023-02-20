@@ -1,17 +1,19 @@
 export {renderTask};
-//todo: make title cut off after a certain point
-//make description cut off after a certain point
 //make date a better format
 //make time a better format
 function renderTask(taskObj){
     let {name, desc, due, priority, maxPriority, estimatedTime, switchTimes} = taskObj;
     let numLines = 0;
+    name = cutOffStrings(name);
+    desc = cutOffStrings(desc);
+    date = formatDate(date);
     let estTime = renderEstTime(estimatedTime);
     let dueDate = renderDueDate(due);
     let priBar = renderPriBar(priority, maxPriority);
     let description = renderDescription(desc);
     let title = renderTitle(name);
     let checkCircle = renderCheckCircle();
+
 
     let task = document.createElement('div');
     let checkContainer = document.createElement('div');
@@ -90,35 +92,32 @@ function renderTask(taskObj){
         infoContainer.append(nextRow);
         infoContainer.append(bottomRow);
     }
-
-    /*if(description.textContent == ''){
-        nextRow.classList.add('row', 'bottomRow');
-        nextRow.append(dueDate);
-        nextRow.append(estTime);
-        topRow.append(title);
-        topRow.append(priBar);
-        bottomRow = null;
-    }
-    else{
-        nextRow.classList.add('row', 'middleRow');
-        bottomRow.classList.add('row', 'bottomRow');
-
-        bottomRow.append(dueDate);
-        bottomRow.append(estTime);
-        nextRow.append(description);
-        nextRow.append(priBar);
-        topRow.append(title);
-    }
-    infoContainer.append(topRow);
-    infoContainer.append(nextRow);
-    if(bottomRow){
-        infoContainer.append(bottomRow);
-    }*/
     checkContainer.append(checkCircle);
     task.append(checkContainer);
     task.append(infoContainer);
     
     document.querySelector('.allTasks').append(task);
+}
+
+function formatDate(date){
+    if(date == ''){
+        return date;
+    }
+    let year = new Date().getFullYear();
+    let dateParts = due.split('/');
+    let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"];
+    due = months[parseInt(dateParts[0]) - 1] + ' ' +  dateParts[1];
+    if(dateParts[2] != year){
+        due += " '" + dateParts[2].substring(2,4);
+    }
+    return date;
+}
+
+function cutOffStrings(str){
+    if(str.length > 40){
+        str = str.substring(0,40) + '...';
+    }
+    return str;
 }
 
 function renderEstTime(timeEst){
