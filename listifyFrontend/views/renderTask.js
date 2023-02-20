@@ -1,13 +1,16 @@
 export {renderTask};
-
+//todo: make title cut off after a certain point
+//make description cut off after a certain point
+//make date a better format
+//make time a better format
 function renderTask(taskObj){
     let {name, desc, due, priority, maxPriority, estimatedTime, switchTimes} = taskObj;
     let numLines = 0;
-    let estTime = renderEstTime('4 min');
-    let dueDate = renderDueDate('feb 5');
-    let priBar = renderPriBar(2, '');
-    let description = renderDescription('this is a desc');
-    let title = renderTitle('Example task');
+    let estTime = renderEstTime(estimatedTime);
+    let dueDate = renderDueDate(due);
+    let priBar = renderPriBar(priority, maxPriority);
+    let description = renderDescription(desc);
+    let title = renderTitle(name);
     let checkCircle = renderCheckCircle();
 
     let task = document.createElement('div');

@@ -171,7 +171,7 @@ function formSubmission(e){
   else{
     
     let task = constructTask();
-    //renderTask(task);
+    renderTask(task);
     console.log(task);
     e.preventDefault();
   }
@@ -220,7 +220,8 @@ function constructTask(){
   let estimatedDays = parseInt(document.querySelector('input[name=estDays').value);
   console.log("estmins type: " + typeof estimatedMins);
   let estimatedMs = (60000 * estimatedMins) + (3600000 * estimatedHours) + (86400000 * estimatedDays);
-  console.log(estimatedMs + typeof estimatedMs);
+
   let task = taskFactory(name, desc, due, priority, maxPriority, estimatedMs);
+  return task;
 }
 }
