@@ -165,7 +165,7 @@ function getErrorMessage(){
 }
 
 function formSubmission(e){
-  if(document.querySelector('.addTask').classList.contains('dimmed')){
+  if(getErrorMessage() != ''){
     e.preventDefault();
   }
   else{

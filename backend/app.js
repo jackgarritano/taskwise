@@ -4,7 +4,7 @@ const { ObjectId } = require('mongodb')
 const { MongoError } = require('mongodb')
 const app = express()
 
-function Taska() {
+/*function Taska() {
     this.name = 'math homework',
         this.desc = '',
         this.due = '2022-12-27',
@@ -13,7 +13,7 @@ function Taska() {
         this.estimatedTime = 0,
         this.tags = { 1: 'math class' }
 }
-var taska = new Taska()
+var taska = new Taska()*/
 /*
 *Api function: turn submitted task object into new displayed task object, sort objects into correct 
 order, split tasks into today and everything lists. Submit lists back as today and everything objects
@@ -54,7 +54,7 @@ addTask()
 
 //calculates switch times for inputted task by evenly splitting time between [current time] and [due]-[estimatedTime] into
 //[maxPriority]-[priority] intervals. Returns an array of switchTimes in iso format
-function findSwitchTimes(task) {
+/*function findSwitchTimes(task) {
     intervals = task.maxPriority - task.priority
     if (intervals == 0) {             //no intervals means priority doesn't switch
         return null
@@ -75,15 +75,15 @@ function findSwitchTimes(task) {
         switchTimes.push(nextInterval.toJSON())
     }
     return switchTimes
-}
+}*/
 
 
 //converts Task sent by frontend to RichTask which is stored in db and sent back to frontend
-function convertTask(task) {
+/*function convertTask(task) {
     switchTimes = findSwitchTimes(task)
     task.switchTimes = switchTimes
     return task
-}
+}*/
 
 //middleware to check Task object to make sure all values exist and are correct; if not sends an error response
 //NOTE: will now be doing this inline instead of server-side, function not currently needed
