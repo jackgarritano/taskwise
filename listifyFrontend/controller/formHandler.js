@@ -64,7 +64,7 @@ function observeTextFields(checkIfAddAllowed){
     inputField.setAttribute('value', input);
   }
 
-  function gatherMinInput(){
+  /*function gatherMinInput(){
     let modifiedElement = estimatedMins;
     let input = modifiedElement.innerText.replace(/\n/g, '');
     let inputField = estimatedMins;
@@ -83,18 +83,18 @@ function observeTextFields(checkIfAddAllowed){
     let input = modifiedElement.innerText.replace(/\n/g, '');
     let inputField = estimatedDays;
     inputField.setAttribute('value', input);
-  }
+  }*/
 
   const titleObserver = new MutationObserver(gatherTitleInput);
   titleObserver.observe(taskName, {characterData: true, subtree: true});
   const descObserver = new MutationObserver(gatherDescInput);
   descObserver.observe(description, {characterData: true, subtree: true});
-  const minObserver = new MutationObserver(gatherMinInput);
+  /*const minObserver = new MutationObserver(gatherMinInput);
   minObserver.observe(estimatedMins, {characterData: true, subtree: true});
   const hourObserver = new MutationObserver(gatherHourInput);
   hourObserver.observe(estimatedHours, {characterData: true, subtree: true});
   const dayObserver = new MutationObserver(gatherDayInput);
-  dayObserver.observe(estimatedDays, {characterData: true, subtree: true});
+  dayObserver.observe(estimatedDays, {characterData: true, subtree: true});*/
 }
 
 function validateTimeInputs(el){
@@ -169,11 +169,11 @@ function formSubmission(e){
     e.preventDefault();
   }
   else{
-    e.preventDefault();
+    
     let task = constructTask();
     //renderTask(task);
     console.log(task);
-    
+    e.preventDefault();
   }
 
 function taskFactory(name, desc, due, priority, maxPriority, estimatedTime){
@@ -215,14 +215,12 @@ function constructTask(){
   let due = document.querySelector('input[name=dateInput]').value;
   let priority = document.querySelector('input[name=priInput]').value;
   let maxPriority = document.querySelector('input[name=maxPriInput]').value;
-  //let estimatedTime = document.querySelector('input[name=estTimeInput]').value;
-  let estimatedMins = document.querySelector('input[name=estMinutes').value;
-  let estimatedHours = document.querySelector('input[name=estHours').value;
-  let estimatedDays = document.querySelector('input[name=estDays').value;
+  let estimatedMins = parseInt(document.querySelector('input[name=estMinutes').value);
+  let estimatedHours = parseInt(document.querySelector('input[name=estHours').value);
+  let estimatedDays = parseInt(document.querySelector('input[name=estDays').value);
   console.log("estmins type: " + typeof estimatedMins);
-  let estmatedMs;
-  
-  let task = taskFactory(name, desc, due, priority, maxPriority, estimatedMins); //wrong:estimatedMins needs to be total ms b/w days, mins, hours
-  return task;
+  let estimatedMs = (60000 * estimatedMins) + (3600000 * estimatedHours) + (86400000 * estimatedDays);
+  console.log(estimatedMs + typeof estimatedMs);
+  let task = taskFactory(name, desc, due, priority, maxPriority, estimatedMs);
 }
 }
