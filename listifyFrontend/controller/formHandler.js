@@ -1,4 +1,5 @@
 import { renderTask } from "../views/renderTask";
+import { saveTask } from "./fetch";
 export {onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
   observeTextFields, validateTimeInputs, getErrorMessage, formSubmission};
 
@@ -64,37 +65,10 @@ function observeTextFields(checkIfAddAllowed){
     inputField.setAttribute('value', input);
   }
 
-  /*function gatherMinInput(){
-    let modifiedElement = estimatedMins;
-    let input = modifiedElement.innerText.replace(/\n/g, '');
-    let inputField = estimatedMins;
-    inputField.setAttribute('value', input);
-  }
-
-  function gatherHourInput(){
-    let modifiedElement = estimatedHours;
-    let input = modifiedElement.innerText.replace(/\n/g, '');
-    let inputField = estimatedHours;
-    inputField.setAttribute('value', input);
-  }
-
-  function gatherDayInput(){
-    let modifiedElement = estimatedDays;
-    let input = modifiedElement.innerText.replace(/\n/g, '');
-    let inputField = estimatedDays;
-    inputField.setAttribute('value', input);
-  }*/
-
   const titleObserver = new MutationObserver(gatherTitleInput);
   titleObserver.observe(taskName, {characterData: true, subtree: true});
   const descObserver = new MutationObserver(gatherDescInput);
   descObserver.observe(description, {characterData: true, subtree: true});
-  /*const minObserver = new MutationObserver(gatherMinInput);
-  minObserver.observe(estimatedMins, {characterData: true, subtree: true});
-  const hourObserver = new MutationObserver(gatherHourInput);
-  hourObserver.observe(estimatedHours, {characterData: true, subtree: true});
-  const dayObserver = new MutationObserver(gatherDayInput);
-  dayObserver.observe(estimatedDays, {characterData: true, subtree: true});*/
 }
 
 function validateTimeInputs(el){
@@ -172,7 +146,7 @@ function formSubmission(e){
     e.preventDefault();
     let task = constructTask();
     renderTask(task);
-    console.log(task);
+    saveTask(task);
     
   }
 
@@ -224,4 +198,5 @@ function constructTask(){
   let task = taskFactory(name, desc, due, priority, maxPriority, estimatedMs);
   return task;
 }
+
 }

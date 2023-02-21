@@ -201,10 +201,11 @@ async function addSubtask(req,res){
     throw new Error(e)
     }
 }*/
-
+app.use('/', express.json());
 app.all('/', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
     next();
    });
 
@@ -212,7 +213,7 @@ app.all('/', function(req, res, next) {
 app.get('/', async (req, res) => {
     try {
         let allTasks = await user1.find({status:'live'}).toArray()
-        console.log(allTasks)
+        //console.log(allTasks)
         return res.status(200).json(allTasks)
     }
     catch (e) {
@@ -222,7 +223,21 @@ app.get('/', async (req, res) => {
 
 
 })
-
+app.post('/', async (req, res) => {       
+    let task = req.body;
+    let {name, desc, due, priority, maxPriority, estimatedTime, switchTimes} = task;
+    console.log(req.body);
+    try { 
+        let insertResult = await user1.insertOne(
+            {name, desc, due, priority, maxPriority, estimatedTime, switchTimes});
+        console.log('task added successfully to db');
+        return res.status(200).json({ _id: insertResult.insertedId});
+    }
+    catch (e) {
+        console.log('task add to db failed');
+        return res.status(404).json({ failure: e });
+    }
+})
 //writes task to server and returns rich task to frontend
 /*app.post('/', [express.urlencoded({ extended: false })], async (req, res) => {       
     let { task } = req.body
