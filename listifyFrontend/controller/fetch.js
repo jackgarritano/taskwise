@@ -22,10 +22,9 @@ async function saveTask(task){
                 },
             body:JSON.stringify(task),
             })
-            .then((res)=>{
-                res.json()})
-        console.log(JSON.stringify(taskSent));
-        
+        let receievdBody = await taskSent.json();
+        task.id = receievdBody._id;
+        return task;
     }
     catch(e){
         console.log('saveTask error: ' + e);

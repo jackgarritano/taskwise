@@ -212,7 +212,7 @@ app.all('/', function(req, res, next) {
 //gets all live tasks from server
 app.get('/', async (req, res) => {
     try {
-        let allTasks = await user1.find({status:'live'}).toArray()
+        let allTasks = await user1.find({}).toArray();
         //console.log(allTasks)
         return res.status(200).json(allTasks)
     }

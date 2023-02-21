@@ -147,7 +147,6 @@ function formSubmission(e){
     let task = constructTask();
     renderTask(task);
     saveTask(task);
-    
   }
 
 function taskFactory(name, desc, due, priority, maxPriority, estimatedTime){
