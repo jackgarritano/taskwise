@@ -197,7 +197,7 @@ body{
 }
 .allTasks{
   /*width:100%;*/
-  width:min(50%, 700px);
+  width:clamp(400px, 50%, 700px);
   display:flex;
   flex-direction: column;
   border-bottom:#44464C 3px solid;
