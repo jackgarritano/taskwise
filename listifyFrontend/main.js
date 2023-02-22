@@ -6,12 +6,16 @@ import { onlyPasteText } from './controller/formHandler';
 import { renderForm } from './views/renderForm';
 import { initForm } from './views/formViewHandler';
 import { renderTask } from './views/renderTask';
+import { addToList } from './controller/taskList';
+
+let script = document.querySelector('body').querySelector('script');
+document.querySelector('head').append(script);
 
 
 initForm();
-sortOnLoad().then((task) => {
-    task.forEach((el)=>{
-        renderTask(el);
+getAllTasks().then((tasks) => {
+    tasks.forEach((el)=>{
+        renderTask(el, addToList(el));
     })
 });
 

@@ -1,7 +1,7 @@
 export {renderTask};
 //make date a better format
 //make time a better format
-function renderTask(taskObj){
+function renderTask(taskObj, index){
     let {name, desc, due, priority, maxPriority, estimatedTime, switchTimes} = taskObj;
     let numLines = 0;
     name = cutOffStrings(name);
@@ -88,7 +88,7 @@ function renderTask(taskObj){
     task.append(checkContainer);
     task.append(infoContainer);
     
-    document.querySelector('.allTasks').append(task);
+    document.querySelector('.allTasks').children[index].insertAdjacentElement('afterend', task);
 }
 
 function formatTime(ms){

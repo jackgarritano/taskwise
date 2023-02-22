@@ -1,5 +1,6 @@
 import { renderTask } from "../views/renderTask";
 import { saveTask } from "./fetch";
+import { addToList } from "./taskList";
 export {onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
   observeTextFields, validateTimeInputs, getErrorMessage, formSubmission};
 
@@ -145,7 +146,7 @@ function formSubmission(e){
   else{
     e.preventDefault();
     let task = constructTask();
-    renderTask(task);
+    renderTask(task, addToList(task));
     saveTask(task);
   }
 
