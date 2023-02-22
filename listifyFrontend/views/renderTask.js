@@ -1,3 +1,4 @@
+import { addInteractvity } from "../controller/taskHandler";
 export {renderTask};
 //make date a better format
 //make time a better format
@@ -89,6 +90,22 @@ function renderTask(taskObj, index){
     task.append(infoContainer);
     
     document.querySelector('.allTasks').children[index].insertAdjacentElement('afterend', task);
+
+    let taskNode = {
+        estTime,
+        dueDate,
+        priBar,
+        description,
+        title,
+        checkCircle,
+        task,
+        checkContainer,
+        infoContainer,
+        topRow,
+        nextRow,
+        bottomRow,
+    }
+    addInteractvity(taskNode);
 }
 
 function formatTime(ms){

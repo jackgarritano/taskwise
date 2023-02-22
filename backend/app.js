@@ -206,6 +206,7 @@ app.all('/', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
     next();
    });
 
@@ -220,9 +221,8 @@ app.get('/', async (req, res) => {
         console.log("get error: " + e)
         return res.status(404).json({ status: "get error" })
     }
-
-
 })
+
 app.post('/', async (req, res) => {       
     let task = req.body;
     let {name, desc, due, priority, maxPriority, estimatedTime, switchTimes} = task;
@@ -235,6 +235,17 @@ app.post('/', async (req, res) => {
     }
     catch (e) {
         console.log('task add to db failed');
+        return res.status(404).json({ failure: e });
+    }
+})
+
+app.delete('/', async (req, res) => {
+    try{
+        let deleteResult = await user1.deleteOne({_id: ObjectId(req.body.id)});
+        return res.status(200).json({status:'finished'});
+    }
+    catch(e){
+        console.log("delete error: " + e);
         return res.status(404).json({ failure: e });
     }
 })

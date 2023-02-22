@@ -1,4 +1,4 @@
-export {getAllTasks, saveTask};
+export {getAllTasks, saveTask, deleteFromDb};
 
 async function getAllTasks(){
     try{
@@ -13,7 +13,6 @@ async function getAllTasks(){
 
 async function saveTask(task){
     try{
-        console.log('body being sent: ' + JSON.stringify(task));
         let taskSent = await fetch('http://localhost:3000', 
             {method:'POST',
             mode:'cors',
@@ -29,4 +28,21 @@ async function saveTask(task){
     catch(e){
         console.log('saveTask error: ' + e);
     }
-  }
+}
+
+async function deleteFromDb(id){
+    try{
+        let taskSent = await fetch('http://localhost:3000', 
+            {method:'DELETE',
+            mode:'cors',
+            headers:{
+                'Content-Type': 'application/json',
+                },
+            body: JSON.stringify({id:id}),
+            })
+        return 'success';
+    }
+    catch(e){
+        return e;
+    }
+}

@@ -1,4 +1,4 @@
-export {addToList};
+export {addToList, getId, deleteFromList};
 
 let taskList = [];
 
@@ -22,4 +22,13 @@ function addToList(task){
     }
     taskList.push(task);
     return taskList.length-1;
+}
+
+function getId(index){
+    let id  = taskList[index]._id;
+    return id;
+}
+
+function deleteFromList(index){
+    taskList.splice(index, 1);
 }
