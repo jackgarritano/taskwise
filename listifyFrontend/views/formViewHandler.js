@@ -2,7 +2,7 @@ import { renderForm } from "./renderForm";
 import { clearCal, renderCalendar } from "./calendar";
 import { onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
     observeTextFields, validateTimeInputs, getErrorMessage, formSubmission} from "../controller/formHandler";
-export {initForm};
+export {initForm, derenderForm};
 
 function initForm(){
 let highestUnavailable = 0;
@@ -10,7 +10,7 @@ let highestUnavailable = 0;
 onlyPasteText();
 let formElements = renderForm();
 let allTasks = document.querySelector('.allTasks');
-allTasks.append(formElements.addForm);
+allTasks.prepend(formElements.addForm);
 formElements.taskName.focus();
 renderCalendar(formElements.dueDate);
 observeTextFields(checkIfAddAllowed);
@@ -104,6 +104,8 @@ function closePopupListener(e){
     document.addEventListener('click', closePopup, true)
 }
 
+formElements.cancel.addEventListener('click', derenderForm);
+
 function checkIfAddAllowed(){
     if(document.querySelector('input[name=taskName]').value != '' &&
      document.querySelector('input[name=priInput]').value != '' &&
@@ -152,4 +154,22 @@ formElements.addTask.addEventListener('mouseover', addTaskHoverErr);
 document.addEventListener('click', hideErrorMessage);
 
 formElements.addForm.addEventListener('submit', formSubmission);
+}
+
+function derenderForm(){ //this needs to also render the addTask button in its place
+    document.querySelector('.addForm').remove();
+    renderAddButton();
+}
+
+function renderAddButton(){
+    let addButton = document.createElement('div');
+    let textSpan = document.createElement('span');
+
+    addButton.classList.add('addButton');
+    textSpan.textContent = 'Add task';
+
+    addButton.append(textSpan);
+    document.querySelector('.allTasks').prepend(addButton);
+
+    addButton.addEventListener('click', initForm);
 }

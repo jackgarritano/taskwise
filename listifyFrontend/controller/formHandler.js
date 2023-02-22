@@ -1,6 +1,7 @@
 import { renderTask } from "../views/renderTask";
 import { saveTask } from "./fetch";
 import { addToList } from "./taskList";
+import { derenderForm } from "../views/formViewHandler";
 export {onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
   observeTextFields, validateTimeInputs, getErrorMessage, formSubmission};
 
@@ -148,6 +149,7 @@ function formSubmission(e){
     let task = constructTask();
     renderTask(task, addToList(task));
     saveTask(task);
+    derenderForm();
   }
 
 function taskFactory(name, desc, due, priority, maxPriority, estimatedTime){
