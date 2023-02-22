@@ -272,8 +272,13 @@ function renderTitle(title){
 
 function renderCheckCircle(){
     let checkCircle = document.createElement('div');
+    let xLogo = document.createElement('img');
 
     checkCircle.classList.add('checkCircle');
+    xLogo.classList.add('xLogo');
+    xLogo.setAttribute('src', 'assets/xLogoCropped.svg');
+
+    checkCircle.append(xLogo);
 
     return checkCircle;
 }
