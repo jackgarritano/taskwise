@@ -4,13 +4,15 @@ import { onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
     observeTextFields, validateTimeInputs, getErrorMessage, formSubmission} from "../controller/formHandler";
 export {initForm, derenderForm, renderAddButton};
 
+let formElements;
+
 function initForm(){
 let highestUnavailable = 0;
 
 document.querySelector('.addButton').remove();
 
 onlyPasteText();
-let formElements = renderForm();
+formElements = renderForm();
 let allTasks = document.querySelector('.allTasks');
 allTasks.prepend(formElements.addForm);
 formElements.taskName.focus();
@@ -141,10 +143,6 @@ function showErrorMessage(message){
     formElements.errorMessage.style.top = '100%';
 }
 
-function hideErrorMessage(){
-    formElements.errorMessage.style.top = `calc(100% - ${formElements.errorMessage.clientHeight}px)`;
-}
-
 function addTaskHoverErr(e){
     if(e.target.classList.contains('dimmed')){
         showErrorMessage(getErrorMessage());
@@ -158,7 +156,12 @@ document.addEventListener('click', hideErrorMessage);
 formElements.addForm.addEventListener('submit', formSubmission);
 }
 
+function hideErrorMessage(){
+    formElements.errorMessage.style.top = `calc(100% - ${formElements.errorMessage.clientHeight}px)`;
+}
+
 function derenderForm(){ //this needs to also render the addTask button in its place
+    document.removeEventListener('click', hideErrorMessage);
     document.querySelector('.addForm').remove();
     renderAddButton();
 }
@@ -178,4 +181,10 @@ function renderAddButton(){
     document.querySelector('.allTasks').prepend(addButton);
 
     addButton.addEventListener('click', initForm);
+    addButton.addEventListener('mouseover', ()=>{
+        document.querySelector('.addLogo').setAttribute('src', 'assets/plusLogoBlue.svg');
+    })
+    addButton.addEventListener('mouseout', ()=>{
+        document.querySelector('.addLogo').setAttribute('src', 'assets/plusLogo.svg');
+    })
 }

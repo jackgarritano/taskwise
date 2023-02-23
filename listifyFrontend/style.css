@@ -431,18 +431,18 @@ button{
   margin-top: 7px;
   margin-right: 10px;
   background-color: #303136;
-  transition:background-color .25s;
   position:relative;
 }
-.checkCircle:hover{
-  background-color: #48BFE3;
+.checkCircle:hover .xLogo{
+  filter: invert(63%) sepia(83%) saturate(360%) hue-rotate(155deg) brightness(92%) contrast(94%);
 }
 .xLogo{
-  width: 19px;
-  height: 19px;
+  width: 8px;
+  height: 18px;
   position: relative;
-  right: 1%;
-  bottom: 2%;
+  left: calc(50% - 4px);
+  transition:.25s;
+  filter: invert(13%) sepia(5%) saturate(1067%) hue-rotate(192deg) brightness(100%) contrast(83%);
 }
 .infoContainer{
   width:100%;
@@ -528,7 +528,8 @@ button{
   margin-top:50px;
   padding-bottom:10px;
   padding-top:10px;
-  transition: background-color .25s;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
 .addLogo{
   width:20px;
@@ -536,7 +537,7 @@ button{
   margin-right:10px;
 }
 .addButton:hover{
-  background-color:#41444A;
+  color:#48BFE3;
 }
 /*end of add button styling*/
 

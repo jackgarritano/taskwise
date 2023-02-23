@@ -242,6 +242,7 @@ app.post('/', async (req, res) => {
 app.delete('/', async (req, res) => {
     try{
         let deleteResult = await user1.deleteOne({_id: ObjectId(req.body.id)});
+        console.log('number of tasks deleted: ' + deleteResult.deletedCount);
         return res.status(200).json({status:'finished'});
     }
     catch(e){

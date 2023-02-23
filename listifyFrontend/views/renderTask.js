@@ -276,7 +276,7 @@ function renderCheckCircle(){
 
     checkCircle.classList.add('checkCircle');
     xLogo.classList.add('xLogo');
-    xLogo.setAttribute('src', 'assets/xLogoCropped.svg');
+    xLogo.setAttribute('src', 'assets/realPlusLogo.svg');
 
     checkCircle.append(xLogo);
 
