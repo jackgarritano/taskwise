@@ -255,6 +255,7 @@ body{
   margin-right:10px;
   margin-left:10px;
   margin-top: 4px;
+  z-index:5;
 }
 button{
   background-color: #303136;
@@ -420,6 +421,7 @@ button{
   font-size:13px;
   color:#FFFFFF;
   line-height: 14px;
+  position:relative;
 }
 .checkCircle{
   width:20px;
@@ -444,6 +446,7 @@ button{
 }
 .infoContainer{
   width:100%;
+  z-index:-2;
 }
 .taskTitle{
   display:inline-block;
@@ -525,6 +528,7 @@ button{
   margin-top:50px;
   padding-bottom:10px;
   padding-top:10px;
+  transition: background-color .25s;
 }
 .addLogo{
   width:20px;
