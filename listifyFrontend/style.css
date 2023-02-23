@@ -516,6 +516,25 @@ button{
   padding-bottom:8px;
 }
 /*end of task styling*/
+/*beginning of add button styling*/
+.addButton{
+  display:flex;
+  align-items: center;
+  color:#97989D;
+  font-size:15px;
+  margin-top:50px;
+  padding-bottom:10px;
+  padding-top:10px;
+}
+.addLogo{
+  width:20px;
+  height:20px;
+  margin-right:10px;
+}
+.addButton:hover{
+  background-color:#41444A;
+}
+/*end of add button styling*/
 
 .hidden{
   display:none;

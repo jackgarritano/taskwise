@@ -4,15 +4,15 @@ import { sortOnLoad } from './controller/ordering';
 import { renderCalendar } from './views/calendar';
 import { onlyPasteText } from './controller/formHandler';
 import { renderForm } from './views/renderForm';
-import { initForm } from './views/formViewHandler';
+import { initForm, renderAddButton } from './views/formViewHandler';
 import { renderTask } from './views/renderTask';
 import { addToList } from './controller/taskList';
 
 let script = document.querySelector('body').querySelector('script');
 document.querySelector('head').append(script);
 
+renderAddButton();
 
-initForm();
 getAllTasks().then((tasks) => {
     tasks.forEach((el)=>{
         renderTask(el, addToList(el));

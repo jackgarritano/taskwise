@@ -2,10 +2,12 @@ import { renderForm } from "./renderForm";
 import { clearCal, renderCalendar } from "./calendar";
 import { onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
     observeTextFields, validateTimeInputs, getErrorMessage, formSubmission} from "../controller/formHandler";
-export {initForm, derenderForm};
+export {initForm, derenderForm, renderAddButton};
 
 function initForm(){
 let highestUnavailable = 0;
+
+document.querySelector('.addButton').remove();
 
 onlyPasteText();
 let formElements = renderForm();
@@ -163,11 +165,15 @@ function derenderForm(){ //this needs to also render the addTask button in its p
 
 function renderAddButton(){
     let addButton = document.createElement('div');
+    let addLogo = document.createElement('img');
     let textSpan = document.createElement('span');
 
     addButton.classList.add('addButton');
     textSpan.textContent = 'Add task';
+    addLogo.classList.add('addLogo');
+    addLogo.setAttribute('src', 'assets/plusLogo.svg');
 
+    addButton.append(addLogo);
     addButton.append(textSpan);
     document.querySelector('.allTasks').prepend(addButton);
 
