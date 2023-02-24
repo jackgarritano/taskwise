@@ -1,7 +1,6 @@
 import { addInteractvity } from "../controller/taskHandler";
+import { setTimers } from "../controller/switchHandler";
 export {renderTask};
-//make date a better format
-//make time a better format
 function renderTask(taskObj, index){
     let {name, desc, due, priority, maxPriority, estimatedTime, switchTimes} = taskObj;
     let numLines = 0;
@@ -11,7 +10,7 @@ function renderTask(taskObj, index){
     estimatedTime = formatTime(estimatedTime);
     let estTime = renderEstTime(estimatedTime);
     let dueDate = renderDueDate(due);
-    let priBar = renderPriBar(priority, maxPriority);
+    let priBar = renderPriBar(priority, maxPriority, switchTimes);
     let description = renderDescription(desc);
     let title = renderTitle(name);
     let checkCircle = renderCheckCircle();
@@ -89,7 +88,7 @@ function renderTask(taskObj, index){
     task.append(checkContainer);
     task.append(infoContainer);
     
-    document.querySelector('.allTasks').children[index].insertAdjacentElement('afterend', task);
+    Array.from(document.querySelector('.allTasks').children)[index].insertAdjacentElement('afterend', task);
 
     let taskNode = {
         estTime,
@@ -211,16 +210,27 @@ function renderDueDate(dateDue){
     return dueDate;
 }
 
-function renderPriBar(priority, maxPriority){
+function renderPriBar(priority, maxPriority, switchTimes){
+    let now = new Date();
+    
     let taskPri = document.createElement('div');
     let priLogo = document.createElement('img');
     let priSpan = document.createElement('span');
 
-    
-
     taskPri.classList.add('taskPri');
     priLogo.classList.add('priLogo', 'priLogoTask');
     priLogo.setAttribute('src', 'assets/priLogo.svg');
+
+    for(let i=0; i<switchTimes.length; i++){
+        let switchDate = new Date(switchTimes[i]);
+        if(switchDate < now){
+            priority ++;
+        }
+        else{
+            setTimers(now, switchDate);
+            break;
+        }
+    }
 
     priSpan.textContent = priority;
     if(maxPriority != ''){

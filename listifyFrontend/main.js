@@ -7,6 +7,7 @@ import { renderForm } from './views/renderForm';
 import { initForm, renderAddButton } from './views/formViewHandler';
 import { renderTask } from './views/renderTask';
 import { addToList } from './controller/taskList';
+import { setTimers } from './controller/switchHandler';
 
 let script = document.querySelector('body').querySelector('script');
 document.querySelector('head').append(script);
