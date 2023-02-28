@@ -436,6 +436,9 @@ button{
 .checkCircle:hover .xLogo{
   filter: invert(63%) sepia(83%) saturate(360%) hue-rotate(155deg) brightness(92%) contrast(94%);
 }
+.checkCircle:hover{
+  cursor:pointer;
+}
 .xLogo{
   width: 8px;
   height: 18px;
@@ -538,6 +541,7 @@ button{
 }
 .addButton:hover{
   color:#48BFE3;
+  cursor: pointer;
 }
 /*end of add button styling*/
 
