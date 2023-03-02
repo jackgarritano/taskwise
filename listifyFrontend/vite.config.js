@@ -3,5 +3,8 @@ export default {
       hmr: {
         port: 3001,
       },
+      watch: {
+        usePolling: true,
+      },
     },
   }
