@@ -1,0 +1,29 @@
+services:
+  backend:
+    build: ./backend
+    image: listify/backend
+    expose:
+      - "3000"
+    #only made public for dev purposes
+    ports:
+      - "3000:3000"
+    volumes:
+      - type: bind
+        source: ./backend
+        target: /app
+  frontend:
+    build: ./listifyFrontend
+    image: listify/frontend
+    depends_on:
+      - backend
+    expose:
+      - "3001"
+      - "5173"
+    ports:
+      - "5173:5173"
+      - "3001:3001"
+    volumes:
+      - type: bind
+        source: ./listifyFrontend
+        target: /app
+      - /app/node_modules

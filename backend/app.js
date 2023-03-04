@@ -214,8 +214,7 @@ app.all('/', function(req, res, next) {
 app.get('/', async (req, res) => {
     try {
         let allTasks = await user1.find({}).toArray();
-        //console.log(allTasks)
-        return res.status(200).json(allTasks)
+        return res.status(200).json(allTasks);
     }
     catch (e) {
         console.log("get error: " + e)

@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Expose the port that the application is running on
-EXPOSE 5173
+EXPOSE 3000
 
 # Start the development server with hot module reloading
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+CMD ["npm", "start"]
