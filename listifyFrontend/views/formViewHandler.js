@@ -2,6 +2,8 @@ import { renderForm } from "./renderForm";
 import { clearCal, renderCalendar } from "./calendar";
 import { onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
     observeTextFields, validateTimeInputs, getErrorMessage, formSubmission} from "../controller/formHandler";
+import grayPlusSvg from '../assets/plusLogo.svg';
+import bluePlusSvg from '../assets/plusLogoBlue.svg';
 export {initForm, derenderForm, renderAddButton};
 
 let formElements;
@@ -174,7 +176,7 @@ function renderAddButton(){
     addButton.classList.add('addButton');
     textSpan.textContent = 'Add task';
     addLogo.classList.add('addLogo');
-    addLogo.setAttribute('src', 'assets/plusLogo.svg');
+    addLogo.setAttribute('src', grayPlusSvg);
 
     addButton.append(addLogo);
     addButton.append(textSpan);
@@ -182,9 +184,9 @@ function renderAddButton(){
 
     addButton.addEventListener('click', initForm);
     addButton.addEventListener('mouseover', ()=>{
-        document.querySelector('.addLogo').setAttribute('src', 'assets/plusLogoBlue.svg');
+        document.querySelector('.addLogo').setAttribute('src', bluePlusSvg);
     })
     addButton.addEventListener('mouseout', ()=>{
-        document.querySelector('.addLogo').setAttribute('src', 'assets/plusLogo.svg');
+        document.querySelector('.addLogo').setAttribute('src', grayPlusSvg);
     })
 }

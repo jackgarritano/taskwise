@@ -1,5 +1,9 @@
 import { addInteractvity } from "../controller/taskHandler";
 import { setTimers } from "../controller/switchHandler";
+import clockLogoSvg from '../assets/clockLogo.svg';
+import priLogoSvg from '../assets/priLogo.svg';
+import calLogoSvg from '../assets/calLogo.svg';
+import realPlusLogoSvg from '../assets/realPlusLogo.svg';
 export {renderTask};
 function renderTask(taskObj, index){
     let {name, desc, due, priority, maxPriority, estimatedTime, switchTimes} = taskObj;
@@ -183,7 +187,7 @@ function renderEstTime(timeEst){
 
     estTime.classList.add('taskEstTime');
     clockLogo.classList.add('clockLogo', 'clockLogoTask');
-    clockLogo.setAttribute('src', 'assets/clockLogo.svg');
+    clockLogo.setAttribute('src', clockLogoSvg);
 
     timeSpan.textContent = timeEst;
 
@@ -200,7 +204,7 @@ function renderDueDate(dateDue){
 
     dueDate.classList.add('taskDueDate');
     calLogo.classList.add('calLogo', 'calLogoTask');
-    calLogo.setAttribute('src', 'assets/calLogo.svg');
+    calLogo.setAttribute('src', calLogoSvg);
 
     dateSpan.textContent = dateDue;
 
@@ -219,7 +223,7 @@ function renderPriBar(priority, maxPriority, switchTimes){
 
     taskPri.classList.add('taskPri');
     priLogo.classList.add('priLogo', 'priLogoTask');
-    priLogo.setAttribute('src', 'assets/priLogo.svg');
+    priLogo.setAttribute('src', priLogoSvg);
 
     for(let i=0; i<switchTimes.length; i++){
         let switchDate = new Date(switchTimes[i]);
@@ -286,7 +290,7 @@ function renderCheckCircle(){
 
     checkCircle.classList.add('checkCircle');
     xLogo.classList.add('xLogo');
-    xLogo.setAttribute('src', 'assets/realPlusLogo.svg');
+    xLogo.setAttribute('src', realPlusLogoSvg);
 
     checkCircle.append(xLogo);
 

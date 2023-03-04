@@ -9,21 +9,25 @@ import { renderTask } from './views/renderTask';
 import { addToList } from './controller/taskList';
 import { setTimers } from './controller/switchHandler';
 
-renderAddButton();
-
-getAllTasks().then((tasks) => {
-    tasks.forEach((el)=>{
-        renderTask(el, addToList(el));
-    })
-});
-
-
-
-/*onlyPasteText();
-let formElements = renderForm();
-let allTasks = document.querySelector('.allTasks');
-allTasks.append(formElements.addForm);
-renderCalendar(formElements.dueDate);*/
-
-//initForm();
-//renderTask();
+document.querySelector('body').innerHTML= '<form><input type="text" class="fillerInput"></input><button class="fillerButton">submit</button></form>';
+document.querySelector('.fillerButton').addEventListener('click', (e)=>{
+    e.preventDefault();
+    fetch('http://localhost:3000/password', {method:'PUT',
+        mode:'cors', headers:{
+        'Content-Type': 'application/json',}, 
+        body: JSON.stringify({password: document.querySelector('.fillerInput').value})})
+        .then((res)=>{
+            return res.json();
+        })
+        .then((res)=>{
+            if(res.status == 'passed'){
+                document.querySelector('body').innerHTML = '<div class="allTasks">'
+                renderAddButton();
+                getAllTasks().then((tasks) => {
+                tasks.forEach((el)=>{
+                renderTask(el, addToList(el));
+            })
+            });
+            }
+        })
+})

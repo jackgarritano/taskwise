@@ -1,4 +1,7 @@
 import { renderCalendar } from "./calendar";
+import priLogoSvg from '../assets/priLogo.svg';
+import calLogoSvg from '../assets/calLogo.svg';
+import clockLogoSvg from '../assets/clockLogo.svg';
 export {renderForm};
 
 function renderForm(){
@@ -112,7 +115,7 @@ function renderMaxPriority(){
 
     maxPriority.classList.add('maxPriority', 'selectable');
     priLogo.classList.add('priLogo');
-    priLogo.setAttribute('src', 'assets/priLogo.svg');
+    priLogo.setAttribute('src', priLogoSvg);
     maxPriChoice.classList.add('maxPriChoice');
     textSpan.textContent = 'Max. Priority';
     maxPriInput.setAttribute('name', 'maxPriInput');
@@ -148,7 +151,7 @@ function renderPriority(){
 
     priority.classList.add('priority', 'selectable');
     priLogo.classList.add('priLogo');
-    priLogo.setAttribute('src', 'assets/priLogo.svg');
+    priLogo.setAttribute('src', priLogoSvg);
     priChoice.classList.add('priChoice');
     textSpan.textContent = 'Priority';
     priInput.setAttribute('name', 'priInput');
@@ -170,7 +173,7 @@ function renderDueDate(){
 
     dueDate.classList.add('dueDate', 'selectable');
     calLogo.classList.add('calLogo', 'calLogoForm');
-    calLogo.setAttribute('src', 'assets/calLogo.svg');
+    calLogo.setAttribute('src', calLogoSvg);
     dueDateChoice.classList.add('dueDateChoice');
     textSpan.textContent = 'Date';
     dateInput.setAttribute('name', 'dateInput');
@@ -192,7 +195,7 @@ function renderEstTime(){
 
     estTime.classList.add('estTime', 'selectable');
     clockLogo.classList.add('clockLogo');
-    clockLogo.setAttribute('src', 'assets/clockLogo.svg');
+    clockLogo.setAttribute('src', clockLogoSvg);
     estTimeChoice.classList.add('estTimeChoice');
     textSpan.textContent = 'Time';
     estTimeInput.setAttribute('name', 'estTimeInput');

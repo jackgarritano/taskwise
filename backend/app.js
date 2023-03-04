@@ -209,6 +209,13 @@ app.all('/', function(req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
     next();
    });
+   app.all('/password', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+    next();
+   });
 
 //gets all live tasks from server
 app.get('/', async (req, res) => {
@@ -218,6 +225,22 @@ app.get('/', async (req, res) => {
     }
     catch (e) {
         console.log("get error: " + e)
+        return res.status(404).json({ status: "get error" })
+    }
+})
+
+app.put('/password', async (req, res) => {
+    try {
+        console.log('pass request gotten. pass is: ' + req.body.password);
+        if(req.body.password == process.env.TEMP_PASS){
+            return res.status(200).json({status: 'passed'});
+        }
+        else{
+            return res.status(200).json({status: 'failed'});
+        }
+    }
+    catch (e) {
+        console.log("get password error: " + e)
         return res.status(404).json({ status: "get error" })
     }
 })
