@@ -12,7 +12,9 @@ services:
         source: ./backend
         target: /app
   frontend:
-    build: ./listifyFrontend
+    build:
+      context: ./listifyFrontend
+      dockerfile: Dockerfile.dev
     image: listify/frontend
     depends_on:
       - backend
