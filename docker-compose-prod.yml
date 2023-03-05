@@ -1,0 +1,19 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+  frontend:
+    build:
+      context: ./listifyFrontend
+      dockerfile: Dockerfile.prod
+    depends_on:
+      - backend
+    expose:
+      - "80"
+    ports:
+      - "80:80"

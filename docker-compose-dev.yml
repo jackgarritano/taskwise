@@ -1,7 +1,8 @@
 services:
   backend:
-    build: ./backend
-    image: listify/backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
     expose:
       - "3000"
     #only made public for dev purposes
@@ -15,7 +16,6 @@ services:
     build:
       context: ./listifyFrontend
       dockerfile: Dockerfile.dev
-    image: listify/frontend
     depends_on:
       - backend
     expose:
