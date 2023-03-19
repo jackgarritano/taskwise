@@ -3,8 +3,20 @@ const { MongoClient } = require('mongodb')
 const { ObjectId } = require('mongodb')
 const { MongoError } = require('mongodb')
 const dotenv = require('dotenv');
+const {OAuth2Client} = require('google-auth-library');
 dotenv.config();
-const app = express()
+const app = express();
+const client = new OAuth2Client(process.env.CLIENT_ID);
+
+async function verify(token) {
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: process.env.CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+    });
+    const payload = ticket.getPayload();
+    const userid = payload['sub'];
+    return userid;
+  }
 /*function Taska() {
     this.name = 'math homework',
         this.desc = '',
@@ -32,24 +44,37 @@ Necessary help functions:
 
 
 */
-var user1
-async function addTask() {
-    const uri = "mongodb+srv://admin:" + process.env.SECRET_KEY + "@mflix.5cbzlet.mongodb.net/?retryWrites=true&w=majority"
+var collection;
+const uri = "mongodb+srv://admin:" + process.env.SECRET_KEY + "@mflix.5cbzlet.mongodb.net/?retryWrites=true&w=majority";
+const mongoClient = new MongoClient(uri);
 
-    const client = new MongoClient(uri)
-    console.log("connecting to database")
+async function connectToCollection(userId) {
     try {
-        await client.connect()
-        user1 = await client.db('Todo').collection('User1')       //creates collection handle used for CRUD
-        console.log("collection handle successfully created")
+      await mongoClient.connect();
+      const database = mongoClient.db('Todo');
+  
+      // Check if collection exists
+      const collections = await database.listCollections().toArray();
+      const collectionExists = collections.some((collection) => collection.name === userId);
+  
+      if (collectionExists) {
+        console.log(`Collection ${userId} already exists.`);
+      } else {
+        // Create new collection
+        await database.createCollection(userId);
+        console.log(`Collection ${userId} created.`);
+      }
+  
+      // Connect to the collection
+      collection = database.collection(userId);
+      console.log(`Connected to collection ${collection.collectionName}.`);
+  
+    } catch (e) {
+      console.error(e);
     }
-    catch (e) {
-        console.log("error occurred connecting to db: " + e)
-    }
-
 }
 
-addTask()
+//addTask()
 //.catch(console.error)
 
 
@@ -216,11 +241,25 @@ app.all('/', function(req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
     next();
    });
+   app.all('/auth', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+    next();
+   });
+   app.all('/tasks', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+    next();
+   });
 
 //gets all live tasks from server
-app.get('/', async (req, res) => {
+app.get('/tasks', async (req, res) => {
     try {
-        let allTasks = await user1.find({}).toArray();
+        let allTasks = await collection.find({}).toArray();
         return res.status(200).json(allTasks);
     }
     catch (e) {
@@ -245,12 +284,25 @@ app.put('/password', async (req, res) => {
     }
 })
 
+app.post('/auth', async (req, res) => {
+    try {
+        let id = await verify(req.body.credential).catch(console.error);
+        console.log(id);
+        await connectToCollection(id);
+        return res.status(200).json({status: 'it worked'});
+    }
+    catch (e) {
+        console.log("auth error: " + e);
+        return res.status(404).json({ status: "post error" });
+    }
+})
+
 app.post('/', async (req, res) => {       
     let task = req.body;
     let {name, desc, due, priority, maxPriority, estimatedTime, switchTimes} = task;
     console.log(req.body);
     try { 
-        let insertResult = await user1.insertOne(
+        let insertResult = await collection.insertOne(
             {name, desc, due, priority, maxPriority, estimatedTime, switchTimes});
         console.log('task added successfully to db');
         return res.status(200).json({ _id: insertResult.insertedId});
@@ -263,7 +315,7 @@ app.post('/', async (req, res) => {
 
 app.delete('/', async (req, res) => {
     try{
-        let deleteResult = await user1.deleteOne({_id: ObjectId(req.body.id)});
+        let deleteResult = await collection.deleteOne({_id: ObjectId(req.body.id)});
         console.log('number of tasks deleted: ' + deleteResult.deletedCount);
         return res.status(200).json({status:'finished'});
     }

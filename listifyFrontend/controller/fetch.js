@@ -2,7 +2,7 @@ export {getAllTasks, saveTask, deleteFromDb};
 
 async function getAllTasks(){
     try{
-        let tasksObject = await fetch('http://localhost:3000', {mode:'cors'});
+        let tasksObject = await fetch(`${import.meta.env.VITE_ALIAS}/tasks`, {mode:'cors'});
         let newObj = await tasksObject.json();
         return newObj;
     }
@@ -13,7 +13,7 @@ async function getAllTasks(){
 
 async function saveTask(task){
     try{
-        let taskSent = await fetch('http://localhost:3000', 
+        let taskSent = await fetch(`${import.meta.env.VITE_ALIAS}`,
             {method:'POST',
             mode:'cors',
             headers:{
@@ -32,7 +32,7 @@ async function saveTask(task){
 
 async function deleteFromDb(id){
     try{
-        let taskSent = await fetch('http://localhost:3000', 
+        let taskSent = await fetch(`${import.meta.env.VITE_ALIAS}`, 
             {method:'DELETE',
             mode:'cors',
             headers:{

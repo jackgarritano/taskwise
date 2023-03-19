@@ -27,5 +27,5 @@ services:
     volumes:
       - type: bind
         source: ./listifyFrontend
-        target: /app
+        target: /app/
       - /app/node_modules
