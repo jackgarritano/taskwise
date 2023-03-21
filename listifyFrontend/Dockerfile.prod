@@ -2,7 +2,7 @@
 FROM node:latest AS build
 
 #Set environment variable
-ENV VITE_ALIAS=http://localhost:3000
+ENV VITE_ALIAS=https://3br6fwjqkb.us-east-2.awsapprunner.com
 
 # Set the working directory to /app
 WORKDIR /app

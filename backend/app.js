@@ -255,7 +255,24 @@ app.all('/', function(req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
     next();
    });
+   app.all('/testlogin', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+    next();
+   });
 
+
+app.get('/', (req, res) => {
+    try {
+        return res.status(200).json({status: "it works"});
+    }
+    catch (e) {
+        console.log("get error: " + e)
+        return res.status(404).json({ status: "get error" })
+    }
+})   
 //gets all live tasks from server
 app.get('/tasks', async (req, res) => {
     try {
@@ -287,6 +304,19 @@ app.put('/password', async (req, res) => {
 app.post('/auth', async (req, res) => {
     try {
         let id = await verify(req.body.credential).catch(console.error);
+        console.log(id);
+        await connectToCollection(id);
+        return res.status(200).json({status: 'it worked'});
+    }
+    catch (e) {
+        console.log("auth error: " + e);
+        return res.status(404).json({ status: "post error" });
+    }
+})
+
+app.get('/testlogin', async (req, res) => {
+    try {
+        let id = 'User1';
         console.log(id);
         await connectToCollection(id);
         return res.status(200).json({status: 'it worked'});
