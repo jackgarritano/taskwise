@@ -546,11 +546,41 @@ button{
 /*end of add button styling*/
 
 /*beginning of login screen styling*/
+.loginWrapper{
+  height:100vh;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .loginBox{
-  width:500px;
+  width:400px;
   height:300px;
-  background-color: red;
+  background-color: #212225;
   border-radius: 10px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#g_id_onload{
+  display:none;
+}
+.g_id_signin{
+  display:flex;
+  justify-content: center;
+}
+.guestLogin{
+  width:184px;
+  border-radius: 4px;
+  margin-top:30px;
+  color: #DCDDDE;
+  text-align:center;
+  border: 1px solid #44464C;
+}
+.guestLogin:hover{
+  background-color:#41444A;
+  cursor:pointer;
 }
 /*end of login screen styling*/
 

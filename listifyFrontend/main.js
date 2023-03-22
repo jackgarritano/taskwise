@@ -11,7 +11,6 @@ import { setTimers } from './controller/switchHandler';
 import { initLoginScreen } from './views/loginScreen';
 
 window.handleAuth = async (a) => {
-    console.log(a);
     try{
       let taskSent = await fetch(`${import.meta.env.VITE_ALIAS}/auth`,
         {method:'POST',

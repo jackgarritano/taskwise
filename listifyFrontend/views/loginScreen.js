@@ -4,10 +4,11 @@ export {initLoginScreen};
 function initLoginScreen(){
     document.querySelector('body').innerHTML = '';
     let loginBox = document.createElement('div');
-    loginBox.classList.add('loginBox');
+    loginBox.classList.add('loginWrapper');
     document.querySelector('body').append(loginBox);
 
     loginBox.innerHTML = `
+    <div class="loginBox">
         <div id="g_id_onload"
             data-client_id="334783994184-v63tsepd3hfgg4534l9v74r3nqtv1t6l.apps.googleusercontent.com"
             data-context="signin"
@@ -25,7 +26,8 @@ function initLoginScreen(){
             data-size="large"
             data-logo_alignment="left">
         </div>
-        <div class="guestLogin" style="border: 1px solid red">Test login button updated</div>
+        <div class="guestLogin">Guest mode</div>
+        </div>
         `;
 
         addLoginListeners();

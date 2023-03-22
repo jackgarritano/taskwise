@@ -1,4 +1,8 @@
 export {addLoginListeners};
+import { initForm, renderAddButton } from '../views/formViewHandler';
+import { getAllTasks } from './fetch';
+import { renderTask } from '../views/renderTask';
+import { addToList } from './taskList';
 
 function addLoginListeners(){
     document.querySelector('.guestLogin').addEventListener('click', async (e)=>{
