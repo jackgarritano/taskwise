@@ -9,6 +9,9 @@ function addInteractvity(taskNode){
 }
 
 async function deleteTask(e){
+    e.stopPropagation();
+    console.log('delete task ran');
+    console.log('e: ' + JSON.stringify(e));
     let index = getCheckIndex(e.target)
     let id = getId(index);
     try{

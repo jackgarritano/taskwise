@@ -4,7 +4,7 @@ import clockLogoSvg from '../assets/clockLogo.svg';
 import priLogoSvg from '../assets/priLogo.svg';
 import calLogoSvg from '../assets/calLogo.svg';
 import realPlusLogoSvg from '../assets/realPlusLogo.svg';
-export {renderTask, formatDate};
+export {renderTask, formatDate, formatTimeForForm};
 function renderTask(taskObj, index){
     let {name, desc, due, priority, maxPriority, estimatedTime, switchTimes} = taskObj;
     let numLines = 0;
@@ -121,6 +121,25 @@ function formatTime(ms){
         let hrs = ms % 86400000;
         hrs = Math.round(hrs / 3600000);
         return formatDays(days) + ', ' + formatHours(hrs);
+    }
+    else if(ms >= 3600000){
+        let hrs = Math.round((ms * 10)/3600000) / 10;
+        return formatHours(hrs);
+    }
+    else{
+        let mins = Math.ceil(ms / 60000);
+        return formatMinutes(mins);
+    }
+}
+
+function formatTimeForForm(ms){
+    let timeStr = '';
+    if(ms == ''){
+        return timeStr;
+    }
+    else if(ms >= 86400000){
+        let days = Math.floor(ms / 86400000);
+        return formatDays(days);
     }
     else if(ms >= 3600000){
         let hrs = Math.round((ms * 10)/3600000) / 10;
