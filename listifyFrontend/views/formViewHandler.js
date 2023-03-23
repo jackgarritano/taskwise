@@ -7,7 +7,7 @@ import {
 import grayPlusSvg from '../assets/plusLogo.svg';
 import bluePlusSvg from '../assets/plusLogoBlue.svg';
 import { renderEditor } from "./renderForm";
-export { initForm, derenderForm, renderAddButton };
+export { initForm, initEditForm, derenderForm, renderAddButton };
 
 let formElements;
 let highestUnavailable;
@@ -28,7 +28,7 @@ function initForm() {
     allTasks.prepend(formElements.addForm);
 
    document.querySelector('body').append(editorElements.addForm); //temp
-   document.querySelector('.overlay').classList.add('dimScreen');
+   document.querySelector('.overlay').classList.add('dimScreen'); //temp
 
 
     formElements.taskName.focus();
@@ -102,14 +102,98 @@ function initForm() {
     formElements.addForm.addEventListener('submit', formSubmission);
 } //end of init fn
 
+function initEditForm(){
+    onlyPasteText();
+    formElements = renderEditor();
+
+    document.querySelector('body').append(formElements.addForm);
+    document.querySelector('.overlay').classList.add('dimScreen');
+
+    formElements.taskName.focus();
+    renderCalendar(formElements.dueDate);
+    observeTextFields(checkIfAddAllowed);
+
+    horizCenterPopups(formElements.errorMessage);
+    hideErrorMessage();
+
+    formElements.dueDate.addEventListener('click', (e) => {
+        let calendarHolder = document.querySelector('.calendarHolder')
+        if (e.target.classList.contains('dateCircle') || e.target.parentElement.classList.contains('dateCircle')) {
+            calendarHolder.classList.add('hidden');
+        }
+        else if (calendarHolder.classList.contains('hidden')) {
+            calendarHolder.classList.toggle('hidden');
+            closePopupListener();
+        }
+    })
+
+    formElements.estTime.addEventListener('click', () => {
+        let estTime = document.querySelector('.timePickerHolder')
+        if (estTime.classList.contains('hidden')) {
+            estTime.classList.toggle('hidden');
+            closePopupListener();
+        }
+    })
+
+    formElements.priority.addEventListener('click', (e) => {
+        let priorityPicker = document.querySelectorAll('.priorityPickerHolder')[0];
+        if (regPriorityButtonClicked(e.target)) {
+            disableMaxPriority(e.target.dataset.number - 1);
+            checkIfAddAllowed();
+            priorityPicker.classList.add('hidden');
+        }
+        else if (priorityPicker.classList.contains('hidden')) {
+            priorityPicker.classList.toggle('hidden');
+            closePopupListener();
+        }
+    })
+    formElements.maxPriority.addEventListener('click', (e) => {
+        let maxPriorityPicker = document.querySelectorAll('.priorityPickerHolder')[1];
+        if (maxPriorityButtonClicked(e.target, highestUnavailable)) {
+            maxPriorityPicker.classList.add('hidden');
+        }
+        else if (maxPriorityPicker.classList.contains('hidden')) {
+            maxPriorityPicker.classList.toggle('hidden');
+            closePopupListener();
+        }
+    })
+    formElements.estTime.querySelectorAll('.textInput').forEach((el) => {
+        el.addEventListener('focus', (e) => {
+            e.target.select();
+        })
+    })
+
+    formElements.cancel.addEventListener('click', derenderEditForm);
+
+    const valueObserver = new MutationObserver(checkOnValueMutation);
+    valueObserver.observe(formElements.dueDate.querySelector('input[name=dateInput]'), { attributes: true });
+    valueObserver.observe(formElements.maxPriority.querySelector('input[name=maxPriInput]'), { attributes: true });
+
+    formElements.estTime.querySelectorAll('input').forEach((el) => {
+        validateTimeInputs(el);
+    })
+
+    formElements.addTask.addEventListener('mouseover', addTaskHoverErr);
+
+    document.addEventListener('click', hideErrorMessage);
+
+    formElements.addForm.addEventListener('submit', formSubmission);
+}
+
 function hideErrorMessage() {
     formElements.errorMessage.style.top = `calc(100% - ${formElements.errorMessage.clientHeight}px)`;
 }
 
-function derenderForm() { //this needs to also render the addTask button in its place
+function derenderForm() {
     document.removeEventListener('click', hideErrorMessage);
     document.querySelector('.addForm').remove();
     renderAddButton();
+}
+
+function derenderEditForm() {
+    document.removeEventListener('click', hideErrorMessage);
+    document.querySelector('.editForm').remove();
+    document.querySelector('.overlay').classList.remove('dimScreen');
 }
 
 function renderAddButton() {
