@@ -192,6 +192,7 @@ body{
   width:100%;
   align-items: center;
   flex-direction: column;
+  background-color: #37393e;
 }
 .allTasks{
   width:clamp(400px, 50%, 700px);
@@ -592,7 +593,13 @@ button{
   height:100vh;
 }
 .dimScreen{
-  filter: brightness(50%);
+  -webkit-filter: blur(4px) brightness(50%);
+  -moz-filter: blur(4px) brightness(50%);
+  -o-filter: blur(4px) brightness(50%);
+  -ms-filter: blur(4px) brightness(50%);
+  filter: blur(4px) brightness(50%);
+  filter: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="blur"><feGaussianBlur stdDeviation="4"/></filter></svg>#blur') brightness(50%);
+  filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='4') progid:DXImageTransform.Microsoft.Brightness(50%);
 }
 .editForm{
   width:clamp(400px, 50%, 700px);
