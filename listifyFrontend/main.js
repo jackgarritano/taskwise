@@ -4,6 +4,7 @@ import { initForm, renderAddButton } from './views/formViewHandler';
 import { renderTask } from './views/renderTask';
 import { addToList } from './controller/taskList';
 import { initLoginScreen } from './views/loginScreen';
+import { renderEditor } from './views/renderForm';
 
 window.handleAuth = async (a) => {
     try{
@@ -17,7 +18,7 @@ window.handleAuth = async (a) => {
         })
       let receivedBody = await taskSent.json();
       if(receivedBody.status == 'it worked'){
-        document.querySelector('body').innerHTML = '<div class="allTasks">'
+        document.querySelector('body').innerHTML = '<div class="overlay"><div class="allTasks"></div></div>'
         renderAddButton();
         getAllTasks().then((tasks) => {
             tasks.forEach((el)=>{
@@ -32,6 +33,7 @@ window.handleAuth = async (a) => {
   }
 
 initLoginScreen();
+
 
 
 

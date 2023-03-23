@@ -6,6 +6,7 @@ import {
 } from "../controller/formHandler";
 import grayPlusSvg from '../assets/plusLogo.svg';
 import bluePlusSvg from '../assets/plusLogoBlue.svg';
+import { renderEditor } from "./renderForm";
 export { initForm, derenderForm, renderAddButton };
 
 let formElements;
@@ -18,8 +19,18 @@ function initForm() {
 
     onlyPasteText();
     formElements = renderForm();
+
+
+    let editorElements = renderEditor();  //temp
+
+
     let allTasks = document.querySelector('.allTasks');
     allTasks.prepend(formElements.addForm);
+
+   document.querySelector('body').append(editorElements.addForm); //temp
+   document.querySelector('.overlay').classList.add('dimScreen');
+
+
     formElements.taskName.focus();
     renderCalendar(formElements.dueDate);
     observeTextFields(checkIfAddAllowed);
