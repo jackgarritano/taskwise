@@ -18,7 +18,6 @@
 }
 /*start of calendar styling*/
 body{
-    background-color: #37393e;
 	display:flex;
   -webkit-font-smoothing: antialiased;
   font-smooth: always;
@@ -191,12 +190,10 @@ body{
 /*beginning of form styling*/
 body{
   width:100%;
-  display:flex;
   align-items: center;
   flex-direction: column;
 }
 .allTasks{
-  /*width:100%;*/
   width:clamp(400px, 50%, 700px);
   display:flex;
   flex-direction: column;
@@ -583,6 +580,40 @@ button{
   cursor:pointer;
 }
 /*end of login screen styling*/
+/*start of edit form styling*/
+ 
+.overlay{
+  background-color: #37393e;
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+  position:fixed;
+  width:100vw;
+  height:100vh;
+}
+.dimScreen{
+  filter: brightness(50%);
+}
+.editForm{
+  width:clamp(400px, 50%, 700px);
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  background-color: #303136;
+  border-radius: 10px;
+  color:#97989D;
+  line-height: 18px;
+  font-size:13px;
+  position:absolute;
+  top:40%;
+  /* -webkit-filter: none;
+  -moz-filter: none;
+  -o-filter: none;
+  -ms-filter: none;
+  filter: none; */
+}
+/*end of edit form styling*/
 
 .hidden{
   display:none;

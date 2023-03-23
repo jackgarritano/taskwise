@@ -2,7 +2,7 @@ import { renderCalendar } from "./calendar";
 import priLogoSvg from '../assets/priLogo.svg';
 import calLogoSvg from '../assets/calLogo.svg';
 import clockLogoSvg from '../assets/clockLogo.svg';
-export {renderForm};
+export {renderForm, renderEditor};
 
 function renderForm(){
     let addTask = renderAddTask();
@@ -81,6 +81,89 @@ function renderForm(){
         bottomButtons,
         addForm,
         errorMessage,
+    }
+}
+
+function renderEditor(){
+    let addTask = renderAddTask();
+    let cancel = renderCancel();
+    let maxPriorityPickerHolder = renderPriorityPicker();
+    let maxPriority = renderMaxPriority();
+    let priorityPickerHolder = renderPriorityPicker();
+    let priority = renderPriority();
+    let dueDate = renderDueDate();
+    let estTime = renderEstTime();
+    let timePickerHolder = renderTimePicker();
+    let description = renderDescription();
+    let descriptionInput = renderDescriptionInput();
+    let descriptionLabel = renderDescriptionLabel();
+    let taskName = renderTaskName();
+    let taskNameInput = renderTaskNameInput();
+    let taskNameLabel = renderTaskNameLabel();
+    let errorMessage = renderErrorMessage();
+
+    let overlay = document.createElement('div');
+    let rightSideButtons = document.createElement('div');
+    let options = document.createElement('div');
+    let bottomButtons = document.createElement('div');
+    let addForm = document.createElement('form');
+    let maxPriButtons = maxPriorityPickerHolder.querySelectorAll('.priorityPicker');
+    let priButtons = priorityPickerHolder.querySelectorAll('.priorityPicker');
+
+    overlay.classList.add('dimScreen');
+    maxPriButtons.forEach((el)=>{
+        el.classList.add('maxPriorityButton');
+    })
+    priButtons.forEach((el)=>{
+        el.classList.add('regPriorityButton');
+    })
+    rightSideButtons.classList.add('rightSideButtons');
+    options.classList.add('options');
+    bottomButtons.classList.add('bottomButtons');
+    addForm.classList.add('editForm');
+
+    addForm.setAttribute('action', '');
+    addForm.setAttribute('method', 'post');
+
+    rightSideButtons.append(cancel);
+    rightSideButtons.append(addTask);
+    estTime.append(timePickerHolder);
+    options.append(estTime);
+    options.append(dueDate);
+    priority.append(priorityPickerHolder);
+    options.append(priority);
+    maxPriority.append(maxPriorityPickerHolder);
+    options.append(maxPriority);
+    bottomButtons.append(options);
+    bottomButtons.append(rightSideButtons);
+    addForm.append(taskNameLabel);
+    addForm.append(taskNameInput);
+    addForm.append(taskName);
+    addForm.append(descriptionLabel);
+    addForm.append(descriptionInput);
+    addForm.append(description);
+    addForm.append(bottomButtons);
+    addForm.append(errorMessage);
+
+    return {
+        addTask,
+        cancel,
+        maxPriority, 
+        priority,
+        dueDate,
+        estTime,
+        description,
+        descriptionInput,
+        descriptionLabel,
+        taskName,
+        taskNameInput,
+        taskNameLabel,
+        rightSideButtons,
+        options,
+        bottomButtons,
+        addForm,
+        errorMessage,
+        overlay,
     }
 }
 
