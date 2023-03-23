@@ -1,9 +1,11 @@
 import { deleteFromList, getId } from "./taskList";
 import { deleteFromDb } from "./fetch";
+import { initEditForm } from "../views/formViewHandler";
 export {addInteractvity};
 
 function addInteractvity(taskNode){
     taskNode.checkCircle.addEventListener('click', deleteTask);
+    taskNode.task.addEventListener('click', initEditForm);
 }
 
 async function deleteTask(e){
