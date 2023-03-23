@@ -30,7 +30,9 @@ function regPriorityButtonClicked(target){
     if(document.querySelector('input[name="maxPriInput"]').value != '' &&
       target.dataset.number > document.querySelector('input[name="maxPriInput"]').value){
       document.querySelector('input[name="maxPriInput"]').value = target.dataset.number;
+      document.querySelector('.maxPriChoice > span').textContent = target.dataset.number;
     }
+    document.querySelector('.priChoice > span').textContent = target.dataset.number;
     return true;
   }
 }
@@ -41,6 +43,7 @@ function maxPriorityButtonClicked(target, highestUnavailable){
   }
   else{
     document.querySelector('input[name="maxPriInput"]').setAttribute('value', target.dataset.number);
+    document.querySelector('.maxPriChoice > span').textContent = target.dataset.number;
     return true;
   }
 }

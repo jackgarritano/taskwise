@@ -1,3 +1,4 @@
+import { formatDate } from "./renderTask";
 export {renderCalendar, clearCal};
 
 //todo: fix inconsistent spacing above and below 'today' and 'tomorrow' buttons
@@ -11,6 +12,7 @@ function renderCalendar (parent){
     var month = d.getMonth() - 1;
   
     let dateInput = document.querySelector('input[name=dateInput]');
+    let dateText = document.querySelector('.dueDateChoice > span');
     //const body = document.querySelector('body');
     const calendarHolder = document.createElement('div');
     calendarHolder.classList.add('calendarHolder', 'hidden', 'popup');
@@ -230,6 +232,7 @@ function renderCalendar (parent){
             clearRange();
             item.classList.add('selected__startEnd');
             dateInput.value = item.getAttribute("data-date");
+            dateText.textContent = formatDate(dateInput.value);
         });
       });
     }

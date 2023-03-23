@@ -4,7 +4,7 @@ import clockLogoSvg from '../assets/clockLogo.svg';
 import priLogoSvg from '../assets/priLogo.svg';
 import calLogoSvg from '../assets/calLogo.svg';
 import realPlusLogoSvg from '../assets/realPlusLogo.svg';
-export {renderTask};
+export {renderTask, formatDate};
 function renderTask(taskObj, index){
     let {name, desc, due, priority, maxPriority, estimatedTime, switchTimes} = taskObj;
     let numLines = 0;
