@@ -405,6 +405,7 @@ button{
   left:calc(50% - 56.72px / 2);
   background-color: #2D2E33;
   border: 1px solid #5d5d5d;
+  min-width: 56.4px;
 }
 .priorityPicker{
   padding:2.5px;
