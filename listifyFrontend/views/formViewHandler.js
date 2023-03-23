@@ -7,6 +7,7 @@ import {
 import grayPlusSvg from '../assets/plusLogo.svg';
 import bluePlusSvg from '../assets/plusLogoBlue.svg';
 import { renderEditor } from "./renderForm";
+import { formatTimeForForm } from "./renderTask";
 export { initForm, initEditForm, derenderForm, renderAddButton };
 
 let formElements;
@@ -95,6 +96,7 @@ function initForm() {
 } //end of init fn
 
 function initEditForm(){
+    console.log('edit form inited');
     onlyPasteText();
     formElements = renderEditor();
 
@@ -253,6 +255,9 @@ function closePopupListener(e) {
     let closePopup = function (e) {
         if (!popup.contains(e.target)) {
             popup.classList.add('hidden');
+            if(popup.classList.contains('timePickerHolder')){
+                showSelectedTime();
+            }
             removeClosePopupListener();
         }
     }
@@ -260,6 +265,16 @@ function closePopupListener(e) {
         document.removeEventListener('click', closePopup, true);
     }
     document.addEventListener('click', closePopup, true)
+}
+
+function showSelectedTime(){
+    let estimatedMins = parseInt(document.querySelector('input[name=estMinutes').value);
+    let estimatedHours = parseInt(document.querySelector('input[name=estHours').value);
+    let estimatedDays = parseInt(document.querySelector('input[name=estDays').value);
+    let estimatedMs = (60000 * estimatedMins) + (3600000 * estimatedHours) + (86400000 * estimatedDays);
+    if(estimatedMs != 0){   
+        document.querySelector('.estTimeChoice > span').textContent = formatTimeForForm(estimatedMs);
+    }
 }
 
 function disableMaxPriority(maxDisabled) {

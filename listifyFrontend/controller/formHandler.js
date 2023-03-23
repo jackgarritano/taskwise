@@ -197,7 +197,6 @@ function constructTask(){
   let estimatedMins = parseInt(document.querySelector('input[name=estMinutes').value);
   let estimatedHours = parseInt(document.querySelector('input[name=estHours').value);
   let estimatedDays = parseInt(document.querySelector('input[name=estDays').value);
-  console.log("estmins type: " + typeof estimatedMins);
   let estimatedMs = (60000 * estimatedMins) + (3600000 * estimatedHours) + (86400000 * estimatedDays);
 
   let task = taskFactory(name, desc, due, priority, maxPriority, estimatedMs);
