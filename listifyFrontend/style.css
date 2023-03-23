@@ -421,6 +421,7 @@ button{
   color:#FFFFFF;
   line-height: 14px;
   position:relative;
+  cursor:pointer;
 }
 .checkCircle{
   width:20px;
