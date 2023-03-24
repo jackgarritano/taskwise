@@ -11,6 +11,7 @@ import { formatTimeForForm } from "./renderTask";
 export { initForm, initEditForm, derenderForm, renderAddButton };
 
 let formElements;
+let inactiveFormElements;
 let highestUnavailable;
 
 function initForm() {
@@ -20,6 +21,7 @@ function initForm() {
 
     onlyPasteText();
     formElements = renderForm();
+    inactiveFormElements = formElements;
 
     let allTasks = document.querySelector('.allTasks');
     allTasks.prepend(formElements.addForm);
@@ -181,6 +183,8 @@ function hideErrorMessage() {
 function derenderForm() {
     document.removeEventListener('click', hideErrorMessage);
     document.querySelector('.addForm').remove();
+    inactiveFormElements = null;
+    formElements = null;
     renderAddButton();
 }
 
@@ -188,6 +192,9 @@ function derenderEditForm() {
     document.removeEventListener('click', hideErrorMessage);
     document.querySelector('.editForm').remove();
     document.querySelector('.overlay').classList.remove('dimScreen');
+    if(inactiveFormElements){
+        formElements = inactiveFormElements;
+    }
 }
 
 function renderAddButton() {
