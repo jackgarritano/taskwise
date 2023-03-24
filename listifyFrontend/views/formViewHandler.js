@@ -28,13 +28,13 @@ function initForm() {
 
     formElements.taskName.focus();
     renderCalendar(formElements.dueDate);
-    observeTextFields(checkIfAddAllowed);
+    observeTextFields(checkIfAddAllowed, formElements.addForm);
 
     horizCenterPopups(formElements.errorMessage);
     hideErrorMessage();
 
     formElements.dueDate.addEventListener('click', (e) => {
-        let calendarHolder = document.querySelector('.calendarHolder')
+        let calendarHolder = formElements.addForm.querySelector('.calendarHolder')
         if (e.target.classList.contains('dateCircle') || e.target.parentElement.classList.contains('dateCircle')) {
             calendarHolder.classList.add('hidden');
         }
@@ -45,7 +45,7 @@ function initForm() {
     })
 
     formElements.estTime.addEventListener('click', () => {
-        let estTime = document.querySelector('.timePickerHolder')
+        let estTime = formElements.addForm.querySelector('.timePickerHolder')
         if (estTime.classList.contains('hidden')) {
             estTime.classList.toggle('hidden');
             closePopupListener();
@@ -53,8 +53,8 @@ function initForm() {
     })
 
     formElements.priority.addEventListener('click', (e) => {
-        let priorityPicker = document.querySelectorAll('.priorityPickerHolder')[0];
-        if (regPriorityButtonClicked(e.target)) {
+        let priorityPicker = formElements.addForm.querySelectorAll('.priorityPickerHolder')[0];
+        if (regPriorityButtonClicked(e.target, formElements.addForm)) {
             disableMaxPriority(e.target.dataset.number - 1);
             checkIfAddAllowed();
             priorityPicker.classList.add('hidden');
@@ -65,8 +65,8 @@ function initForm() {
         }
     })
     formElements.maxPriority.addEventListener('click', (e) => {
-        let maxPriorityPicker = document.querySelectorAll('.priorityPickerHolder')[1];
-        if (maxPriorityButtonClicked(e.target, highestUnavailable)) {
+        let maxPriorityPicker = formElements.addForm.querySelectorAll('.priorityPickerHolder')[1];
+        if (maxPriorityButtonClicked(e.target, highestUnavailable, formElements.addForm)) {
             maxPriorityPicker.classList.add('hidden');
         }
         else if (maxPriorityPicker.classList.contains('hidden')) {
@@ -94,11 +94,12 @@ function initForm() {
 
     document.addEventListener('click', hideErrorMessage);
 
-    formElements.addForm.addEventListener('submit', formSubmission);
+    formElements.addForm.addEventListener('submit', (e) => {
+        formSubmission(e, formElements.addForm);
+        });
 } //end of init fn
 
 function initEditForm(){
-    console.log('edit form inited');
     onlyPasteText();
     formElements = renderEditor();
 
@@ -107,13 +108,13 @@ function initEditForm(){
 
     formElements.taskName.focus();
     renderCalendar(formElements.dueDate);
-    observeTextFields(checkIfAddAllowed);
+    observeTextFields(checkIfAddAllowed, formElements.addForm);
 
     horizCenterPopups(formElements.errorMessage);
     hideErrorMessage();
 
     formElements.dueDate.addEventListener('click', (e) => {
-        let calendarHolder = document.querySelector('.calendarHolder')
+        let calendarHolder = formElements.addForm.querySelector('.calendarHolder')
         if (e.target.classList.contains('dateCircle') || e.target.parentElement.classList.contains('dateCircle')) {
             calendarHolder.classList.add('hidden');
         }
@@ -124,7 +125,7 @@ function initEditForm(){
     })
 
     formElements.estTime.addEventListener('click', () => {
-        let estTime = document.querySelector('.timePickerHolder')
+        let estTime = formElements.addForm.querySelector('.timePickerHolder')
         if (estTime.classList.contains('hidden')) {
             estTime.classList.toggle('hidden');
             closePopupListener();
@@ -132,8 +133,8 @@ function initEditForm(){
     })
 
     formElements.priority.addEventListener('click', (e) => {
-        let priorityPicker = document.querySelectorAll('.priorityPickerHolder')[0];
-        if (regPriorityButtonClicked(e.target)) {
+        let priorityPicker = formElements.addForm.querySelectorAll('.priorityPickerHolder')[0];
+        if (regPriorityButtonClicked(e.target, formElements.addForm)) {
             disableMaxPriority(e.target.dataset.number - 1);
             checkIfAddAllowed();
             priorityPicker.classList.add('hidden');
@@ -144,8 +145,8 @@ function initEditForm(){
         }
     })
     formElements.maxPriority.addEventListener('click', (e) => {
-        let maxPriorityPicker = document.querySelectorAll('.priorityPickerHolder')[1];
-        if (maxPriorityButtonClicked(e.target, highestUnavailable)) {
+        let maxPriorityPicker = formElements.addForm.querySelectorAll('.priorityPickerHolder')[1];
+        if (maxPriorityButtonClicked(e.target, highestUnavailable, formElements.addForm)) {
             maxPriorityPicker.classList.add('hidden');
         }
         else if (maxPriorityPicker.classList.contains('hidden')) {
@@ -222,7 +223,7 @@ function renderAddButton() {
 
 function addTaskHoverErr(e) {
     if (e.target.classList.contains('dimmed')) {
-        showErrorMessage(getErrorMessage());
+        showErrorMessage(getErrorMessage(formElements.addForm));
     }
 }
 
@@ -233,8 +234,8 @@ function showErrorMessage(message) {
 }
 
 function checkIfAddAllowed() {
-    if (document.querySelector('input[name=taskName]').value != '' &&
-        document.querySelector('input[name=priInput]').value != '' &&
+    if (formElements.addForm.querySelector('input[name=taskName]').value != '' &&
+        formElements.addForm.querySelector('input[name=priInput]').value != '' &&
         (formElements.dueDate.querySelector('input[name=dateInput]').value != '' ||
             formElements.maxPriority.querySelector('input[name=maxPriInput]').value == '')) {
         formElements.addTask.classList.remove('dimmed');
@@ -253,7 +254,7 @@ function checkOnValueMutation(mutations) {
 
 function closePopupListener(e) {
     let popup;
-    let popups = document.querySelectorAll('.popup');
+    let popups = formElements.addForm.querySelectorAll('.popup');
     popups.forEach((item) => {
         if (!item.classList.contains('hidden')) {
             popup = item;
@@ -275,12 +276,12 @@ function closePopupListener(e) {
 }
 
 function showSelectedTime(){
-    let estimatedMins = parseInt(document.querySelector('input[name=estMinutes').value);
-    let estimatedHours = parseInt(document.querySelector('input[name=estHours').value);
-    let estimatedDays = parseInt(document.querySelector('input[name=estDays').value);
+    let estimatedMins = parseInt(formElements.addForm.querySelector('input[name=estMinutes').value);
+    let estimatedHours = parseInt(formElements.addForm.querySelector('input[name=estHours').value);
+    let estimatedDays = parseInt(formElements.addForm.querySelector('input[name=estDays').value);
     let estimatedMs = (60000 * estimatedMins) + (3600000 * estimatedHours) + (86400000 * estimatedDays);
     if(estimatedMs != 0){   
-        document.querySelector('.estTimeChoice > span').textContent = formatTimeForForm(estimatedMs);
+        formElements.addForm.querySelector('.estTimeChoice > span').textContent = formatTimeForForm(estimatedMs);
     }
 }
 

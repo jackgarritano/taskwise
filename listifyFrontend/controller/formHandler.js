@@ -21,44 +21,44 @@ inputText.forEach((item)=>{
       });
     })}
 
-function regPriorityButtonClicked(target){
+function regPriorityButtonClicked(target, formNode){
   if(!target.classList.contains('regPriorityButton')){
     return false;
   }
   else{
-    document.querySelector('input[name="priInput"]').setAttribute('value', target.dataset.number);
-    if(document.querySelector('input[name="maxPriInput"]').value != '' &&
-      target.dataset.number > document.querySelector('input[name="maxPriInput"]').value){
-      document.querySelector('input[name="maxPriInput"]').value = target.dataset.number;
-      document.querySelector('.maxPriChoice > span').textContent = target.dataset.number;
+    formNode.querySelector('input[name="priInput"]').setAttribute('value', target.dataset.number);
+    if(formNode.querySelector('input[name="maxPriInput"]').value != '' &&
+      target.dataset.number > formNode.querySelector('input[name="maxPriInput"]').value){
+      formNode.querySelector('input[name="maxPriInput"]').value = target.dataset.number;
+      formNode.querySelector('.maxPriChoice > span').textContent = target.dataset.number;
     }
-    document.querySelector('.priChoice > span').textContent = target.dataset.number;
+    formNode.querySelector('.priChoice > span').textContent = target.dataset.number;
     return true;
   }
 }
 
-function maxPriorityButtonClicked(target, highestUnavailable){
+function maxPriorityButtonClicked(target, highestUnavailable, formNode){
   if(!(target.classList.contains('maxPriorityButton') && target.dataset.number > highestUnavailable)){
     return false;
   }
   else{
-    document.querySelector('input[name="maxPriInput"]').setAttribute('value', target.dataset.number);
-    document.querySelector('.maxPriChoice > span').textContent = target.dataset.number;
+    formNode.querySelector('input[name="maxPriInput"]').setAttribute('value', target.dataset.number);
+    formNode.querySelector('.maxPriChoice > span').textContent = target.dataset.number;
     return true;
   }
 }
 
-function observeTextFields(checkIfAddAllowed){
-  let taskName = document.querySelector('.title');
-  let description = document.querySelector('.description');
-  let estimatedMins = document.querySelector('input[name=estMinutes');
-  let estimatedHours = document.querySelector('input[name=estHours');
-  let estimatedDays = document.querySelector('input[name=estDays');
+function observeTextFields(checkIfAddAllowed, formNode){
+  let taskName = formNode.querySelector('.title');
+  let description = formNode.querySelector('.description');
+  let estimatedMins = formNode.querySelector('input[name=estMinutes');
+  let estimatedHours = formNode.querySelector('input[name=estHours');
+  let estimatedDays = formNode.querySelector('input[name=estDays');
 
   function gatherTitleInput(){
     let modifiedElement = taskName;
     let input = modifiedElement.innerText.replace(/\n/g, '');
-    let inputField = document.querySelector(`#${modifiedElement.dataset.inputType}`);
+    let inputField = formNode.querySelector(`#${modifiedElement.dataset.inputType}`);
     inputField.setAttribute('value', input);
     checkIfAddAllowed();
   }
@@ -66,7 +66,7 @@ function observeTextFields(checkIfAddAllowed){
   function gatherDescInput(){
     let modifiedElement = description;
     let input = modifiedElement.innerText.replace(/\n/g, '');
-    let inputField = document.querySelector(`#${modifiedElement.dataset.inputType}`);
+    let inputField = formNode.querySelector(`#${modifiedElement.dataset.inputType}`);
     inputField.setAttribute('value', input);
   }
 
@@ -118,22 +118,22 @@ function validateTimeInputs(el){
   })
 }
 
-function getErrorMessage(){
+function getErrorMessage(formNode){
   let firstMessage = true;
   let message = '';
-  if(document.querySelector('input[name=taskName]').value == ''){
+  if(formNode.querySelector('input[name=taskName]').value == ''){
       message += "Task name is required";
       firstMessage = false;
   }
-  if(document.querySelector('input[name=priInput]').value == ''){
+  if(formNode.querySelector('input[name=priInput]').value == ''){
       if(!firstMessage){
           message += ', ';
       }
       message += 'Priority is required';
       firstMessage = false;
   }
-  if(document.querySelector('input[name=dateInput]').value == '' &&
-  document.querySelector('input[name=maxPriInput]').value != ''){
+  if(formNode.querySelector('input[name=dateInput]').value == '' &&
+  formNode.querySelector('input[name=maxPriInput]').value != ''){
       if(!firstMessage){
           message += ', ';
       }
@@ -143,13 +143,13 @@ function getErrorMessage(){
   return message;
 }
 
-function formSubmission(e){
-  if(getErrorMessage() != ''){
+function formSubmission(e, formNode){
+  if(getErrorMessage(formNode) != ''){
     e.preventDefault();
   }
   else{
     e.preventDefault();
-    let task = constructTask();
+    let task = constructTask(formNode);
     renderTask(task, addToList(task));
     saveTask(task);
     derenderForm();
@@ -188,15 +188,15 @@ function findSwitchTimes(task) {
   return switchTimes
 }
 
-function constructTask(){
-  let name = document.querySelector('input[name=taskName]').value;
-  let desc = document.querySelector('input[name=taskDesc]').value;
-  let due = document.querySelector('input[name=dateInput]').value;
-  let priority = document.querySelector('input[name=priInput]').value;
-  let maxPriority = document.querySelector('input[name=maxPriInput]').value;
-  let estimatedMins = parseInt(document.querySelector('input[name=estMinutes').value);
-  let estimatedHours = parseInt(document.querySelector('input[name=estHours').value);
-  let estimatedDays = parseInt(document.querySelector('input[name=estDays').value);
+function constructTask(formNode){
+  let name = formNode.querySelector('input[name=taskName]').value;
+  let desc = formNode.querySelector('input[name=taskDesc]').value;
+  let due = formNode.querySelector('input[name=dateInput]').value;
+  let priority = formNode.querySelector('input[name=priInput]').value;
+  let maxPriority = formNode.querySelector('input[name=maxPriInput]').value;
+  let estimatedMins = parseInt(formNode.querySelector('input[name=estMinutes').value);
+  let estimatedHours = parseInt(formNode.querySelector('input[name=estHours').value);
+  let estimatedDays = parseInt(formNode.querySelector('input[name=estDays').value);
   let estimatedMs = (60000 * estimatedMins) + (3600000 * estimatedHours) + (86400000 * estimatedDays);
 
   let task = taskFactory(name, desc, due, priority, maxPriority, estimatedMs);
