@@ -163,11 +163,11 @@ async function editFormSubmission(e, formNode, taskClick){
   }
   else{
     e.preventDefault();
+    derenderEditForm();
     await deleteTask(taskClick);
     let task = constructTask(formNode);
     renderTask(task, addToList(task));
     saveTask(task);
-    derenderEditForm();
   }
 }
 

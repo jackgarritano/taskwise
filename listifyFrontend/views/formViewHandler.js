@@ -110,6 +110,7 @@ function initEditForm(taskClick){
 
     document.querySelector('body').append(formElements.addForm);
     document.querySelector('.overlay').classList.add('dimScreen');
+    document.querySelector('.overlay').addEventListener('click', listenForClose, true);
 
     renderCalendar(formElements.dueDate, formElements.addForm);
     observeTextFields(checkIfAddAllowed, formElements.addForm);
@@ -181,6 +182,15 @@ function initEditForm(taskClick){
     formElements.addForm.addEventListener('submit', (e) => {
         editFormSubmission(e, formElements.addForm, taskClick);
         });
+
+}
+
+function listenForClose(e){
+    if(document.querySelector('.overlay').classList.contains('dimScreen')){
+       e.stopPropagation();
+       derenderEditForm(); 
+       document.querySelector('.overlay').removeEventListener('click', listenForClose);
+    }
 }
 
 function populateData(target, formNode){
