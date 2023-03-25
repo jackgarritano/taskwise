@@ -1,10 +1,20 @@
 import { getAllTasks } from "./fetch";
 import { renderTask } from "../views/renderTask";
 import { addToList, removeAllFromList,} from "./taskList";
-export{setTimers};
+export{setTimers, removeTimers};
 
-function setTimers(now, switchDate){
-    setTimeout(renderAllTasks, switchDate - now);
+let activeTimers = {};
+
+function setTimers(now, switchDate, taskId){
+    removeTimers(taskId);
+    activeTimers[taskId] = setTimeout(renderAllTasks, switchDate - now);
+}
+
+function removeTimers(taskId){
+    if(taskId in activeTimers){
+        clearTimeout(activeTimers[taskId]);
+        delete activeTimers[taskId];
+    }
 }
 
 async function renderAllTasks(){

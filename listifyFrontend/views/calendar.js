@@ -4,15 +4,15 @@ export {renderCalendar, clearCal};
 //todo: fix inconsistent spacing above and below 'today' and 'tomorrow' buttons
 //todo: add a function to pre-populate selected date on open if a date was previously selected and render the month of the selected date instead of current month
 //todo: add a prepend months method for use in the above case
-function renderCalendar (parent){ 
+function renderCalendar (parent, formNode){ 
     var monthsToShow, primary, accent, mode;
     var cal;
     const d = new Date();
     var year = d.getFullYear();
     var month = d.getMonth() - 1;
   
-    let dateInput = document.querySelector('input[name=dateInput]');
-    let dateText = document.querySelector('.dueDateChoice > span');
+    let dateInput = formNode.querySelector('input[name=dateInput]');
+    let dateText = formNode.querySelector('.dueDateChoice > span');
     //const body = document.querySelector('body');
     const calendarHolder = document.createElement('div');
     calendarHolder.classList.add('calendarHolder', 'hidden', 'popup');
@@ -206,7 +206,7 @@ function renderCalendar (parent){
       moreMonths.innerHTML = "+";
       moreMonths.addEventListener("click", reconcileMonths);
       let observer = new IntersectionObserver(reconcileMonths, {
-        root:document.querySelector('.calendar'),
+        root:formNode.querySelector('.calendar'),
         rootMargin:'50px',
       });
       observer.observe(moreMonths);
@@ -251,7 +251,7 @@ function renderCalendar (parent){
     */
     function highlightToday() {
       let today = new Date();
-      let todayCell = document.querySelector(
+      let todayCell = formNode.querySelector(
         'td[data-date="' + new Intl.DateTimeFormat("en-US").format(today) + '"]'
       );
       todayCell.classList.add("todaysDate");
@@ -263,7 +263,7 @@ function renderCalendar (parent){
   
     /* function to clear the selected dates */
     function clearRange() {
-      let selected = document.querySelectorAll('.selected,.selected__startEnd');
+      let selected = formNode.querySelectorAll('.selected,.selected__startEnd');
       for(let item of selected) {
         item.classList = "";
       }
@@ -271,6 +271,6 @@ function renderCalendar (parent){
   }
   // function to destroy the calendar element
   function clearCal() {
-    let calCont = document.querySelector('.calendarHolder');
+    let calCont = formNode.querySelector('.calendarHolder');
     calCont.remove();
   }

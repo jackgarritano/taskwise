@@ -7,7 +7,10 @@ import {
 import grayPlusSvg from '../assets/plusLogo.svg';
 import bluePlusSvg from '../assets/plusLogoBlue.svg';
 import { renderEditor } from "./renderForm";
-import { formatTimeForForm } from "./renderTask";
+import { formatTimeForForm, calculateCurrentPriority } from "./renderTask";
+import { getCheckIndex } from "../controller/taskHandler";
+import { getTask } from "../controller/taskList";
+import { formatDate } from "./renderTask";
 export { initForm, initEditForm, derenderForm, renderAddButton };
 
 let formElements;
@@ -27,7 +30,7 @@ function initForm() {
     allTasks.prepend(formElements.addForm);
 
     formElements.taskName.focus();
-    renderCalendar(formElements.dueDate);
+    renderCalendar(formElements.dueDate, formElements.addForm);
     observeTextFields(checkIfAddAllowed, formElements.addForm);
 
     horizCenterPopups(formElements.errorMessage);
@@ -99,15 +102,15 @@ function initForm() {
         });
 } //end of init fn
 
-function initEditForm(){
+function initEditForm(e){
     onlyPasteText();
     formElements = renderEditor();
+    populateData(e.target, formElements);
 
     document.querySelector('body').append(formElements.addForm);
     document.querySelector('.overlay').classList.add('dimScreen');
 
-    formElements.taskName.focus();
-    renderCalendar(formElements.dueDate);
+    renderCalendar(formElements.dueDate, formElements.addForm);
     observeTextFields(checkIfAddAllowed, formElements.addForm);
 
     horizCenterPopups(formElements.errorMessage);
@@ -175,6 +178,51 @@ function initEditForm(){
     document.addEventListener('click', hideErrorMessage);
 
     formElements.addForm.addEventListener('submit', formSubmission);
+}
+
+function populateData(target, formNode){
+    let taskIndex = getCheckIndex(target);
+    let clickedTask = getTask(taskIndex);
+
+    formNode.addForm.querySelector('.title').textContent = clickedTask.name;
+    formNode.addForm.querySelector('input[name=taskName]').value = clickedTask.name;
+
+    formNode.addForm.querySelector('.description').textContent = clickedTask.desc;
+    formNode.addForm.querySelector('input[name=taskDesc]').value = clickedTask.desc;
+
+    let times =  msToTime(clickedTask.estimatedTime);
+    if(clickedTask.estimatedTime){
+        formNode.addForm.querySelector('input[name=estMinutes]').value = times[0];
+        formNode.addForm.querySelector('input[name=estHours]').value = times[1];
+        formNode.addForm.querySelector('input[name=estDays]').value = times[2];
+        formNode.addForm.querySelector('.estTimeChoice > span').textContent = formatTimeForForm(clickedTask.estimatedTime);
+    }
+    
+    if(clickedTask.due){
+        formNode.addForm.querySelector('input[name=dateInput]').value = clickedTask.due;
+        formNode.addForm.querySelector('.dueDateChoice > span').textContent = formatDate(clickedTask.due);
+    }
+
+    if(clickedTask.priority){
+        let currentPri = calculateCurrentPriority(clickedTask.priority, clickedTask.switchTimes);
+        formNode.addForm.querySelector('.priChoice > span').textContent = currentPri;
+        formNode.addForm.querySelector('input[name=priInput]').value = currentPri;
+    }
+
+    if(clickedTask.maxPriority){
+        formNode.addForm.querySelector('.maxPriChoice > span').textContent = clickedTask.maxPriority;
+        formNode.addForm.querySelector('input[name=maxPriInput]').value = clickedTask.maxPriority;
+    }
+}
+
+function msToTime(ms){
+    let days = Math.floor(ms / 86400000);
+    let leftover = ms % 86400000;
+    let hours = Math.floor(leftover / 3600000);
+    leftover = leftover % 3600000;
+    let mins = Math.floor(leftover / 60000);
+
+    return [mins, hours, days];
 }
 
 function hideErrorMessage() {

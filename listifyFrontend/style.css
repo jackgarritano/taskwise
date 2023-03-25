@@ -195,7 +195,7 @@ body{
   background-color: #37393e;
 }
 .allTasks{
-  width:clamp(430px, 50%, 700px);
+  width:clamp(450px, 50%, 700px);
   display:flex;
   flex-direction: column;
   border-bottom:#44464C 3px solid;
@@ -604,7 +604,7 @@ button{
   filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='4') progid:DXImageTransform.Microsoft.Brightness(50%);
 }
 .editForm{
-  width:clamp(430px, 50%, 700px);
+  width:clamp(450px, 50%, 700px);
   display:flex;
   flex-direction: column;
   justify-content: space-around;

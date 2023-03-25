@@ -1,4 +1,3 @@
-import { renderCalendar } from "./calendar";
 import priLogoSvg from '../assets/priLogo.svg';
 import calLogoSvg from '../assets/calLogo.svg';
 import clockLogoSvg from '../assets/clockLogo.svg';

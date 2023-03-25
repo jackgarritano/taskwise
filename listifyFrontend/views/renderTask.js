@@ -4,7 +4,7 @@ import clockLogoSvg from '../assets/clockLogo.svg';
 import priLogoSvg from '../assets/priLogo.svg';
 import calLogoSvg from '../assets/calLogo.svg';
 import realPlusLogoSvg from '../assets/realPlusLogo.svg';
-export {renderTask, formatDate, formatTimeForForm};
+export {renderTask, formatDate, formatTimeForForm, calculateCurrentPriority};
 function renderTask(taskObj, index){
     let {name, desc, due, priority, maxPriority, estimatedTime, switchTimes} = taskObj;
     let numLines = 0;
@@ -234,8 +234,6 @@ function renderDueDate(dateDue){
 }
 
 function renderPriBar(priority, maxPriority, switchTimes){
-    let now = new Date();
-    
     let taskPri = document.createElement('div');
     let priLogo = document.createElement('img');
     let priSpan = document.createElement('span');
@@ -244,16 +242,7 @@ function renderPriBar(priority, maxPriority, switchTimes){
     priLogo.classList.add('priLogo', 'priLogoTask');
     priLogo.setAttribute('src', priLogoSvg);
 
-    for(let i=0; i<switchTimes.length; i++){
-        let switchDate = new Date(switchTimes[i]);
-        if(switchDate < now){
-            priority ++;
-        }
-        else{
-            setTimers(now, switchDate);
-            break;
-        }
-    }
+    priority = calculateCurrentPriority(priority, switchTimes);
 
     priSpan.textContent = priority;
     if(maxPriority != ''){
@@ -277,6 +266,21 @@ function renderPriBar(priority, maxPriority, switchTimes){
     taskPri.append(priLogo);
     
     return taskPri;
+}
+
+function calculateCurrentPriority(priority, switchTimes){
+    let now = new Date();
+    for(let i=0; i<switchTimes.length; i++){
+        let switchDate = new Date(switchTimes[i]);
+        if(switchDate < now){
+            priority ++;
+        }
+        else{
+            setTimers(now, switchDate);
+            break;
+        }
+    }
+    return priority;
 }
 
 function renderDescription(description){

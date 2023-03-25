@@ -1,7 +1,8 @@
 import { deleteFromList, getId } from "./taskList";
 import { deleteFromDb } from "./fetch";
 import { initEditForm } from "../views/formViewHandler";
-export {addInteractvity};
+import { removeTimers } from "./switchHandler";
+export {addInteractvity, deleteTask, getCheckIndex};
 
 function addInteractvity(taskNode){
     taskNode.checkCircle.addEventListener('click', deleteTask);
@@ -10,8 +11,6 @@ function addInteractvity(taskNode){
 
 async function deleteTask(e){
     e.stopPropagation();
-    console.log('delete task ran');
-    console.log('e: ' + JSON.stringify(e));
     let index = getCheckIndex(e.target)
     let id = getId(index);
     try{
@@ -19,6 +18,7 @@ async function deleteTask(e){
         if(result = 'success'){
             deleteFromList(index);
             document.querySelector('.allTasks').children[index+1].remove();
+            removeTimers(id);
         }
     }
     catch(e){
