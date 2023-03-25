@@ -2,7 +2,8 @@ import { renderForm } from "./renderForm";
 import { clearCal, renderCalendar } from "./calendar";
 import {
     onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
-    observeTextFields, validateTimeInputs, getErrorMessage, formSubmission
+    observeTextFields, validateTimeInputs, getErrorMessage, formSubmission,
+    editFormSubmission
 } from "../controller/formHandler";
 import grayPlusSvg from '../assets/plusLogo.svg';
 import bluePlusSvg from '../assets/plusLogoBlue.svg';
@@ -11,7 +12,7 @@ import { formatTimeForForm, calculateCurrentPriority } from "./renderTask";
 import { getCheckIndex } from "../controller/taskHandler";
 import { getTask } from "../controller/taskList";
 import { formatDate } from "./renderTask";
-export { initForm, initEditForm, derenderForm, renderAddButton };
+export { initForm, initEditForm, derenderForm, renderAddButton, derenderEditForm };
 
 let formElements;
 let inactiveFormElements;
@@ -102,10 +103,10 @@ function initForm() {
         });
 } //end of init fn
 
-function initEditForm(e){
+function initEditForm(taskClick){
     onlyPasteText();
     formElements = renderEditor();
-    populateData(e.target, formElements);
+    populateData(taskClick.target, formElements);
 
     document.querySelector('body').append(formElements.addForm);
     document.querySelector('.overlay').classList.add('dimScreen');
@@ -177,7 +178,9 @@ function initEditForm(e){
 
     document.addEventListener('click', hideErrorMessage);
 
-    formElements.addForm.addEventListener('submit', formSubmission);
+    formElements.addForm.addEventListener('submit', (e) => {
+        editFormSubmission(e, formElements.addForm, taskClick);
+        });
 }
 
 function populateData(target, formNode){

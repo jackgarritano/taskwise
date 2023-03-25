@@ -5,7 +5,9 @@ import { removeTimers } from "./switchHandler";
 export {addInteractvity, deleteTask, getCheckIndex};
 
 function addInteractvity(taskNode){
-    taskNode.checkCircle.addEventListener('click', deleteTask);
+    taskNode.checkCircle.addEventListener('click', (e) => {
+        deleteTask(e);
+    });
     taskNode.task.addEventListener('click', initEditForm);
 }
 

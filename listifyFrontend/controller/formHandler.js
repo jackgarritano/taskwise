@@ -1,9 +1,10 @@
 import { renderTask } from "../views/renderTask";
 import { saveTask } from "./fetch";
 import { addToList } from "./taskList";
-import { derenderForm } from "../views/formViewHandler";
+import { derenderForm, derenderEditForm } from "../views/formViewHandler";
+import { deleteTask } from "./taskHandler";
 export {onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
-  observeTextFields, validateTimeInputs, getErrorMessage, formSubmission};
+  observeTextFields, validateTimeInputs, getErrorMessage, formSubmission, editFormSubmission};
 
 function onlyPasteText(){
 const inputText = document.querySelectorAll(".textInput");
@@ -154,6 +155,21 @@ function formSubmission(e, formNode){
     saveTask(task);
     derenderForm();
   }
+}
+
+async function editFormSubmission(e, formNode, taskClick){
+  if(getErrorMessage(formNode) != ''){
+    e.preventDefault();
+  }
+  else{
+    e.preventDefault();
+    await deleteTask(taskClick);
+    let task = constructTask(formNode);
+    renderTask(task, addToList(task));
+    saveTask(task);
+    derenderEditForm();
+  }
+}
 
 function taskFactory(name, desc, due, priority, maxPriority, estimatedTime){
   let task = {name, desc, due, priority, maxPriority, estimatedTime};
@@ -201,6 +217,4 @@ function constructTask(formNode){
 
   let task = taskFactory(name, desc, due, priority, maxPriority, estimatedMs);
   return task;
-}
-
 }
