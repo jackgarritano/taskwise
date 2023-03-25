@@ -207,12 +207,14 @@ function populateData(target, formNode){
         let currentPri = calculateCurrentPriority(clickedTask.priority, clickedTask.switchTimes);
         formNode.addForm.querySelector('.priChoice > span').textContent = currentPri;
         formNode.addForm.querySelector('input[name=priInput]').value = currentPri;
+        disableMaxPriority(currentPri - 1);
     }
 
     if(clickedTask.maxPriority){
         formNode.addForm.querySelector('.maxPriChoice > span').textContent = clickedTask.maxPriority;
         formNode.addForm.querySelector('input[name=maxPriInput]').value = clickedTask.maxPriority;
     }
+    checkIfAddAllowed();
 }
 
 function msToTime(ms){
