@@ -6,6 +6,8 @@ import { addToList } from './controller/taskList';
 import { initLoginScreen } from './views/loginScreen';
 import { renderEditor } from './views/renderForm';
 
+console.log('ordering fixed 3/29/23');
+
 window.handleAuth = async (a) => {
     try{
       let taskSent = await fetch(`${import.meta.env.VITE_ALIAS}/auth`,
