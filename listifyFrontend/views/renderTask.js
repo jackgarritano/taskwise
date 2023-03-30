@@ -270,14 +270,16 @@ function renderPriBar(priority, maxPriority, switchTimes){
 
 function calculateCurrentPriority(priority, switchTimes){
     let now = new Date();
-    for(let i=0; i<switchTimes.length; i++){
-        let switchDate = new Date(switchTimes[i]);
-        if(switchDate < now){
-            priority ++;
-        }
-        else{
-            setTimers(now, switchDate);
-            break;
+    if(switchTimes){
+        for(let i=0; i<switchTimes.length; i++){
+            let switchDate = new Date(switchTimes[i]);
+            if(switchDate < now){
+                priority ++;
+            }
+            else{
+                setTimers(now, switchDate);
+                break;
+            }
         }
     }
     return priority;
