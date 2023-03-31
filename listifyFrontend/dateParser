@@ -9,7 +9,7 @@ const parsedDate = function(){
     obj['compare'] = function(parsedObj){
         let add;
         let minIncrement;
-        if(this.dateArr.length > parsedObj.length){
+        if(this.dateArr.length > parsedObj.length){ //problem is that add seems to always be true?
             minIncrement = parsedObj.length;
             add = false;
         }
@@ -20,6 +20,7 @@ const parsedDate = function(){
 
         for(let i=0; i<minIncrement; i++){
             if(this.dateArr[i].date !== `${parsedObj[i].start.get('month')}/${parsedObj[i].start.get('day')}/${parsedObj[i].start.get('year')}`){
+                console.log('requested delete at :' + i);
                 return {
                     add,
                     index:i,
@@ -42,13 +43,16 @@ const parsedDate = function(){
         let date = `${month}/${day}/${year}`;
         let dateObj = {
             date,
-            'highlight' : false,
+            'highlight' : true,
         }
         this.dateArr.splice(index, 0, dateObj);
+        console.table(this.dateArr);
     }
 
     obj['remove'] = function(index){ 
+        console.table(this.dateArr);
         this.dateArr.splice(index, 1);
+        console.table(this.dateArr);
     }
 
     return obj;

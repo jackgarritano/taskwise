@@ -63,11 +63,13 @@ function observeTextFields(checkIfAddAllowed, formNode){
     let inputField = formNode.querySelector(`#${modifiedElement.dataset.inputType}`);
     inputField.setAttribute('value', input);
     let parseResult = chrono.parse(input);
+    console.log('parseResult: ' + JSON.stringify(parseResult));
     let comparison = taskNameDates.compare(parseResult);
-    console.log('title comparison output: ' + JSON.stringify(comparison));
     if(comparison.index != -1){
+      console.log('add bool val: ' + comparison.add);
       if(comparison.add){
-        taskNameDates.add(parseResult[index].start.get('month'), parseResult[index].start.get('day'), parseResult[index].start.get('year'), comparison.index)
+        taskNameDates.add(parseResult[comparison.index].start.get('day'), parseResult[comparison.index].start.get('month'), 
+        parseResult[comparison.index].start.get('year'), comparison.index)
       }
       else{
         taskNameDates.remove(comparison.index);
@@ -84,12 +86,13 @@ function observeTextFields(checkIfAddAllowed, formNode){
     inputField.setAttribute('value', input);
     let parseResult = chrono.parse(input);
     let comparison = descriptionDates.compare(parseResult);
-    console.log('title comparison output: ' + JSON.stringify(comparison));
     if(comparison.index != -1){
       if(comparison.add){
-        descriptionDates.add(parseResult[index].start.get('month'), parseResult[index].start.get('day'), parseResult[index].start.get('year'), comparison.index)
+        descriptionDates.add(parseResult[comparison.index].start.get('day'), parseResult[comparison.index].start.get('month'), 
+        parseResult[comparison.index].start.get('year'), comparison.index)
       }
       else{
+        console.log('remove called');
         descriptionDates.remove(comparison.index);
       }
     }
