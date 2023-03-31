@@ -1,8 +1,10 @@
+import * as chrono from 'chrono-node';
 import { renderTask } from "../views/renderTask";
 import { saveTask } from "./fetch";
 import { addToList } from "./taskList";
 import { derenderForm, derenderEditForm } from "../views/formViewHandler";
 import { deleteTask } from "./taskHandler";
+import { parsedDate } from '../dateParser';
 export {onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
   observeTextFields, validateTimeInputs, getErrorMessage, formSubmission, editFormSubmission};
 
@@ -52,15 +54,26 @@ function maxPriorityButtonClicked(target, highestUnavailable, formNode){
 function observeTextFields(checkIfAddAllowed, formNode){
   let taskName = formNode.querySelector('.title');
   let description = formNode.querySelector('.description');
-  let estimatedMins = formNode.querySelector('input[name=estMinutes');
-  let estimatedHours = formNode.querySelector('input[name=estHours');
-  let estimatedDays = formNode.querySelector('input[name=estDays');
+  let taskNameDates = new parsedDate();
+  let descriptionDates = new parsedDate();
 
   function gatherTitleInput(){
     let modifiedElement = taskName;
     let input = modifiedElement.innerText.replace(/\n/g, '');
     let inputField = formNode.querySelector(`#${modifiedElement.dataset.inputType}`);
     inputField.setAttribute('value', input);
+    let parseResult = chrono.parse(input);
+    let comparison = taskNameDates.compare(parseResult);
+    console.log('title comparison output: ' + JSON.stringify(comparison));
+    if(comparison.index != -1){
+      if(comparison.add){
+        taskNameDates.add(parseResult[index].start.get('month'), parseResult[index].start.get('day'), parseResult[index].start.get('year'), comparison.index)
+      }
+      else{
+        taskNameDates.remove(comparison.index);
+      }
+    }
+
     checkIfAddAllowed();
   }
 
@@ -69,7 +82,24 @@ function observeTextFields(checkIfAddAllowed, formNode){
     let input = modifiedElement.innerText.replace(/\n/g, '');
     let inputField = formNode.querySelector(`#${modifiedElement.dataset.inputType}`);
     inputField.setAttribute('value', input);
+    let parseResult = chrono.parse(input);
+    let comparison = descriptionDates.compare(parseResult);
+    console.log('title comparison output: ' + JSON.stringify(comparison));
+    if(comparison.index != -1){
+      if(comparison.add){
+        descriptionDates.add(parseResult[index].start.get('month'), parseResult[index].start.get('day'), parseResult[index].start.get('year'), comparison.index)
+      }
+      else{
+        descriptionDates.remove(comparison.index);
+      }
+    }
+
+    checkIfAddAllowed();
+
+    checkIfAddAllowed();
   }
+
+
 
   const titleObserver = new MutationObserver(gatherTitleInput);
   titleObserver.observe(taskName, {characterData: true, subtree: true});

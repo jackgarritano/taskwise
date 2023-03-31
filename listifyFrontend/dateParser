@@ -1,0 +1,55 @@
+import * as chrono from 'chrono-node';
+export {parsedDate}
+
+const parsedDate = function(){
+    let obj = {
+        'dateArr': []
+    };
+
+    obj['compare'] = function(parsedObj){
+        let add;
+        let minIncrement;
+        if(this.dateArr.length > parsedObj.length){
+            minIncrement = parsedObj.length;
+            add = false;
+        }
+        else{
+            minIncrement = this.dateArr.length;
+            add = true;
+        }
+
+        for(let i=0; i<minIncrement; i++){
+            if(this.dateArr[i].date !== `${parsedObj[i].start.get('month')}/${parsedObj[i].start.get('day')}/${parsedObj[i].start.get('year')}`){
+                return {
+                    add,
+                    index:i,
+                };
+            }
+        }
+        if(this.dateArr.length == parsedObj.length){
+            return {
+                'add':false,
+                index:-1,
+            }
+        }
+        return {
+            add,
+            index:this.dateArr.length,
+        }
+    }
+
+    obj['add'] = function(day, month, year, index){
+        let date = `${month}/${day}/${year}`;
+        let dateObj = {
+            date,
+            'highlight' : false,
+        }
+        this.dateArr.splice(index, 0, dateObj);
+    }
+
+    obj['remove'] = function(index){ 
+        this.dateArr.splice(index, 1);
+    }
+
+    return obj;
+}
