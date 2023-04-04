@@ -7,35 +7,39 @@ const parsedDate = function(){
     };
 
     obj['compare'] = function(parsedObj){
-        let add;
-        let minIncrement;
-        if(this.dateArr.length > parsedObj.length){ //problem is that add seems to always be true?
-            minIncrement = parsedObj.length;
-            add = false;
-        }
-        else{
-            minIncrement = this.dateArr.length;
-            add = true;
-        }
-
+        let add = this.dateArr.length < parsedObj.length; //new issue: if list length stays same (eg june 2 -> june 25, this can't handle that b/c it needs a delete and an insert. 2nd bool for both?)
+        let minIncrement = Math.min(this.dateArr.length, parsedObj.length);
+    
         for(let i=0; i<minIncrement; i++){
             if(this.dateArr[i].date !== `${parsedObj[i].start.get('month')}/${parsedObj[i].start.get('day')}/${parsedObj[i].start.get('year')}`){
-                console.log('requested delete at :' + i);
+                console.log('inside for loop, reqed at index: ' + i + '. add is: ' + add);
                 return {
                     add,
-                    index:i,
+                    index: i,
                 };
             }
         }
-        if(this.dateArr.length == parsedObj.length){
+    
+        if(parsedObj.length < this.dateArr.length){
+            console.log('requested delete at :' + minIncrement);
             return {
-                'add':false,
-                index:-1,
-            }
+                add: false,
+                index: minIncrement,
+            };
         }
-        return {
-            add,
-            index:this.dateArr.length,
+        else if(parsedObj.length > this.dateArr.length){
+            console.log('requested insert at :' + minIncrement);
+            return {
+                add: true,
+                index: minIncrement,
+            };
+        }
+        else{
+            console.log('no action required');
+            return {
+                add: false,
+                index: -1,
+            };
         }
     }
 
