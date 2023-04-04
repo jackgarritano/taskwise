@@ -20,7 +20,8 @@ window.handleAuth = async (a) => {
         })
       let receivedBody = await taskSent.json();
       if(receivedBody.status == 'it worked'){
-        document.querySelector('body').innerHTML = '<div class="overlay"><div class="allTasks"></div></div>'
+        document.querySelector('body').innerHTML = '<div class="overlay"><div class="allTasks"></div></div>';
+        document.m_id = receivedBody.id;
         renderAddButton();
         getAllTasks().then((tasks) => {
             tasks.forEach((el)=>{
