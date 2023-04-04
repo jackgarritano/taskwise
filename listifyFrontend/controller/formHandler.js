@@ -4,7 +4,7 @@ import { saveTask } from "./fetch";
 import { addToList } from "./taskList";
 import { derenderForm, derenderEditForm } from "../views/formViewHandler";
 import { deleteTask } from "./taskHandler";
-import { parsedDate } from '../dateParser';
+import { parsedDate } from './dateParser';
 export {onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
   observeTextFields, validateTimeInputs, getErrorMessage, formSubmission, editFormSubmission};
 
