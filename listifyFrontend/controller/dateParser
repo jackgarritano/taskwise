@@ -7,38 +7,39 @@ const parsedDate = function(){
     };
 
     obj['compare'] = function(parsedObj){
-        let add = this.dateArr.length < parsedObj.length; //new issue: if list length stays same (eg june 2 -> june 25, this can't handle that b/c it needs a delete and an insert. 2nd bool for both?)
+        let add = this.dateArr.length < parsedObj.length;
+        let both = this.dateArr.length == parsedObj.length;
         let minIncrement = Math.min(this.dateArr.length, parsedObj.length);
     
         for(let i=0; i<minIncrement; i++){
             if(this.dateArr[i].date !== `${parsedObj[i].start.get('month')}/${parsedObj[i].start.get('day')}/${parsedObj[i].start.get('year')}`){
-                console.log('inside for loop, reqed at index: ' + i + '. add is: ' + add);
                 return {
                     add,
                     index: i,
+                    both,
                 };
             }
         }
     
         if(parsedObj.length < this.dateArr.length){
-            console.log('requested delete at :' + minIncrement);
             return {
                 add: false,
                 index: minIncrement,
+                both,
             };
         }
         else if(parsedObj.length > this.dateArr.length){
-            console.log('requested insert at :' + minIncrement);
             return {
                 add: true,
                 index: minIncrement,
+                both,
             };
         }
         else{
-            console.log('no action required');
             return {
                 add: false,
                 index: -1,
+                both,
             };
         }
     }

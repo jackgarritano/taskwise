@@ -66,13 +66,19 @@ function observeTextFields(checkIfAddAllowed, formNode){
     console.log('parseResult: ' + JSON.stringify(parseResult));
     let comparison = taskNameDates.compare(parseResult);
     if(comparison.index != -1){
-      console.log('add bool val: ' + comparison.add);
-      if(comparison.add){
+      if(comparison.both){
+        taskNameDates.remove(comparison.index);
         taskNameDates.add(parseResult[comparison.index].start.get('day'), parseResult[comparison.index].start.get('month'), 
-        parseResult[comparison.index].start.get('year'), comparison.index)
+          parseResult[comparison.index].start.get('year'), comparison.index);
       }
       else{
-        taskNameDates.remove(comparison.index);
+        if(comparison.add){
+          taskNameDates.add(parseResult[comparison.index].start.get('day'), parseResult[comparison.index].start.get('month'), 
+          parseResult[comparison.index].start.get('year'), comparison.index);
+        }
+        else{
+          taskNameDates.remove(comparison.index);
+        }
       }
     }
 
@@ -92,7 +98,6 @@ function observeTextFields(checkIfAddAllowed, formNode){
         parseResult[comparison.index].start.get('year'), comparison.index)
       }
       else{
-        console.log('remove called');
         descriptionDates.remove(comparison.index);
       }
     }
