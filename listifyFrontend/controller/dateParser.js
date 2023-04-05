@@ -8,6 +8,12 @@ const parsedDate = function(editNode){
         node: editNode,
     };
 
+    this.node.addEventListener('keydown', function(event) {
+        if (event.keyCode === 32) {
+          
+        }
+      });
+
     obj['compare'] = function(parsedObj){
         let add = this.length < parsedObj.length; //changed to length
         let both = this.length == parsedObj.length;//changed to length
@@ -72,14 +78,18 @@ const parsedDate = function(editNode){
         console.table(this.dateArr);
     }
 
-    obj['remove'] = function(index){ 
+    obj['remove'] = function(index){
+        let removeHighlightNeeded = false;
         console.table(this.dateArr);
         if(this.dateArr[index].highlighted){
-            this.highlight();
+            removeHighlightNeeded = true;
         }
         this.dateArr.splice(index, 1);
         this.length --;
         console.table(this.dateArr);
+        if(removeHighlightNeeded){
+            this.highlight();
+        }
     }
 
     obj['highlight'] = function(){                      //first check if a highlight already exists. If it does, change that obj's highlighted prop to false, its highlightable
@@ -87,6 +97,7 @@ const parsedDate = function(editNode){
                                                          //highlight element from the innerhtml. Then start at end of dateArr and firnd first obj which is highlightable
                                                          //and make its highlighted property true. Then add the necessary element around that text and innerhtml it in
         let highlight = document.createElement('strong');
+        highlight.classList.add('highlighted');
         let workingText = this.node.innerText;
         let dateToHighlight;
 
@@ -106,6 +117,7 @@ const parsedDate = function(editNode){
         }
 
         if(dateToHighlight){
+            console.log('dateToHighlight isn"t null');
             let beforeStr = workingText.slice(0, dateToHighlight.ind1);
             let dateStr = workingText.slice(dateToHighlight.ind1, dateToHighlight.ind2);
             let afterStr = workingText.slice(dateToHighlight.ind2);
@@ -119,7 +131,7 @@ const parsedDate = function(editNode){
             this.node.append(document.createTextNode(afterStr));
 
             // Create a range that starts immediately after the <strong> element
-            let range = document.createRange();
+            let range = document.createRange();         //need it to be that space takes you outside
             range.setStartAfter(highlight);
             range.setEndAfter(highlight);
 
@@ -127,6 +139,16 @@ const parsedDate = function(editNode){
             let selection = window.getSelection();
             selection.removeAllRanges();
             selection.addRange(range);
+        }
+        else{
+            console.log('dateToHighlight is null');
+            let offset = Cursor.getCurrentCursorPosition(this.node);
+
+            this.node.innerHTML = '';
+            this.node.textContent = workingText;
+
+            Cursor.setCurrentCursorPosition(offset, this.node);
+            this.node.focus();
         }
         
     }
@@ -155,3 +177,91 @@ function update(datesObj, parseResult){
     }
 }
 
+class Cursor {
+    static getCurrentCursorPosition(parentElement) {
+        var selection = window.getSelection(),
+            charCount = -1,
+            node;
+        
+        if (selection.focusNode) {
+            if (Cursor._isChildOf(selection.focusNode, parentElement)) {
+                node = selection.focusNode; 
+                charCount = selection.focusOffset;
+                
+                while (node) {
+                    if (node === parentElement) {
+                        break;
+                    }
+
+                    if (node.previousSibling) {
+                        node = node.previousSibling;
+                        charCount += node.textContent.length;
+                    } else {
+                        node = node.parentNode;
+                        if (node === null) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        return charCount;
+    }
+    
+    static setCurrentCursorPosition(chars, element) {
+        if (chars >= 0) {
+            var selection = window.getSelection();
+            
+            let range = Cursor._createRange(element, { count: chars });
+
+            if (range) {
+                range.collapse(false);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
+        }
+    }
+    
+    static _createRange(node, chars, range) {
+        if (!range) {
+            range = document.createRange()
+            range.selectNode(node);
+            range.setStart(node, 0);
+        }
+
+        if (chars.count === 0) {
+            range.setEnd(node, chars.count);
+        } else if (node && chars.count >0) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                if (node.textContent.length < chars.count) {
+                    chars.count -= node.textContent.length;
+                } else {
+                    range.setEnd(node, chars.count);
+                    chars.count = 0;
+                }
+            } else {
+                for (var lp = 0; lp < node.childNodes.length; lp++) {
+                    range = Cursor._createRange(node.childNodes[lp], chars, range);
+
+                    if (chars.count === 0) {
+                    break;
+                    }
+                }
+            }
+        } 
+
+        return range;
+    }
+    
+    static _isChildOf(node, parentElement) {
+        while (node !== null) {
+            if (node === parentElement) {
+                return true;
+            }
+            node = node.parentNode;
+        }
+
+        return false;
+    }
+}
