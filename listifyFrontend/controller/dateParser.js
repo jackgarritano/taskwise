@@ -9,40 +9,18 @@ const parsedDate = function(editNode){
         node: editNode,
     };
 
-
-    /*obj.node.addEventListener('keydown', (e) => {
-        console.log('key pressed');
+    obj.node.addEventListener('keydown', (e) => {
         if(e.code == 'Space'){
-          e.preventDefault();
-          console.log('space pressed in highlight');
-          let range = getSelection().getRangeAt(0);
-          let nextNode = document.createElement('span');
-          nextNode.classList.add('nonhighlighted');
-          range.insertNode(nextNode);
-          nextNode.innerHTML = '&nbsp;';
-          let selection = window.getSelection();
-          selection.removeAllRanges();
-          range.setStartAfter(nextNode);
-          selection.addRange(range);
-
-
-        //   let nextNode = e.target.nextSibling;
-        //   console.log('nextnode: ' + JSON.stringify(nextNode));
-        //   if(nextNode.length > 0){
-        //     console.log('there is a next node');
-        //     nextNode.textContent = '   ' + nextNode.textContent;
-        //   }
-        //   else{
-        //     console.log("there isn't a next node");
-        //     nextNode = document.createElement('span');
-        //     nextNode.innerHTML = '&nbsp;';
-        //     obj.node.append(nextNode);
-        //   }
-        //   //now need to put cursor after the space
-        //   Cursor.setCurrentCursorPosition(1, nextNode);
+            e.preventDefault();
+            let offset = Cursor.getCurrentCursorPosition(obj.node);
+            removeStrong(obj.node);
+            let inputText = obj.node.textContent;
+            inputText = inputText.substr(0, offset) + '\u00A0' + inputText.substr(offset);
+            obj.node.textContent = inputText;
+            obj.highlight(false);
+            Cursor.setCurrentCursorPosition(offset + 1, obj.node);
         }
-    })*/
-
+    })
 
     obj['compare'] = function(parsedObj){
         let add = this.length < parsedObj.length; //changed to length
@@ -105,7 +83,7 @@ const parsedDate = function(editNode){
         this.dateArr.splice(index, 0, dateObj);
         this.length ++;
         if(highlighted){
-            this.highlight();
+            this.highlight(true);
         }
         console.table(this.dateArr);
     }
@@ -121,12 +99,12 @@ const parsedDate = function(editNode){
         this.length --;
         console.table(this.dateArr);
         if(removeHighlightNeeded){
-            this.highlight();
+            this.highlight(true);
         }
     }
 
 
-    obj['highlight'] = function(){                      //first check if a highlight already exists. If it does, change that obj's highlighted prop to false, its highlightable
+    obj['highlight'] = function(removeNecessary){        //first check if a highlight already exists. If it does, change that obj's highlighted prop to false, its highlightable
                                                          //to false, and remove the
                                                          //highlight element from the innerhtml. Then start at end of dateArr and firnd first obj which is highlightable
                                                          //and make its highlighted property true. Then add the necessary element around that text and innerhtml it in
@@ -135,8 +113,10 @@ const parsedDate = function(editNode){
         let dateToHighlight;
 
         let offset = Cursor.getCurrentCursorPosition(this.node);
-        console.log('offset: ' + offset);
-        removeHighlight(this, this.node);
+
+        if(removeNecessary){
+            removeHighlight(this, this.node);
+        }
 
         dateToHighlight = highlightLastDate(this);
 
@@ -188,7 +168,6 @@ function removeHighlight(parsedDateObj, parentNode){
     for(let i=0; i<parsedDateObj.length; i++){
         if(parsedDateObj.dateArr[i].highlighted){
             parsedDateObj.dateArr[i].highlighted = false;
-            return;
         }
     }
     removeStrong(parentNode);
