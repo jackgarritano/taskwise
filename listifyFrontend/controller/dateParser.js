@@ -21,6 +21,15 @@ const parsedDate = function(editNode){
             obj.highlight(false);
             Cursor.setCurrentCursorPosition(offset + 1, obj.node);
         }
+        if(e.code == 'Backspace'){
+            let offset = Cursor.getCurrentCursorPosition(obj.node);
+            let highlightedNode = highlightLastDate(obj);
+            if(highlightedNode && offset == highlightedNode.ind1 + highlightedNode.ind2){
+                e.preventDefault();
+                obj.setUnavailable();
+                Cursor.setCurrentCursorPosition(offset, obj.node);
+            }
+        }
     })
 
     obj['compare'] = function(parsedObj){
@@ -119,7 +128,7 @@ const parsedDate = function(editNode){
         let offset = Cursor.getCurrentCursorPosition(this.node);
 
         if(removeNecessary){
-            removeHighlight(this, this.node);
+            removeHighlight(this, this.node, false);
         }
 
         dateToHighlight = highlightLastDate(this);
@@ -140,6 +149,11 @@ const parsedDate = function(editNode){
         Cursor.setCurrentCursorPosition(offset, this.node);
         this.node.focus();
        
+    }
+
+    obj['setUnavailable'] = function(){
+        removeHighlight(this, this.node, true);
+        this.highlight(false);
     }
 
 
@@ -168,10 +182,13 @@ function update(datesObj, parseResult){
     }
 }
 
-function removeHighlight(parsedDateObj, parentNode){
+function removeHighlight(parsedDateObj, parentNode, setUnavailable){
     for(let i=0; i<parsedDateObj.length; i++){
         if(parsedDateObj.dateArr[i].highlighted){
             parsedDateObj.dateArr[i].highlighted = false;
+            if(setUnavailable){
+                parsedDateObj.dateArr[i].highlightable = false;
+            }
         }
     }
     removeStrong(parentNode);
