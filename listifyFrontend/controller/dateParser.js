@@ -12,6 +12,7 @@ const parsedDate = function(editNode){
     obj.node.addEventListener('keydown', (e) => {
         if(e.code == 'Space'){
             e.preventDefault();
+            console.table(obj.dateArr);
             let offset = Cursor.getCurrentCursorPosition(obj.node);
             removeStrong(obj.node);
             let inputText = obj.node.textContent;
@@ -28,7 +29,10 @@ const parsedDate = function(editNode){
         let minIncrement = Math.min(this.length, parsedObj.length);//changed to length
    
         for(let i=0; i<minIncrement; i++){
-            if(this.dateArr[i].date !== `${parsedObj[i].start.get('month')}/${parsedObj[i].start.get('day')}/${parsedObj[i].start.get('year')}`){
+            if(this.dateArr[i].date !==
+                `${parsedObj[i].start.get('month')}/${parsedObj[i].start.get('day')}/${parsedObj[i].start.get('year')}`
+                || this.dateArr[i].ind1 !== parsedObj[i].index
+                ){
                 return {
                     add,
                     index: i,
