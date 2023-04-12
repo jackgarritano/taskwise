@@ -1,4 +1,5 @@
 import * as chrono from 'chrono-node';
+import { formatDate } from '../views/renderTask';
 export {parsedDate, update};
 
 
@@ -145,9 +146,11 @@ const parsedDate = function(editNode){
 
         dateToHighlight = highlightLastDate(this);
 
-        
 
         if(dateToHighlight){
+            this.node.parentElement.querySelector('.dueDateChoice > span').textContent = formatDate(dateToHighlight.date);
+            this.node.parentElement.querySelector('input[name=dateInput]').value = dateToHighlight.date;
+
             let textNode = Array.from(this.node.childNodes).find((node) => {
                 return node.nodeName === '#text'}).splitText(dateToHighlight.ind1);
             
@@ -205,6 +208,8 @@ function update(datesObj, parseResult){
 }
 
 function removeHighlight(parsedDateObj, parentNode, setUnavailable){
+    parentNode.parentElement.querySelector('.dueDateChoice > span').textContent = 'Date';
+    parentNode.parentElement.querySelector('input[name=dateInput]').value = '';
     for(let i=0; i<parsedDateObj.length; i++){
         if(parsedDateObj.dateArr[i].highlighted){
             parsedDateObj.dateArr[i].highlighted = false;
