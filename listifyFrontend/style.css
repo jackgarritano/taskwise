@@ -629,6 +629,7 @@ button{
   background-color:#48BFE3;
   border-radius:3px;
   padding:2px;
+  cursor:pointer;
 }
 .nonhighlighted{
   background-color: transparent !important;

@@ -40,13 +40,20 @@ const parsedDate = function(editNode){
         for(let i=0; i<minIncrement; i++){
             if(this.dateArr[i].date !==
                 `${parsedObj[i].start.get('month')}/${parsedObj[i].start.get('day')}/${parsedObj[i].start.get('year')}`
-                || this.dateArr[i].ind1 !== parsedObj[i].index
                 ){
                 return {
                     add,
                     index: i,
                     both,
                 };
+            }
+            else if(this.dateArr[i].ind1 !== parsedObj[i].index){
+                let update = true;
+                return {
+                    update,
+                    index: i,
+                    newOffset: parsedObj[i].index,
+                }
             }
         }
    
@@ -116,6 +123,11 @@ const parsedDate = function(editNode){
         }
     }
 
+    obj['updateCurrArr'] = function(index, newOffset){
+        this.dateArr[index].ind1 = newOffset;
+        this.highlight(true);
+    }
+
 
     obj['highlight'] = function(removeNecessary){        //first check if a highlight already exists. If it does, change that obj's highlighted prop to false, its highlightable
                                                          //to false, and remove the
@@ -133,6 +145,8 @@ const parsedDate = function(editNode){
 
         dateToHighlight = highlightLastDate(this);
 
+        
+
         if(dateToHighlight){
             let textNode = Array.from(this.node.childNodes).find((node) => {
                 return node.nodeName === '#text'}).splitText(dateToHighlight.ind1);
@@ -149,6 +163,11 @@ const parsedDate = function(editNode){
         Cursor.setCurrentCursorPosition(offset, this.node);
         this.node.focus();
        
+        highlight.addEventListener('click', (e) =>{
+            let clickOffset = Cursor.getCurrentCursorPosition(obj.node);
+            obj.setUnavailable();
+            Cursor.setCurrentCursorPosition(clickOffset, obj.node);
+        })
     }
 
     obj['setUnavailable'] = function(){
@@ -163,6 +182,9 @@ const parsedDate = function(editNode){
 
 function update(datesObj, parseResult){
     let comparison = datesObj.compare(parseResult);
+    if(comparison.update){
+        datesObj.updateCurrArr(comparison.index, comparison.newOffset);
+    }
     if(comparison.index != -1){
       if(comparison.both){
         datesObj.remove(comparison.index);
