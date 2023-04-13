@@ -69,7 +69,6 @@ function renderTask(taskObj, index){
         infoContainer.append(nextRow);
     }
     else{
-        console.log(numLines);
         topRow.classList.add('row', 'topRow');
         nextRow.classList.add('row', 'middleRow');
         bottomRow.classList.add('row', 'bottomRow');

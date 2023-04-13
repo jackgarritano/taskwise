@@ -624,6 +624,17 @@ button{
   filter: none; */
 }
 /*end of edit form styling*/
+/*beginning of highlight nlp styling*/
+.highlighted{
+  background-color:#48BFE3;
+  border-radius:3px;
+  padding:2px;
+  cursor:pointer;
+}
+.nonhighlighted{
+  background-color: transparent !important;
+}
+/*end of highlight nlp styling*/
 
 .hidden{
   display:none;

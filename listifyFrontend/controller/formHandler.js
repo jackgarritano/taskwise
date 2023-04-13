@@ -1,8 +1,10 @@
+import * as chrono from 'chrono-node';
 import { renderTask } from "../views/renderTask";
 import { saveTask } from "./fetch";
 import { addToList } from "./taskList";
 import { derenderForm, derenderEditForm } from "../views/formViewHandler";
 import { deleteTask } from "./taskHandler";
+import { parsedDate, update } from './dateParser';
 export {onlyPasteText, regPriorityButtonClicked, maxPriorityButtonClicked,
   observeTextFields, validateTimeInputs, getErrorMessage, formSubmission, editFormSubmission};
 
@@ -52,15 +54,18 @@ function maxPriorityButtonClicked(target, highestUnavailable, formNode){
 function observeTextFields(checkIfAddAllowed, formNode){
   let taskName = formNode.querySelector('.title');
   let description = formNode.querySelector('.description');
-  let estimatedMins = formNode.querySelector('input[name=estMinutes');
-  let estimatedHours = formNode.querySelector('input[name=estHours');
-  let estimatedDays = formNode.querySelector('input[name=estDays');
+  let taskNameDates = new parsedDate(taskName);
+  let descriptionDates = new parsedDate(description);
 
   function gatherTitleInput(){
     let modifiedElement = taskName;
     let input = modifiedElement.innerText.replace(/\n/g, '');
     let inputField = formNode.querySelector(`#${modifiedElement.dataset.inputType}`);
     inputField.setAttribute('value', input);
+    let parseResult = chrono.parse(input);
+    console.log('parseResult: ' + JSON.stringify(parseResult));
+    update(taskNameDates, parseResult);
+
     checkIfAddAllowed();
   }
 
@@ -69,7 +74,15 @@ function observeTextFields(checkIfAddAllowed, formNode){
     let input = modifiedElement.innerText.replace(/\n/g, '');
     let inputField = formNode.querySelector(`#${modifiedElement.dataset.inputType}`);
     inputField.setAttribute('value', input);
+    let parseResult = chrono.parse(input);
+    update(descriptionDates, parseResult);
+
+    checkIfAddAllowed();
+
+    checkIfAddAllowed();
   }
+
+
 
   const titleObserver = new MutationObserver(gatherTitleInput);
   titleObserver.observe(taskName, {characterData: true, subtree: true});

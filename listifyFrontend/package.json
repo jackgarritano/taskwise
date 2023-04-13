@@ -12,6 +12,7 @@
     "vite": "^4.0.0"
   },
   "dependencies": {
+    "chrono-node": "^2.6.2",
     "dotenv": "^16.0.3"
   }
 }
