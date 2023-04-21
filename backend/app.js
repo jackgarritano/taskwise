@@ -33,11 +33,10 @@ async function initUserCollection(userId) {
       const collections = await database.listCollections().toArray();
       const collectionExists = collections.some((collection) => collection.name === userId);
   
-      if (collectionExists) {
-      } else {
+      if (!collectionExists) {
         // Create new collection
         await database.createCollection(userId);
-      }
+    }
   
     } catch (e) {
       console.error(e);
@@ -63,33 +62,16 @@ async function initGuestCollection() {
 async function connectToCollection(userId) {
     return database.collection(userId);
 }
-
-app.use('/', express.json());
-app.all('/', function(req, res, next) {
+function setHeaders(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, m_id");
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-    next();
-   });
-   app.all('/auth', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, m_id, Authorization");
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
     res.header('Access-Control-Allow-Credentials', 'true');
     next();
-   });
-   app.all('/tasks', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, m_id");
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-    next();
-   });
-   app.all('/testlogin', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-    next();
-   });
+}
+
+app.use('/', setHeaders);
+app.use('/', express.json());
 
 
 app.get('/', (req, res) => {
