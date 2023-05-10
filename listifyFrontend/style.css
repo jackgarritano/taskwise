@@ -446,6 +446,11 @@ button{
   left: calc(50% - 4px);
   transition:.25s;
   filter: invert(13%) sepia(5%) saturate(1067%) hue-rotate(192deg) brightness(100%) contrast(83%);
+  -webkit-user-select: none;  
+  -khtml-user-select: none;   
+  -moz-user-select: none;     
+  -ms-user-select: none;      
+  user-select: none;
 }
 .infoContainer{
   width:100%;
