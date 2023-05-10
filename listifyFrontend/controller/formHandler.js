@@ -63,7 +63,6 @@ function observeTextFields(checkIfAddAllowed, formNode){
     let inputField = formNode.querySelector(`#${modifiedElement.dataset.inputType}`);
     inputField.setAttribute('value', input);
     let parseResult = chrono.parse(input);
-    console.log('parseResult: ' + JSON.stringify(parseResult));
     update(taskNameDates, parseResult);
 
     checkIfAddAllowed();
@@ -76,8 +75,6 @@ function observeTextFields(checkIfAddAllowed, formNode){
     inputField.setAttribute('value', input);
     let parseResult = chrono.parse(input);
     update(descriptionDates, parseResult);
-
-    checkIfAddAllowed();
 
     checkIfAddAllowed();
   }
