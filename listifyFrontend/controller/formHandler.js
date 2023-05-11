@@ -56,15 +56,22 @@ function observeTextFields(checkIfAddAllowed, formNode){
   let description = formNode.querySelector('.description');
   let taskNameDates = new parsedDate(taskName);
   let descriptionDates = new parsedDate(description);
+  let noDateChosen = true;
+
+  formNode.querySelector('.cal__container').addEventListener('click', ()=>{
+    noDateChosen = false;
+    taskNameDates.datePicked();
+  }, true)
 
   function gatherTitleInput(){
     let modifiedElement = taskName;
     let input = modifiedElement.innerText.replace(/\n/g, '');
     let inputField = formNode.querySelector(`#${modifiedElement.dataset.inputType}`);
     inputField.setAttribute('value', input);
-    let parseResult = chrono.parse(input);
-    update(taskNameDates, parseResult);
-
+    if(noDateChosen){
+      let parseResult = chrono.parse(input);
+      update(taskNameDates, parseResult);
+    }
     checkIfAddAllowed();
   }
 
@@ -73,8 +80,6 @@ function observeTextFields(checkIfAddAllowed, formNode){
     let input = modifiedElement.innerText.replace(/\n/g, '');
     let inputField = formNode.querySelector(`#${modifiedElement.dataset.inputType}`);
     inputField.setAttribute('value', input);
-    let parseResult = chrono.parse(input);
-    update(descriptionDates, parseResult);
 
     checkIfAddAllowed();
   }

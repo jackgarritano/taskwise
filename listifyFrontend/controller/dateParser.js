@@ -13,7 +13,6 @@ const parsedDate = function(editNode){
     obj.node.addEventListener('keydown', (e) => {
         if(e.code == 'Space'){
             e.preventDefault();
-            console.table(obj.dateArr);
             let offset = Cursor.getCurrentCursorPosition(obj.node);
             removeStrong(obj.node);
             let inputText = obj.node.textContent;
@@ -106,19 +105,16 @@ const parsedDate = function(editNode){
         if(highlighted){
             this.highlight(true);
         }
-        console.table(this.dateArr);
     }
 
 
     obj['remove'] = function(index){
         let removeHighlightNeeded = false;
-        console.table(this.dateArr);
         if(this.dateArr[index].highlighted){
             removeHighlightNeeded = true;
         }
         this.dateArr.splice(index, 1);
         this.length --;
-        console.table(this.dateArr);
         if(removeHighlightNeeded){
             this.highlight(true);
         }
@@ -178,6 +174,11 @@ const parsedDate = function(editNode){
         this.highlight(false);
     }
 
+    obj['datePicked'] = function(){
+        obj.setUnavailable();
+        window.getSelection().removeAllRanges();
+    }
+
 
     return obj;
 }
@@ -196,7 +197,6 @@ function update(datesObj, parseResult){
       }
       else{
         if(comparison.add){
-            console.log(parseResult[comparison.index].index);
             datesObj.add(parseResult[comparison.index].start.get('day'), parseResult[comparison.index].start.get('month'),
           parseResult[comparison.index].start.get('year'), comparison.index, parseResult[comparison.index].index, parseResult[comparison.index].text.length);
         }
