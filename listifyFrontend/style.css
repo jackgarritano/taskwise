@@ -645,3 +645,13 @@ button{
 .hidden{
   display:none;
 }
+
+@media screen and (max-width: 450px) {
+  .allTasks{
+    width:97%;
+  }
+  .editForm{
+    width:97%;
+  }
+
+}
