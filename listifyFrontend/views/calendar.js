@@ -18,33 +18,14 @@ function renderCalendar (parent, formNode){
     calendarHolder.classList.add('calendarHolder', 'hidden', 'popup');
     const calendar = document.createElement('div');
     calendar.classList.add('calendar');
-    const inputContainer = document.createElement('div');
-    inputContainer.classList.add('inputs');
-    const today = document.createElement('div');
-    today.classList.add('today');
-    today.textContent = 'Today';
-    const tomorrow = document.createElement('div');
-    tomorrow.classList.add('tomorrow');
-    tomorrow.textContent = "Tomorrow";
     const calContainer = document.createElement('div');
     calContainer.classList.add('cal__container');
     const scrollDown = document.createElement('span');
     //scrollDown.classList.add('scrollDown');
     scrollDown.textContent = '(scroll down)';
-  
-    inputContainer.append(today);
-      inputContainer.append(tomorrow);
-      calendar.append(inputContainer);
       calendar.append(calContainer);
       calendarHolder.append(calendar);
       parent.append(calendarHolder);
-  
-    /*inputContainer.append(today);
-    inputContainer.append(tomorrow);
-    calendar.append(inputContainer);
-    calendar.append(calContainer);
-    calendarHolder.append(calendar);
-    body.append(calendarHolder);*/
   
     var style = false;
     const months = [
